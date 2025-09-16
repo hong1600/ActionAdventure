@@ -31,8 +31,9 @@ public class PlayerCombat : MonoBehaviour
     {
         isAttack = true;
         anim.SetTrigger("IsAttack");
+        AudioManager.instance.PlaySfx(ESfx.ATTACK, transform.position, transform);
 
-        yield return new WaitForSeconds(0.15f);
+        yield return new WaitForSeconds(0.5f);
 
         isAttack = false;
     }

@@ -12,7 +12,12 @@ public enum EScene
 
 public enum ESfx
 {
-
+    ATTACK,
+    DASH,
+    HIT,
+    JUMPLAND,
+    JUMPUP,
+    RUN
 }
 
 public enum EBgm

@@ -17,6 +17,11 @@ public class PlayerSpawner : MonoBehaviour
 
     private void Start()
     {
+        Invoke(nameof(Spawn), 2);
+    }
+
+    private void Spawn()
+    {
         SpawnPlayer(playerSpawnPos.position);
     }
 

@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     int lastDir = 1;
 
     [SerializeField] bool isGround;
+    bool wasGround;
 
     [SerializeField] float jumpSpeed = 5f; 
     [SerializeField] bool isJump;
@@ -32,10 +33,6 @@ public class PlayerMovement : MonoBehaviour
         playerStatus = GetComponent<PlayerStatus>();
     }
 
-    private void Start()
-    {
-    }
-
     private void Update()
     {
         if (playerStatus.curState == EPlayerState.NONE)
@@ -45,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
             Gravity();
             CheckGround();
             ChangeAnim();
+            CheckLand();
         }
     }
 
@@ -75,11 +73,13 @@ public class PlayerMovement : MonoBehaviour
         if (inputX < 0 && lastDir != -1)
         {
             transform.localScale = new Vector3(-0.5f, 0.5f, 0.5f);
+
             lastDir = -1;
         }
         else if (inputX > 0 && lastDir != 1)
         {
             transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+
             lastDir = 1;
         }
     }
@@ -90,11 +90,25 @@ public class PlayerMovement : MonoBehaviour
         {
             if (isGround && isJump == false)
             {
-                rigid.velocity = new Vector2(rigid.velocity.x, jumpSpeed);
                 isJump = true;
+
+                rigid.velocity = new Vector2(rigid.velocity.x, jumpSpeed);
+
                 anim.SetTrigger("IsJump");
+
+                AudioManager.instance.PlaySfx(ESfx.JUMPUP, transform.position, transform);
             }
         }
+    }
+
+    private void CheckLand()
+    {
+        if (!wasGround && isGround)
+        {
+            AudioManager.instance.PlaySfx(ESfx.JUMPLAND, transform.position, transform);
+        }
+
+        wasGround = isGround;
     }
 
     private void Gravity()
@@ -117,6 +131,11 @@ public class PlayerMovement : MonoBehaviour
                 isJump = false;
             }
         }
+    }
+
+    public void PlayFootStep()
+    {
+        AudioManager.instance.PlaySfx(ESfx.RUN, transform.position, transform);
     }
 
     private void CheckGround()
