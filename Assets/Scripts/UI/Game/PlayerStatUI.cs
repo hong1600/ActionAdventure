@@ -18,7 +18,7 @@ public class PlayerStatUI : MonoBehaviour
 
         mpMat = mpImg.material;
 
-        UpdateMp(10, 10);
+        UpdateMp(0, 10);
     }
 
     private void Init()

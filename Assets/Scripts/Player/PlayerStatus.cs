@@ -19,7 +19,7 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
     [SerializeField] int curHp = 5;
     int maxHp = 5;
 
-    [SerializeField] int curMp = 10;
+    [SerializeField] int curMp = 0;
     int maxMp = 10;
 
 
@@ -82,24 +82,6 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
         else
         {
             return false;
-        }
-    }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.T))
-        {
-            TakeDmg(1);
-        }
-
-        if(Input.GetKeyDown(KeyCode.Y))
-        {
-            FillMp(1);
-        }
-
-        if(Input.GetKeyDown(KeyCode.U))
-        {
-            UseMp(1);
         }
     }
 
