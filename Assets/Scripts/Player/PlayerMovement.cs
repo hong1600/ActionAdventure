@@ -72,13 +72,13 @@ public class PlayerMovement : MonoBehaviour
     {
         if (inputX < 0 && lastDir != -1)
         {
-            transform.localScale = new Vector3(-0.5f, 0.5f, 0.5f);
+            transform.localScale = new Vector3(-0.5f, 0.45f, 0.5f);
 
             lastDir = -1;
         }
         else if (inputX > 0 && lastDir != 1)
         {
-            transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            transform.localScale = new Vector3(0.5f, 0.45f, 0.5f);
 
             lastDir = 1;
         }

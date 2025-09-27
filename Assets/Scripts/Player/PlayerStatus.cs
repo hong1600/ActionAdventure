@@ -14,6 +14,10 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
 
     GameObject playerObj;
 
+    [SerializeField] SpriteRenderer render;
+    [SerializeField] Material hitMat;
+    Material originMat;
+
     public EPlayerState curState { get; private set; } = EPlayerState.NONE;
 
     [SerializeField] int curHp = 5;
@@ -28,6 +32,8 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
         anim = GetComponent<Animator>();
 
         playerSpawner = GameManager.instance.PlayerSpawner;
+
+        originMat = render.material;
     }
 
     private void Start()
@@ -48,12 +54,25 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
 
             onHpEvent?.Invoke(curHp, maxHp);
 
+            StartCoroutine(ChangeHitMat());
+
             if(curHp <= 0)
             {
                 StartCoroutine(StartDie());
             }
         }
     }
+
+    IEnumerator ChangeHitMat()
+    {
+        render.material = hitMat;
+
+        yield return new WaitForSeconds(0.15f);
+
+        render.material = originMat;
+    }
+
+
 
     private void FillMp(int _amount)
     {
