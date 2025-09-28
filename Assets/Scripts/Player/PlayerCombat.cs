@@ -7,26 +7,24 @@ public class PlayerCombat : MonoBehaviour
 {
     Animator anim;
 
-    [SerializeField] float attackSpeed = 0.3f;
-    [SerializeField] LayerMask targetLayer;
+    PlayerManager playerManager;
 
-    bool isAttack = false;
+    [SerializeField] float attackDuration = 0.3f;
+
+    public bool isAttack { get; private set; } = false;
 
     [SerializeField] GameObject attackEffect;
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
+
+        playerManager = GetComponent<PlayerManager>();
     }
 
     private void Update()
     {
-        Attack();
-    }
-
-    private void Attack()
-    {
-        if (Input.GetKeyDown(KeyCode.A) && !isAttack)
+        if (Input.GetKeyDown(KeyCode.A) && !playerManager.PlayerCombat.isAttack)
         {
             StartCoroutine(StartAttack());
         }
@@ -39,7 +37,7 @@ public class PlayerCombat : MonoBehaviour
         AudioManager.instance.PlaySfx(ESfx.ATTACK, transform.position, transform);
         attackEffect.SetActive(true);
 
-        yield return new WaitForSeconds(attackSpeed);
+        yield return new WaitForSeconds(attackDuration);
 
         attackEffect.SetActive(false);
         isAttack = false;

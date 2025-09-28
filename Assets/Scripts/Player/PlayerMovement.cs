@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     Animator anim;
     CapsuleCollider2D cap;
 
-    PlayerStatus playerStatus;
+    PlayerManager playerManager;
 
     float inputX;
     float curSpeed = 1;
@@ -30,20 +30,18 @@ public class PlayerMovement : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         cap = GetComponent<CapsuleCollider2D>();
-        playerStatus = GetComponent<PlayerStatus>();
+
+        playerManager = GetComponent<PlayerManager>();
     }
 
     private void Update()
     {
-        if (playerStatus.curState == EPlayerState.NONE)
-        {
-            InputX();
-            Jump();
-            Gravity();
-            CheckGround();
-            ChangeAnim();
-            CheckLand();
-        }
+        InputX();
+        Jump();
+        Gravity();
+        CheckGround();
+        ChangeAnim();
+        CheckLand();
     }
 
     private void FixedUpdate()

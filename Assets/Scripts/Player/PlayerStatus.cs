@@ -9,13 +9,13 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
     public event Action<int, int> onMpEvent;
 
     Animator anim;
+    SpriteRenderer render;
 
     PlayerSpawner playerSpawner;
 
     GameObject playerObj;
 
-    [SerializeField] SpriteRenderer render;
-    [SerializeField] Material hitMat;
+    [SerializeField] Material whiteMat;
     Material originMat;
 
     public EPlayerState curState { get; private set; } = EPlayerState.NONE;
@@ -30,15 +30,24 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
     private void Awake()
     {
         anim = GetComponent<Animator>();
+        render = GetComponent<SpriteRenderer>();
 
         playerSpawner = GameManager.instance.PlayerSpawner;
 
-        originMat = render.material;
+        originMat = render.sharedMaterial;
     }
 
     private void Start()
     {
         playerSpawner.onSpawnEvent += Init;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            ChangeHitColor();
+        }
     }
 
     private void Init()
@@ -54,7 +63,6 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
 
             onHpEvent?.Invoke(curHp, maxHp);
 
-            StartCoroutine(ChangeHitMat());
 
             if(curHp <= 0)
             {
@@ -63,15 +71,20 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
         }
     }
 
-    IEnumerator ChangeHitMat()
+    private void ChangeHitColor()
     {
-        render.material = hitMat;
-
-        yield return new WaitForSeconds(0.15f);
-
-        render.material = originMat;
+        StopAllCoroutines();
+        StartCoroutine(StartChangeColor());
     }
 
+    IEnumerator StartChangeColor()
+    {
+        render.sharedMaterial = whiteMat;
+
+        yield return new WaitForSeconds(0.1f);
+
+        render.sharedMaterial = originMat;
+    }
 
 
     private void FillMp(int _amount)

@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4660076192433278}
+  - component: {fileID: 3019751131127527760}
   - component: {fileID: 6298748019116202139}
   - component: {fileID: 6415598900063741547}
   - component: {fileID: 5292811278241568613}
@@ -40,6 +41,18 @@ Transform:
   - {fileID: 380017361898215857}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3019751131127527760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1377240496476148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3136bd498ce585c44bb889394c231b7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6298748019116202139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,10 +83,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34a2fb37e3da5684685e2120970c18f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackSpeed: 0.3
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 0
+  attackDuration: 0.3
   attackEffect: {fileID: 5451134627658382241}
 --- !u!114 &5292811278241568613
 MonoBehaviour:
@@ -87,6 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b786989b3ecea55448f5573f9c34dbf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  whiteMat: {fileID: 2100000, guid: f867db4be314b5444b7ddd8b09ba61b4, type: 2}
   curHp: 5
   curMp: 0
 --- !u!212 &212971026275759962
@@ -109,7 +120,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 92cdb2a5fa50424418daa4542012c514, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

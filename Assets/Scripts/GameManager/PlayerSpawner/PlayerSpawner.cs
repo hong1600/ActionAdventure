@@ -17,7 +17,7 @@ public class PlayerSpawner : MonoBehaviour
 
     private void Start()
     {
-        Invoke(nameof(Spawn), 2);
+        Invoke(nameof(Spawn), 1);
     }
 
     private void Spawn()
