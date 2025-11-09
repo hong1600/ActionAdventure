@@ -6032,7 +6032,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4633865963506118, guid: e379d1f3d7fb9944e8550815cea8fafb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1136615361}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1516778740484128, guid: e379d1f3d7fb9944e8550815cea8fafb, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 1576052098}
   m_SourcePrefab: {fileID: 100100000, guid: e379d1f3d7fb9944e8550815cea8fafb, type: 3}
 --- !u!1 &671383994
 GameObject:
@@ -10182,6 +10185,30 @@ TilemapCollider2D:
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
   m_UseDelaunayMesh: 0
+--- !u!1 &1576052092 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1516778740484128, guid: e379d1f3d7fb9944e8550815cea8fafb, type: 3}
+  m_PrefabInstance: {fileID: 610899203}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1576052098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576052092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0ef452b96abdcc44a20a896c99e5719, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 4
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  searchRadius: 5
+  attackReadyRadius: 1.5
+  attackBoxSize: {x: 2, y: 1}
 --- !u!1001 &1580749993
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -2,6 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EEnemyState
+{
+    CREATE,
+    MOVE,
+    STAY,
+    ATTACK,
+    DIE
+}
+
 public enum EScene
 {
     LOBBY,
