@@ -68,7 +68,10 @@ MonoBehaviour:
   walkSpeed: 4
   isGround: 0
   jumpSpeed: 8
-  isJump: 0
+  jumpCount: 0
+  isDash: 0
+  dashSpeed: 10
+  dashTime: 0.2
   gravity: -20
   maxFallSpeed: -25
 --- !u!114 &6415598900063741547

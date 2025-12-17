@@ -20,7 +20,12 @@ public class PlayerMovement : MonoBehaviour
     bool wasGround;
 
     [SerializeField] float jumpSpeed = 5f; 
-    [SerializeField] bool isJump;
+    [SerializeField] int jumpCount = 0;
+
+    [SerializeField] bool isDash = false;
+    [SerializeField] float dashSpeed = 10;
+    [SerializeField] float dashTime = 0.2f;
+    float dashTimer;
 
     [SerializeField] float gravity = -9.81f;
     [SerializeField] float maxFallSpeed = -10f;
@@ -38,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
     {
         InputX();
         Jump();
+        Dash();
         Gravity();
         CheckGround();
         ChangeAnim();
@@ -46,7 +52,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Move();
+        if(isDash) 
+        {
+            DoDash();
+        }
+        else
+        {
+            Move();
+        }
     }
 
     private void Move()
@@ -56,6 +69,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void InputX()
     {
+        if (isDash) return;
+
         inputX = Input.GetAxisRaw("Horizontal");
         curSpeed = inputX * walkSpeed;
 
@@ -86,16 +101,51 @@ public class PlayerMovement : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space)) 
         {
-            if (isGround && isJump == false)
+            if (jumpCount < 2)
             {
-                isJump = true;
-
-                rigid.velocity = new Vector2(rigid.velocity.x, jumpSpeed);
-
-                anim.SetTrigger("IsJump");
-
-                AudioManager.instance.PlaySfx(ESfx.JUMPUP, transform.position, transform);
+                DoJump();
             }
+        }
+    }
+
+    private void DoJump()
+    {
+        jumpCount++;
+
+        rigid.velocity = new Vector2(rigid.velocity.x, jumpSpeed);
+
+        anim.SetTrigger("IsJump");
+        AudioManager.instance.PlaySfx(ESfx.JUMPUP, transform.position, transform);
+    }
+
+    private void Dash()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            if(!isDash) 
+            {
+                StartDash();
+            }
+        }
+    }
+
+    private void StartDash()
+    {
+        isDash = true;
+        dashTimer = dashTime;
+
+        rigid.velocity = new Vector2(lastDir * dashSpeed, 0);
+    }
+
+    private void DoDash()
+    {
+        dashTimer -= Time.fixedDeltaTime;
+
+        rigid.velocity = new Vector2(lastDir * dashSpeed, 0);
+
+        if (dashTimer <= 0)
+        {
+            isDash = false; 
         }
     }
 
@@ -111,6 +161,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Gravity()
     {
+        if (isDash) return;
+
         if (!isGround)
         {
             float newY = rigid.velocity.y + gravity * Time.deltaTime;
@@ -121,13 +173,6 @@ public class PlayerMovement : MonoBehaviour
             }
 
             rigid.velocity = new Vector2(rigid.velocity.x, newY);
-        }
-        else
-        {
-            if(rigid.velocity.y <= 0) 
-            {
-                isJump = false;
-            }
         }
     }
 
@@ -140,7 +185,14 @@ public class PlayerMovement : MonoBehaviour
     {
         RaycastHit2D hit = Physics2D.Raycast(cap.bounds.center, Vector2.down, cap.bounds.extents.y + 0.1f, LayerMask.GetMask("Ground"));
 
-        isGround = hit.collider != null;
+        bool nowGround = hit.collider != null;
+
+        if (!isGround && nowGround)
+        {
+            jumpCount = 0;
+        }
+
+        isGround = nowGround;
     }
 
     private void ChangeAnim()
