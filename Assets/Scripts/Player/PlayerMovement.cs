@@ -27,6 +27,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float dashTime = 0.2f;
     float dashTimer;
 
+    [SerializeField] int wallDir;
+    [SerializeField] bool isWall;
+    [SerializeField] bool isWallJump;
+    [SerializeField] float wallfallSpeed = -2f;
+    [SerializeField] float wallJumpX = 7f;
+    [SerializeField] float wallJumpY = 6f;
+    [SerializeField] float wallJumpLockTime = 0.15f;
+    float wallJumpTimer;
+
     [SerializeField] float gravity = -9.81f;
     [SerializeField] float maxFallSpeed = -10f;
 
@@ -44,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
         InputX();
         Jump();
         Dash();
+        CheckWall();
         Gravity();
         CheckGround();
         ChangeAnim();
@@ -52,14 +62,19 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(isDash) 
+        if (isDash)
         {
             DoDash();
         }
-        else
+        else if (isWall)
+        {
+            WallClimb();
+        }
+        else if(!isWallJump)
         {
             Move();
         }
+        WallClimbJump();
     }
 
     private void Move()
@@ -149,6 +164,63 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void CheckWall()
+    {
+        isWall = false;
+        wallDir = 0;
+
+        if (isGround) return;
+
+        Vector2 origin = cap.bounds.center;
+        float dist = cap.bounds.extents.x + 0.05f;
+        int wallMask = LayerMask.GetMask("Wall");
+
+        RaycastHit2D leftHit = Physics2D.Raycast(origin, Vector2.left, dist, wallMask);
+        RaycastHit2D rightHit = Physics2D.Raycast(origin, Vector2.right, dist, wallMask);
+
+        if (leftHit.collider != null)
+        {
+            isWall = true;
+            wallDir = -1;
+        }
+        else if (rightHit.collider != null) 
+        {
+            isWall = true;
+            wallDir = 1;
+        }
+    }
+
+    private void WallClimb()
+    {
+        rigid.velocity = new Vector2(0, wallfallSpeed);
+    }
+
+    private void WallClimbJump()
+    {
+        if(isWall && Input.GetKeyDown(KeyCode.Space)) 
+        {
+            jumpCount = 2;
+
+            float jumpX = -wallDir * wallJumpX;
+            float jumpY = wallJumpY;
+
+            rigid.velocity = new Vector2(jumpX, jumpY);
+
+            isWall = false;
+            isWallJump = true;
+            wallJumpTimer = wallJumpLockTime;
+        }
+        if (isWallJump)
+        {
+            wallJumpTimer -= Time.fixedDeltaTime;
+
+            if(wallJumpTimer < 0) 
+            {
+                isWallJump = false;
+            }
+        }
+    }
+
     private void CheckLand()
     {
         if (!wasGround && isGround)
@@ -161,7 +233,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Gravity()
     {
-        if (isDash) return;
+        if (isDash || isWall) return;
 
         if (!isGround)
         {

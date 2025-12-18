@@ -72,6 +72,13 @@ MonoBehaviour:
   isDash: 0
   dashSpeed: 10
   dashTime: 0.2
+  wallDir: 0
+  isWall: 0
+  isWallJump: 0
+  wallfallSpeed: -1
+  wallJumpX: 5
+  wallJumpY: 6
+  wallJumpLockTime: 0.15
   gravity: -20
   maxFallSpeed: -25
 --- !u!114 &6415598900063741547
