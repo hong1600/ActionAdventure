@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public class SwordHitBox : MonoBehaviour
 {
@@ -13,24 +12,13 @@ public class SwordHitBox : MonoBehaviour
     private void Awake()
     {
         hitBox = GetComponent<BoxCollider2D>();
-        hitBox.enabled = false;
-    }
-
-    public void EnableHitBox()
-    {
-        hitBox.enabled = true;
-    }
-
-    public void DisableHitBox()
-    {
-        hitBox.enabled = false;
     }
 
     private void OnTriggerEnter2D(Collider2D coll)
     {
         if (((1 << coll.gameObject.layer) & targetLayer) != 0)
         {
-            ITakeDmg iTakeDmg = coll.GetComponent<ITakeDmg>();
+            ITakeDmg iTakeDmg = coll.GetComponentInParent<EnemyBase>().GetComponent<ITakeDmg>();
 
             if (iTakeDmg != null)
             {

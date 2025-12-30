@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class EnemyBase : MonoBehaviour
+public abstract class EnemyBase : MonoBehaviour, ITakeDmg
 {
     Rigidbody2D rigid;
     CapsuleCollider2D cap;
+    SpriteRenderer sprite;
+    Material mat;
 
     EnemyState enemyState;
+    KnockBack knockBack;
 
     [SerializeField] float moveSpeed;
     [SerializeField] LayerMask targetLayer;
@@ -16,20 +19,38 @@ public abstract class EnemyBase : MonoBehaviour
     [SerializeField] float attackReadyRadius = 1.5f;
     [SerializeField] Vector2 attackBoxSize = new Vector2(2f, 1f);
 
+    [SerializeField] float curHp;
+    [SerializeField] float maxHp;
+
+    [SerializeField] float knockBackPower;
+
+    bool isDie = false;
+
     public Transform target { get; private set; }
 
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         cap = GetComponent<CapsuleCollider2D>();
+        sprite = GetComponent<SpriteRenderer>();
+        mat = sprite.material;
 
         enemyState = new EnemyState();
+        knockBack = new KnockBack();
 
         enemyState.Init(this);
+        knockBack.Init(rigid);
+    }
+
+    private void Start()
+    {
+        curHp = maxHp;
     }
 
     private void FixedUpdate()
     {
+        if (isDie) return;
+
         if (enemyState != null)
         {
             enemyState.Update();
@@ -106,5 +127,33 @@ public abstract class EnemyBase : MonoBehaviour
 
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(transform.position, attackBoxSize);
+    }
+
+    private void KnockBack()
+    {
+        knockBack.Apply(new Vector2(1, 1), knockBackPower);
+    }
+
+    public void TakeDmg(int _dmg)
+    {
+        if (curHp > 0)
+        {
+            curHp -= _dmg;
+            KnockBack();
+
+            if (curHp <= 0)
+            {
+                StartCoroutine(StartDie());
+            }
+        }
+    }
+
+    IEnumerator StartDie()
+    {
+        isDie = true;
+
+        yield return new WaitForSeconds(1f);
+
+        Destroy(this.gameObject);
     }
 }

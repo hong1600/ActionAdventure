@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDuration: 0.3
-  attackEffect: {fileID: 5451134627658382241}
+  attacBox: {fileID: 2274794489114654244}
 --- !u!114 &5292811278241568613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,13 +255,14 @@ GameObject:
   m_Component:
   - component: {fileID: 380017361898215857}
   - component: {fileID: 2865432977379120843}
+  - component: {fileID: 7141463345057982317}
   m_Layer: 3
   m_Name: AttackBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &380017361898215857
 Transform:
   m_ObjectHideFlags: 0
@@ -323,6 +324,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4, y: 1.5}
   m_EdgeRadius: 0
+--- !u!114 &7141463345057982317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2274794489114654244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f4865c7919e7b34facb821f7ffa53b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1 &8621279673268449040
 GameObject:
   m_ObjectHideFlags: 0
@@ -483,7 +500,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6445826192643391251, guid: 78e50a02e17938a4baf517253d545621, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -493,10 +510,5 @@ PrefabInstance:
 --- !u!4 &2306321625107784672 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3662496979572467538, guid: 78e50a02e17938a4baf517253d545621, type: 3}
-  m_PrefabInstance: {fileID: 1356285892427400370}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5451134627658382241 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6445826192643391251, guid: 78e50a02e17938a4baf517253d545621, type: 3}
   m_PrefabInstance: {fileID: 1356285892427400370}
   m_PrefabAsset: {fileID: 0}

@@ -13,7 +13,7 @@ public class PlayerCombat : MonoBehaviour
 
     public bool isAttack { get; private set; } = false;
 
-    [SerializeField] GameObject attackEffect;
+    [SerializeField] GameObject attacBox;
 
     private void Awake()
     {
@@ -35,11 +35,11 @@ public class PlayerCombat : MonoBehaviour
         isAttack = true;
         anim.SetTrigger("IsAttack");
         AudioManager.instance.PlaySfx(ESfx.ATTACK, transform.position, transform);
-        attackEffect.SetActive(true);
+        attacBox.SetActive(true);
 
         yield return new WaitForSeconds(attackDuration);
 
-        attackEffect.SetActive(false);
+        attacBox.SetActive(false);
         isAttack = false;
     }
 
