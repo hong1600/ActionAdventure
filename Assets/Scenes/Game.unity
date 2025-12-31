@@ -10517,6 +10517,7 @@ MonoBehaviour:
   attackBoxSize: {x: 2, y: 1}
   curHp: 0
   maxHp: 10
+  knockBackPower: 3
 --- !u!1001 &1580749993
 PrefabInstance:
   m_ObjectHideFlags: 0

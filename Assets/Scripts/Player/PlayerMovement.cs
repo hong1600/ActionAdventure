@@ -62,6 +62,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (playerManager.PlayerStatus.IsKnockBack || playerManager.PlayerStatus.IsDie) return;
+
         if (isDash)
         {
             DoDash();

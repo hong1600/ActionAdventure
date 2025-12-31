@@ -15,7 +15,7 @@ public class DamageDealer : MonoBehaviour
 
             if (target != null)
             {
-                target.TakeDmg(dmg);
+                target.TakeDmg(dmg, transform);
             }
         }
     }

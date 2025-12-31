@@ -22,7 +22,7 @@ public class SwordHitBox : MonoBehaviour
 
             if (iTakeDmg != null)
             {
-                iTakeDmg.TakeDmg(damage);
+                iTakeDmg.TakeDmg(damage, transform);
             }
         }
     }

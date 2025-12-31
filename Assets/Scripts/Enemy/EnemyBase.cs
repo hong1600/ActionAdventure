@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public abstract class EnemyBase : MonoBehaviour, ITakeDmg
@@ -28,6 +29,8 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
 
     public Transform target { get; private set; }
 
+    bool isKnockBack;
+
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -49,7 +52,7 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
 
     private void FixedUpdate()
     {
-        if (isDie) return;
+        if (isDie || isKnockBack) return;
 
         if (enemyState != null)
         {
@@ -129,23 +132,32 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
         Gizmos.DrawWireCube(transform.position, attackBoxSize);
     }
 
-    private void KnockBack()
-    {
-        knockBack.Apply(new Vector2(1, 1), knockBackPower);
-    }
-
-    public void TakeDmg(int _dmg)
+    public void TakeDmg(int _dmg, Transform _attacker)
     {
         if (curHp > 0)
         {
             curHp -= _dmg;
-            KnockBack();
+
+            StartCoroutine(StartKnockBack(_attacker));
 
             if (curHp <= 0)
             {
                 StartCoroutine(StartDie());
             }
         }
+    }
+
+    IEnumerator StartKnockBack(Transform _attacker)
+    {
+        isKnockBack = true;
+
+        knockBack.Apply(transform, _attacker, knockBackPower);
+
+        yield return new WaitForSeconds(0.15f);
+
+        rigid.velocity = Vector2.zero;
+
+        isKnockBack = false;
     }
 
     IEnumerator StartDie()
