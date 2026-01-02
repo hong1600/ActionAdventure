@@ -6,12 +6,21 @@ public class SwordHitBox : MonoBehaviour
 {
     BoxCollider2D hitBox;
 
+    HitStop hitStop;
+
     [SerializeField] int damage = 1;
     [SerializeField] LayerMask targetLayer;
+
+    [SerializeField] float hitStopSec;
 
     private void Awake()
     {
         hitBox = GetComponent<BoxCollider2D>();
+    }
+
+    private void Start()
+    {
+        hitStop = GameManager.instance.HitStop;
     }
 
     private void OnTriggerEnter2D(Collider2D coll)
@@ -23,6 +32,8 @@ public class SwordHitBox : MonoBehaviour
             if (iTakeDmg != null)
             {
                 iTakeDmg.TakeDmg(damage, transform);
+
+                hitStop.ApplyHitStop(hitStopSec);
             }
         }
     }

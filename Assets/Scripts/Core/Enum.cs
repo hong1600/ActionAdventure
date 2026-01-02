@@ -38,5 +38,9 @@ public enum EPlayerState
 {
     NONE,
     DIE,
+}
 
+public enum EEffect
+{
+    PLAYERHITEFFECT
 }

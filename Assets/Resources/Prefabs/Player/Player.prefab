@@ -341,6 +341,7 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 256
+  hitStopSec: 0.15
 --- !u!1 &8621279673268449040
 GameObject:
   m_ObjectHideFlags: 0

@@ -79,6 +79,7 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
             onHpEvent?.Invoke(curHp, maxHp);
 
             StartCoroutine(StartKnockBack(_attacker));
+            ObjectPoolManager.instance.EffectPool.FindEffect(EEffect.PLAYERHITEFFECT, transform.position, Quaternion.identity);
 
             if (curHp <= 0)
             {
