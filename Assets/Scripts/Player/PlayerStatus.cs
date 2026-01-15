@@ -9,17 +9,15 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
     public event Action<int, int> onHpEvent;
     public event Action<int, int> onMpEvent;
 
+    Rigidbody2D rigid;
     Animator anim;
     SpriteRenderer render;
-    Rigidbody2D rigid;
 
     PlayerSpawner playerSpawner;
-    KnockBack knockBack;
+    HitEffect hitEffect;
+    public HitEffect HitEffect { get { return hitEffect; } }
 
     GameObject playerObj;
-
-    [SerializeField] Material whiteMat;
-    Material originMat;
 
     public EPlayerState curState { get; private set; } = EPlayerState.NONE;
 
@@ -30,37 +28,26 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
     int maxMp = 10;
 
     [SerializeField] float knockBackPower;
-    bool isKnockBack;
-    public bool IsKnockBack { get { return isKnockBack; } }
+
+    [SerializeField] float hitStopSec;
 
     bool isDie = false;
     public bool IsDie { get {  return isDie; } }
 
     private void Awake()
     {
+        rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         render = GetComponent<SpriteRenderer>();
-        rigid = GetComponent<Rigidbody2D>();
 
         playerSpawner = GameManager.instance.PlayerSpawner;
-        knockBack = new KnockBack();
-
-        knockBack.Init(rigid);
-
-        originMat = render.sharedMaterial;
+        hitEffect = GameManager.instance.HitEffect;
+        hitEffect.Init(rigid, render, knockBackPower);
     }
 
     private void Start()
     {
         playerSpawner.onSpawnEvent += Init;
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            ChangeHitColor();
-        }
     }
 
     private void Init()
@@ -70,16 +57,13 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
 
     public void TakeDmg(int _dmg, Transform _attacker)
     {
-        if (isKnockBack) return;
-
         if (curHp > 0)
         {
             curHp -= _dmg;
 
             onHpEvent?.Invoke(curHp, maxHp);
 
-            StartCoroutine(StartKnockBack(_attacker));
-            ObjectPoolManager.instance.EffectPool.FindEffect(EEffect.PLAYERHITEFFECT, transform.position, Quaternion.identity);
+            hitEffect.ApplyHitEffect(_attacker, transform, hitStopSec, EEffect.PLAYERHITEFFECT, ESfx.HIT);
 
             if (curHp <= 0)
             {
@@ -87,33 +71,6 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
             }
         }
     }
-
-    IEnumerator StartKnockBack(Transform _attacker)
-    {
-        isKnockBack = true;
-
-        knockBack.Apply(transform, _attacker, knockBackPower);
-
-        yield return new WaitForSeconds(0.15f);
-
-        isKnockBack = false;
-    }
-
-    private void ChangeHitColor()
-    {
-        StopAllCoroutines();
-        StartCoroutine(StartChangeColor());
-    }
-
-    IEnumerator StartChangeColor()
-    {
-        render.sharedMaterial = whiteMat;
-
-        yield return new WaitForSeconds(0.1f);
-
-        render.sharedMaterial = originMat;
-    }
-
 
     private void FillMp(int _amount)
     {

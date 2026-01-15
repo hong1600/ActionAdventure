@@ -17,15 +17,7 @@ public class CameraShake : MonoBehaviour
         perlin = virtualCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            ShakeCamera();
-        }
-    }
-
-    private void ShakeCamera()
+    public void ShakeCamera()
     {
         StartCoroutine(StartShakeCamera(freq));
     }

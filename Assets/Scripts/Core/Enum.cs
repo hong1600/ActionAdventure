@@ -44,3 +44,12 @@ public enum EEffect
 {
     PLAYERHITEFFECT
 }
+
+public enum EHitLevel
+{
+    NONE,
+    LIGHT,
+    MEDIUM,
+    HARD,
+    FINISH
+}

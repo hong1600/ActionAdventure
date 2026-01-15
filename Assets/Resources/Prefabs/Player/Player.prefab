@@ -111,6 +111,7 @@ MonoBehaviour:
   curHp: 5
   curMp: 5
   knockBackPower: 5
+  hitStopSec: 0.15
 --- !u!212 &212971026275759962
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -341,7 +342,6 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 256
-  hitStopSec: 0.15
 --- !u!1 &8621279673268449040
 GameObject:
   m_ObjectHideFlags: 0

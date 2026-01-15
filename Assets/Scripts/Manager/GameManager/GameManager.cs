@@ -5,8 +5,8 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] PlayerSpawner playerSpawner;
-    [SerializeField] HitStop hitStop;
+    [SerializeField] HitEffect hitEffect;
 
     public PlayerSpawner PlayerSpawner { get { return playerSpawner; } }
-    public HitStop HitStop { get { return hitStop; } }
+    public HitEffect HitEffect { get { return hitEffect; } }
 }
