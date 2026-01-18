@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class HitEffect : MonoBehaviour
@@ -17,14 +16,13 @@ public class HitEffect : MonoBehaviour
     [SerializeField] float knockBackDelay = 0.15f;
 
     public bool IsKnockBack { get; private set; }
-    float KnockBackPower;
 
     [SerializeField] Material whiteMat;
     Material originMat;
 
     Coroutine colorRoutine;
 
-    public void Init(Rigidbody2D _rigid, SpriteRenderer _render, float _knockBackPower)
+    public void Init(Rigidbody2D _rigid, SpriteRenderer _render)
     {
         rigid = _rigid;
 
@@ -37,23 +35,31 @@ public class HitEffect : MonoBehaviour
 
         render = _render;
         originMat = render.sharedMaterial;
-
-        KnockBackPower = _knockBackPower;
     }
 
-    public void ApplyHitEffect(Transform _attacker, Transform _player, float _hitStopSec, EEffect _eEffect, ESfx _eSfx)
+    public void ApplyHitEffect(HitEffectData _data, HitTransformContext _ctx)
     {
-        StartCoroutine(StartKnockBack(_attacker, _player));
-        effectPool.FindEffect(_eEffect, _player.position, Quaternion.identity);
-        AudioManager.instance.PlaySfx(_eSfx, _player.position, _player);
-        StartCoroutine(StartHitStopDelay(_hitStopSec));
+        if(_data.hitStopTime > 0)
+        StartCoroutine(StartHitStopDelay(_data.hitStopTime));
+
+        if(_data.useKnockBack)
+        StartCoroutine(StartKnockBack(_ctx.attacker, _ctx.target, _data.knockBackPower));
+
+        if((_data.effect != EEffect.NONE))
+        effectPool.FindEffect(_data.effect, _ctx.target.position, Quaternion.identity);
+
+        if(_data.sfx != ESfx.NONE)
+        AudioManager.instance.PlaySfx(_data.sfx, _ctx.target.position, _ctx.target);
+
+        if(_data.useCameraShake)
+        cameraShake.ShakeCamera();
     }
 
-    IEnumerator StartKnockBack(Transform _attacker, Transform _player)
+    IEnumerator StartKnockBack(Transform _attacker, Transform _player, float _knockBackPower)
     {
         IsKnockBack = true;
 
-        knockBack.Apply(_player, _attacker, KnockBackPower);
+        knockBack.Apply(_player, _attacker, _knockBackPower);
 
         yield return new WaitForSeconds(knockBackDelay);
 
@@ -65,8 +71,6 @@ public class HitEffect : MonoBehaviour
         yield return new WaitForSeconds(hitStopDelay);
 
         hitStop.ApplyHitStop(_hitStopSec);
-
-        cameraShake.ShakeCamera();
     }
 
     private void ChangeHitColor()

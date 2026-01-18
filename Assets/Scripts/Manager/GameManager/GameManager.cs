@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
+    [SerializeField] CombatManager combatManager;
     [SerializeField] PlayerSpawner playerSpawner;
-    [SerializeField] HitEffect hitEffect;
 
+    public CombatManager CombatManager { get { return combatManager; } }
     public PlayerSpawner PlayerSpawner { get { return playerSpawner; } }
-    public HitEffect HitEffect { get { return hitEffect; } }
 }

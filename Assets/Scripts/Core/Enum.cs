@@ -21,6 +21,7 @@ public enum EScene
 
 public enum ESfx
 {
+    NONE,
     ATTACK,
     DASH,
     HIT,
@@ -42,6 +43,7 @@ public enum EPlayerState
 
 public enum EEffect
 {
+    NONE,
     PLAYERHITEFFECT
 }
 
@@ -49,7 +51,6 @@ public enum EHitLevel
 {
     NONE,
     LIGHT,
-    MEDIUM,
-    HARD,
+    HEAVY,
     FINISH
 }

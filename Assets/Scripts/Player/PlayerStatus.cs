@@ -16,6 +16,8 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
     PlayerSpawner playerSpawner;
     HitEffect hitEffect;
     public HitEffect HitEffect { get { return hitEffect; } }
+    HitLevelResolver hitLevelResolver;
+    HitEffectTable hitEffectTable;
 
     GameObject playerObj;
 
@@ -27,9 +29,6 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
     [SerializeField] int curMp = 0;
     int maxMp = 10;
 
-    [SerializeField] float knockBackPower;
-
-    [SerializeField] float hitStopSec;
 
     bool isDie = false;
     public bool IsDie { get {  return isDie; } }
@@ -41,8 +40,10 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
         render = GetComponent<SpriteRenderer>();
 
         playerSpawner = GameManager.instance.PlayerSpawner;
-        hitEffect = GameManager.instance.HitEffect;
-        hitEffect.Init(rigid, render, knockBackPower);
+        hitEffect = GameManager.instance.CombatManager.HitEffect;
+        hitEffect.Init(rigid, render);
+        hitLevelResolver = new HitLevelResolver();
+        hitEffectTable = GameManager.instance.CombatManager.HitEffectTable;
     }
 
     private void Start()
@@ -63,7 +64,22 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
 
             onHpEvent?.Invoke(curHp, maxHp);
 
-            hitEffect.ApplyHitEffect(_attacker, transform, hitStopSec, EEffect.PLAYERHITEFFECT, ESfx.HIT);
+            HitContext ctx = new HitContext();
+            ctx.isCritical = true;
+            ctx.isFinish = curHp <= 0;
+
+            EHitLevel level = hitLevelResolver.Resolve(ctx);
+
+            HitEffectData data = hitEffectTable.Get(level);
+            if (data != null)
+            {
+                HitTransformContext trsCtx = new HitTransformContext();
+
+                trsCtx.attacker = _attacker;
+                trsCtx.target = transform;
+
+                hitEffect.ApplyHitEffect(data, trsCtx);
+            }
 
             if (curHp <= 0)
             {
