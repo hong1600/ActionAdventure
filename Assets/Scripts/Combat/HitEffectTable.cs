@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class HitEffectTable : MonoBehaviour
 {
+    public HitEffectData parryHit;
     public HitEffectData lightHit;
     public HitEffectData heavyHit;
     public HitEffectData finishHit;
 
     public HitEffectData Get(EHitLevel _eHitLevel)
     {
+        if (_eHitLevel == EHitLevel.PARRY) return parryHit;
         if(_eHitLevel == EHitLevel.LIGHT) return lightHit;
         if(_eHitLevel == EHitLevel.HEAVY) return heavyHit;
         if(_eHitLevel == EHitLevel.FINISH) return finishHit;
@@ -20,6 +22,8 @@ public class HitEffectTable : MonoBehaviour
 [System.Serializable]
 public class HitEffectData
 {
+    public bool isParry;
+
     public bool useKnockBack;
     public float knockBackPower;
 
@@ -34,6 +38,7 @@ public class HitEffectData
 
 public class HitContext
 {
+    public bool isParry;
     public bool isCritical;
     public bool isFinish;
 }
@@ -49,6 +54,7 @@ public class HitLevelResolver
 {
     public EHitLevel Resolve(HitContext _ctx)
     {
+        if(_ctx.isParry) return EHitLevel.PARRY;
         if (_ctx.isCritical) return EHitLevel.HEAVY;
         if (_ctx.isFinish) return EHitLevel.FINISH;
         return EHitLevel.LIGHT;

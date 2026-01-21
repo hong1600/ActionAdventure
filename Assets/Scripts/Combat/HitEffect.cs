@@ -15,7 +15,10 @@ public class HitEffect : MonoBehaviour
     [SerializeField] float hitStopDelay = 0.1f;
     [SerializeField] float knockBackDelay = 0.15f;
 
+    [SerializeField] float invincibleTime = 0.3f;
+
     public bool IsKnockBack { get; private set; }
+    public bool isInvincible { get; private set; }
 
     [SerializeField] Material whiteMat;
     Material originMat;
@@ -39,20 +42,24 @@ public class HitEffect : MonoBehaviour
 
     public void ApplyHitEffect(HitEffectData _data, HitTransformContext _ctx)
     {
+        if (_data.isParry) return;
+
+        StartInvincible(invincibleTime);
+
         if(_data.hitStopTime > 0)
         StartCoroutine(StartHitStopDelay(_data.hitStopTime));
 
         if(_data.useKnockBack)
         StartCoroutine(StartKnockBack(_ctx.attacker, _ctx.target, _data.knockBackPower));
 
-        if((_data.effect != EEffect.NONE))
         effectPool.FindEffect(_data.effect, _ctx.target.position, Quaternion.identity);
 
-        if(_data.sfx != ESfx.NONE)
         AudioManager.instance.PlaySfx(_data.sfx, _ctx.target.position, _ctx.target);
 
         if(_data.useCameraShake)
         cameraShake.ShakeCamera();
+
+        ChangeHitColor();
     }
 
     IEnumerator StartKnockBack(Transform _attacker, Transform _player, float _knockBackPower)
@@ -82,10 +89,19 @@ public class HitEffect : MonoBehaviour
 
     IEnumerator StartChangeColor()
     {
-        render.sharedMaterial = whiteMat;
+        render.material = whiteMat;
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.25f);
 
-        render.sharedMaterial = originMat;
+        render.material = originMat;
+    }
+
+    IEnumerator StartInvincible(float _time)
+    {
+        isInvincible = true;
+
+        yield return new WaitForSeconds(_time);
+
+        isInvincible = false;
     }
 }

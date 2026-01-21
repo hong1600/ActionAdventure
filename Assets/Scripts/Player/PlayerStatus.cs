@@ -21,7 +21,7 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
 
     GameObject playerObj;
 
-    public EPlayerState curState { get; private set; } = EPlayerState.NONE;
+    public EPlayerState curState { get; private set; } = EPlayerState.PLAY;
 
     [SerializeField] int curHp = 5;
     int maxHp = 5;
@@ -58,6 +58,8 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
 
     public void TakeDmg(int _dmg, Transform _attacker)
     {
+        if (hitEffect.isInvincible) return;
+
         if (curHp > 0)
         {
             curHp -= _dmg;
