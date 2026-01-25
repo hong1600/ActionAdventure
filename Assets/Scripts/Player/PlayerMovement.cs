@@ -50,6 +50,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (playerManager.PlayerStatus.IsDie) return;
+
         InputX();
         Jump();
         Dash();
@@ -94,7 +96,6 @@ public class PlayerMovement : MonoBehaviour
         if (inputX != 0)
         {
             FlipX();
-            ChangeAnim();
         }
     }
 

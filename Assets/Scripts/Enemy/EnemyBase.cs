@@ -7,11 +7,14 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
 {
     Rigidbody2D rigid;
     CapsuleCollider2D cap;
-    SpriteRenderer sprite;
+    SpriteRenderer render;
     Material mat;
+    public EnemyAnim anim { get; private set; }
 
     EnemyState enemyState;
-    KnockBack knockBack;
+    HitEffect hitEffect;
+    HitLevelResolver hitLevelResolver;
+    HitEffectTable hitEffectTable;
 
     [SerializeField] float moveSpeed;
     [SerializeField] LayerMask targetLayer;
@@ -20,39 +23,41 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
     [SerializeField] float attackReadyRadius = 1.5f;
     [SerializeField] Vector2 attackBoxSize = new Vector2(2f, 1f);
 
+    [SerializeField] float attackCooldown = 1.2f;
+    public bool IsCanAttack { get; private set; } = true;
+
     [SerializeField] float curHp;
     [SerializeField] float maxHp;
-
-    [SerializeField] float knockBackPower;
 
     bool isDie = false;
 
     public Transform target { get; private set; }
 
-    bool isKnockBack;
 
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         cap = GetComponent<CapsuleCollider2D>();
-        sprite = GetComponent<SpriteRenderer>();
-        mat = sprite.material;
+        anim = GetComponent<EnemyAnim>();
+        render = GetComponent<SpriteRenderer>();
+        mat = render.material;
 
         enemyState = new EnemyState();
-        knockBack = new KnockBack();
-
         enemyState.Init(this);
-        knockBack.Init(rigid);
     }
 
     private void Start()
     {
         curHp = maxHp;
+
+        hitEffect = GameManager.instance.CombatManager.HitEffect;
+        hitLevelResolver = new HitLevelResolver();
+        hitEffectTable = GameManager.instance.CombatManager.HitEffectTable;
     }
 
     private void FixedUpdate()
     {
-        if (isDie || isKnockBack) return;
+        if (isDie || hitEffect.IsKnockBack) return;
 
         if (enemyState != null)
         {
@@ -117,7 +122,23 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
 
     public void Attack()
     {
+        IsCanAttack = false;
+
+        StartCoroutine(StartAttack());
+    }
+
+    IEnumerator StartAttack()
+    {
         Vector2 dir = (target.position - transform.position).normalized;
+
+        yield return new WaitForSeconds(attackCooldown);
+
+        IsCanAttack = true;
+    }
+
+    public void OnAttackFinished()
+    {
+        enemyState.SetState(new EnemyAttackWaitState(enemyState));
     }
 
     private void OnDrawGizmosSelected()
@@ -138,7 +159,24 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
         {
             curHp -= _dmg;
 
-            StartCoroutine(StartKnockBack(_attacker));
+            anim.Hit();
+
+            HitContext ctx = new HitContext();
+            ctx.isCritical = true;
+            ctx.isFinish = curHp <= 0;
+
+            EHitLevel level = hitLevelResolver.Resolve(ctx);
+
+            HitEffectData data = hitEffectTable.Get(level);
+            if (data != null)
+            {
+                HitTransformContext trsCtx = new HitTransformContext();
+
+                trsCtx.attacker = _attacker;
+                trsCtx.target = transform;
+
+                hitEffect.ApplyHitEffect(data, trsCtx);
+            }
 
             if (curHp <= 0)
             {
@@ -147,21 +185,9 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
         }
     }
 
-    IEnumerator StartKnockBack(Transform _attacker)
-    {
-        isKnockBack = true;
-
-        knockBack.Apply(transform, _attacker, knockBackPower);
-
-        yield return new WaitForSeconds(0.15f);
-
-        rigid.velocity = Vector2.zero;
-
-        isKnockBack = false;
-    }
-
     IEnumerator StartDie()
     {
+        anim.Die();
         isDie = true;
 
         yield return new WaitForSeconds(1f);

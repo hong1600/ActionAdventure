@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class HitEffect : MonoBehaviour
 {
-    Rigidbody2D rigid;
-    SpriteRenderer render;
-
     [SerializeField] HitStop hitStop;
     KnockBack knockBack;
     EffectPool effectPool;
@@ -21,23 +18,15 @@ public class HitEffect : MonoBehaviour
     public bool isInvincible { get; private set; }
 
     [SerializeField] Material whiteMat;
-    Material originMat;
 
     Coroutine colorRoutine;
 
-    public void Init(Rigidbody2D _rigid, SpriteRenderer _render)
+    private void Start()
     {
-        rigid = _rigid;
-
         knockBack = new KnockBack();
-
-        knockBack.Init(rigid);
 
         effectPool = ObjectPoolManager.instance.EffectPool;
         cameraShake = CameraManager.instance.CameraShake;
-
-        render = _render;
-        originMat = render.sharedMaterial;
     }
 
     public void ApplyHitEffect(HitEffectData _data, HitTransformContext _ctx)
@@ -49,8 +38,15 @@ public class HitEffect : MonoBehaviour
         if(_data.hitStopTime > 0)
         StartCoroutine(StartHitStopDelay(_data.hitStopTime));
 
-        if(_data.useKnockBack)
-        StartCoroutine(StartKnockBack(_ctx.attacker, _ctx.target, _data.knockBackPower));
+        if (_data.useKnockBack)
+        {
+            Rigidbody2D rigid = _ctx.target.GetComponent<Rigidbody2D>();
+
+            if (rigid != null)
+            {
+                StartCoroutine(StartKnockBack(rigid, _ctx.attacker, _ctx.target, _data.knockBackPower));
+            }
+        }
 
         effectPool.FindEffect(_data.effect, _ctx.target.position, Quaternion.identity);
 
@@ -59,14 +55,20 @@ public class HitEffect : MonoBehaviour
         if(_data.useCameraShake)
         cameraShake.ShakeCamera();
 
-        ChangeHitColor();
+        SpriteRenderer render = _ctx.target.GetComponent<SpriteRenderer>();
+        if (render != null)
+        {
+            Material originMat = render.material;
+
+            StartCoroutine(StartChangeColor(render, originMat));
+        }
     }
 
-    IEnumerator StartKnockBack(Transform _attacker, Transform _player, float _knockBackPower)
+    IEnumerator StartKnockBack(Rigidbody2D _rigid, Transform _attacker, Transform _target, float _knockBackPower)
     {
         IsKnockBack = true;
 
-        knockBack.Apply(_player, _attacker, _knockBackPower);
+        knockBack.Apply(_rigid, _attacker, _target, _knockBackPower);
 
         yield return new WaitForSeconds(knockBackDelay);
 
@@ -80,20 +82,13 @@ public class HitEffect : MonoBehaviour
         hitStop.ApplyHitStop(_hitStopSec);
     }
 
-    private void ChangeHitColor()
+    IEnumerator StartChangeColor(SpriteRenderer _render, Material _originMat)
     {
-        if (colorRoutine != null) StopCoroutine(colorRoutine);
-
-        colorRoutine = StartCoroutine(StartChangeColor());
-    }
-
-    IEnumerator StartChangeColor()
-    {
-        render.material = whiteMat;
+        _render.material = whiteMat;
 
         yield return new WaitForSeconds(0.25f);
 
-        render.material = originMat;
+        _render.material = _originMat;
     }
 
     IEnumerator StartInvincible(float _time)

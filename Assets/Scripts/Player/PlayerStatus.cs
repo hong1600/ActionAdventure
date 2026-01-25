@@ -38,17 +38,16 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         render = GetComponent<SpriteRenderer>();
-
-        playerSpawner = GameManager.instance.PlayerSpawner;
-        hitEffect = GameManager.instance.CombatManager.HitEffect;
-        hitEffect.Init(rigid, render);
-        hitLevelResolver = new HitLevelResolver();
-        hitEffectTable = GameManager.instance.CombatManager.HitEffectTable;
     }
 
     private void Start()
     {
+        playerSpawner = GameManager.instance.PlayerSpawner;
         playerSpawner.onSpawnEvent += Init;
+
+        hitEffect = GameManager.instance.CombatManager.HitEffect;
+        hitLevelResolver = new HitLevelResolver();
+        hitEffectTable = GameManager.instance.CombatManager.HitEffectTable;
     }
 
     private void Init()

@@ -29,7 +29,7 @@ public class EnemyCreateState : EnemyAIState
 {
     public EnemyCreateState(StateMachine _machine) : base(_machine) { }
 
-    public override void Execute()
+    public override void Enter()
     {
         machine.SetState(new EnemySearchState(machine));
     }
@@ -38,6 +38,11 @@ public class EnemyCreateState : EnemyAIState
 public class EnemySearchState : EnemyAIState
 {
     public EnemySearchState(StateMachine _machine) : base(_machine) { }
+
+    public override void Enter()
+    {
+        enemy.anim.EndMove();
+    }
 
     public override void Execute()
     {
@@ -52,6 +57,11 @@ public class EnemyMoveState : EnemyAIState
 {
     public EnemyMoveState(StateMachine _machine) : base(_machine) { }
 
+    public override void Enter()
+    {
+        enemy.anim.StartMove();
+    }
+
     public override void Execute()
     {
         if (enemy.target == null)
@@ -60,7 +70,7 @@ public class EnemyMoveState : EnemyAIState
             return;
         }
 
-        if (enemy.ReadyAttack())
+        if (enemy.ReadyAttack() && enemy.IsCanAttack)
         {
             enemy.StopMove();
             machine.SetState(new EnemyAttackState(machine));
@@ -71,13 +81,46 @@ public class EnemyMoveState : EnemyAIState
     }
 }
 
+
 public class EnemyAttackState : EnemyAIState
 {
     public EnemyAttackState(StateMachine _machine) : base(_machine) { }
 
-    public override void Execute()
+    public override void Enter()
     {
         enemy.Attack();
+
+        enemy.anim.Attack();
+
+        machine.SetState(new EnemyAttackWaitState(machine));
+    }
+}
+public class EnemyAttackWaitState : EnemyAIState
+{
+    public EnemyAttackWaitState(StateMachine _machine) : base(_machine) { }
+
+    public override void Execute()
+    {
+        if (enemy.IsCanAttack)
+        {
+            if (enemy.target == null)
+            {
+                machine.SetState(new EnemySearchState(machine));
+                return;
+            }
+
+            if (!enemy.ReadyAttack())
+            {
+                machine.SetState(new EnemyMoveState(machine));
+                return;
+            }
+
+            if (enemy.IsCanAttack)
+            {
+                machine.SetState(new EnemyAttackState(machine));
+                return;
+            }
+        }
     }
 }
 
