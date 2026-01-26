@@ -73,6 +73,8 @@ public class HitEffect : MonoBehaviour
         yield return new WaitForSeconds(knockBackDelay);
 
         IsKnockBack = false;
+
+        _rigid.velocity = Vector3.zero;
     }
 
     IEnumerator StartHitStopDelay(float _hitStopSec)

@@ -11,6 +11,9 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
     Material mat;
     public EnemyAnim anim { get; private set; }
 
+    EnemyAttackBase attack;
+    EnemyMovementBase movement;
+
     EnemyState enemyState;
     HitEffect hitEffect;
     HitLevelResolver hitLevelResolver;
@@ -42,12 +45,15 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
         render = GetComponent<SpriteRenderer>();
         mat = render.material;
 
-        enemyState = new EnemyState();
-        enemyState.Init(this);
+        attack = GetComponent<EnemyAttackBase>();
+        movement = GetComponent<EnemyMovementBase>();
     }
 
     private void Start()
     {
+        enemyState = new EnemyState();
+        enemyState.Init(this);
+
         curHp = maxHp;
 
         hitEffect = GameManager.instance.CombatManager.HitEffect;

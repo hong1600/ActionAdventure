@@ -107,11 +107,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b786989b3ecea55448f5573f9c34dbf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  whiteMat: {fileID: 2100000, guid: f867db4be314b5444b7ddd8b09ba61b4, type: 2}
   curHp: 5
   curMp: 5
-  knockBackPower: 5
-  hitStopSec: 0.15
 --- !u!212 &212971026275759962
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -439,6 +436,22 @@ PrefabInstance:
     - target: {fileID: 1010469353794949300, guid: 78e50a02e17938a4baf517253d545621, type: 3}
       propertyPath: m_SortingOrder
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1010469353794949301, guid: 78e50a02e17938a4baf517253d545621, type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1010469353794949301, guid: 78e50a02e17938a4baf517253d545621, type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[0].m_Name
+      value: slash life time
+      objectReference: {fileID: 0}
+    - target: {fileID: 1010469353794949301, guid: 78e50a02e17938a4baf517253d545621, type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[0].m_Value
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1010469353794949301, guid: 78e50a02e17938a4baf517253d545621, type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[0].m_Overridden
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1010469353794949302, guid: 78e50a02e17938a4baf517253d545621, type: 3}
       propertyPath: m_LocalScale.x

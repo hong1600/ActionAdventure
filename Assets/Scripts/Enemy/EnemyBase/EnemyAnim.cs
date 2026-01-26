@@ -4,14 +4,11 @@ using UnityEngine;
 
 public class EnemyAnim : MonoBehaviour
 {
-    EnemyBase owner;
-
     Animator anim;
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
-        owner = GetComponent<EnemyBase>();
     }
 
     public void StartMove()
@@ -41,6 +38,5 @@ public class EnemyAnim : MonoBehaviour
 
     public void DoDashDamage() 
     {
-        owner.OnAttackFinished();
     }
 }
