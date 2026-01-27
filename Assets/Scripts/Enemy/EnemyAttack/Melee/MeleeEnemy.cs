@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeEnemy : MonoBehaviour
+public class MeleeEnemy : EnemyAttackBase
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] GameObject attackBox;
 
-    // Update is called once per frame
-    void Update()
+    protected override IEnumerator StartAttack(Transform _target)
     {
-        
+        base.StartAttack(_target);
+
+        attackBox.SetActive(true);
+
+        yield return new WaitForSeconds(0.15f);
+
+        attackBox.SetActive(false);
     }
 }

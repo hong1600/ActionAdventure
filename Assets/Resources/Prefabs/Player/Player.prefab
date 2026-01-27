@@ -218,7 +218,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 1377240496476148}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 73035f974857c94489896440d1e2b9e8, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -254,8 +254,8 @@ GameObject:
   m_Component:
   - component: {fileID: 380017361898215857}
   - component: {fileID: 2865432977379120843}
-  - component: {fileID: 7141463345057982317}
-  m_Layer: 3
+  - component: {fileID: 528084141243326098}
+  m_Layer: 0
   m_Name: AttackBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -321,9 +321,9 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4, y: 1.5}
+  m_Size: {x: 3, y: 1.5}
   m_EdgeRadius: 0
---- !u!114 &7141463345057982317
+--- !u!114 &528084141243326098
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -332,13 +332,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2274794489114654244}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f4865c7919e7b34facb821f7ffa53b0, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d75315ab36326e4e8b17ee781a3bce9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
-  targetLayer:
+  dmg: 1
+  targetLayers:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 128
 --- !u!1 &8621279673268449040
 GameObject:
   m_ObjectHideFlags: 0

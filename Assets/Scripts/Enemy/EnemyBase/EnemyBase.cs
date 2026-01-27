@@ -5,29 +5,20 @@ using UnityEngine;
 
 public abstract class EnemyBase : MonoBehaviour, ITakeDmg
 {
-    Rigidbody2D rigid;
-    CapsuleCollider2D cap;
     SpriteRenderer render;
     Material mat;
     public EnemyAnim anim { get; private set; }
-
-    EnemyAttackBase attack;
-    EnemyMovementBase movement;
-
     EnemyState enemyState;
+
+    public EnemyAttackBase attack { get; private set; }
+    public EnemyMovementBase movement { get; private set; }
+
     HitEffect hitEffect;
     HitLevelResolver hitLevelResolver;
     HitEffectTable hitEffectTable;
 
-    [SerializeField] float moveSpeed;
     [SerializeField] LayerMask targetLayer;
-
     [SerializeField] float searchRadius = 5f;
-    [SerializeField] float attackReadyRadius = 1.5f;
-    [SerializeField] Vector2 attackBoxSize = new Vector2(2f, 1f);
-
-    [SerializeField] float attackCooldown = 1.2f;
-    public bool IsCanAttack { get; private set; } = true;
 
     [SerializeField] float curHp;
     [SerializeField] float maxHp;
@@ -39,8 +30,6 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
 
     private void Awake()
     {
-        rigid = GetComponent<Rigidbody2D>();
-        cap = GetComponent<CapsuleCollider2D>();
         anim = GetComponent<EnemyAnim>();
         render = GetComponent<SpriteRenderer>();
         mat = render.material;
@@ -71,7 +60,39 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
         }
     }
 
-    public bool SearchTarget()
+    public void MoveToTarget()
+    {
+        if (target == null) 
+        {
+            movement.Stop();
+            return;
+        }
+
+        Vector2 dir = (target.position - transform.position).normalized;
+        movement.Move(dir);
+    }
+
+    public void StopMove()
+    {
+        movement.Stop();
+    }
+
+    public void TryAttack()
+    {
+        attack.Attack(target);
+    }
+
+    public bool IsCanAttack()
+    {
+        return attack.CanAttack(target);
+    }
+
+    public bool IsAttacking()
+    {
+        return attack.isAttacking;
+    }
+
+    public bool IsSearchTarget()
     {
         RaycastHit2D hit = Physics2D.CircleCast(transform.position, searchRadius, Vector2.zero, 0f, targetLayer);
 
@@ -83,80 +104,6 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
 
         target = null;
         return false;
-    }
-
-    public void Move()
-    {
-        if(target == null) 
-        {
-            rigid.velocity = Vector2.zero;
-            return;
-        }
-
-        Vector2 dir = (target.position - transform.position).normalized;
-        Turn(dir);
-
-        rigid.velocity = dir * moveSpeed;
-    }
-
-    private void Turn(Vector2 _dir)
-    {
-        if (_dir.x < 0)
-        {
-            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-        }
-        else if (_dir.x > 0)
-        {
-            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-        }
-    }
-
-    public bool ReadyAttack()
-    {
-        if (target == null)
-            return false;
-
-        float distance = Vector2.Distance(transform.position, target.position);
-
-        return distance <= attackReadyRadius;
-    }
-
-    public void StopMove()
-    {
-        rigid.velocity = Vector2.zero;
-    }
-
-    public void Attack()
-    {
-        IsCanAttack = false;
-
-        StartCoroutine(StartAttack());
-    }
-
-    IEnumerator StartAttack()
-    {
-        Vector2 dir = (target.position - transform.position).normalized;
-
-        yield return new WaitForSeconds(attackCooldown);
-
-        IsCanAttack = true;
-    }
-
-    public void OnAttackFinished()
-    {
-        enemyState.SetState(new EnemyAttackWaitState(enemyState));
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, searchRadius);
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackReadyRadius);
-
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(transform.position, attackBoxSize);
     }
 
     public void TakeDmg(int _dmg, Transform _attacker)
@@ -199,5 +146,11 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
         yield return new WaitForSeconds(1f);
 
         Destroy(this.gameObject);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, searchRadius);
     }
 }

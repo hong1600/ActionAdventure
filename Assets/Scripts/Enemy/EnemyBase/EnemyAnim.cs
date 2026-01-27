@@ -16,7 +16,7 @@ public class EnemyAnim : MonoBehaviour
         anim.SetBool("isMove", true);
     }
 
-    public void EndMove()
+    public void StopMove()
     {
         anim.SetBool("isMove", false);
     }
