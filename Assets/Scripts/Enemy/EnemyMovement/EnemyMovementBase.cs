@@ -4,17 +4,25 @@ using UnityEngine;
 
 public abstract class EnemyMovementBase : MonoBehaviour
 {
-    EnemyAnim anim;
     protected Rigidbody2D rigid;
+    [SerializeField] Collider2D coll;
+    EnemyAnim anim;
 
     [SerializeField] protected float moveSpeed;
 
     bool isMoving;
 
+    protected bool isGround;
+
     private void Awake()
     {
         anim = GetComponent<EnemyAnim>();
         rigid = GetComponent<Rigidbody2D>();
+    }
+
+    private void Update()
+    {
+        CheckGround();
     }
 
     public void Move(Vector2 _dir)
@@ -52,5 +60,12 @@ public abstract class EnemyMovementBase : MonoBehaviour
         {
             transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
+    }
+
+    private void CheckGround()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(coll.bounds.center, Vector2.down, coll.bounds.extents.y + 0.1f, LayerMask.GetMask("Ground"));
+
+        isGround = hit.collider != null;
     }
 }

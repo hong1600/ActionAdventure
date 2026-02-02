@@ -5,8 +5,6 @@ using UnityEngine;
 
 public abstract class EnemyBase : MonoBehaviour, ITakeDmg
 {
-    SpriteRenderer render;
-    Material mat;
     public EnemyAnim anim { get; private set; }
     EnemyState enemyState;
 
@@ -16,6 +14,7 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
     HitEffect hitEffect;
     HitLevelResolver hitLevelResolver;
     HitEffectTable hitEffectTable;
+    HitVisual hitVisual;
 
     [SerializeField] LayerMask targetLayer;
     [SerializeField] float searchRadius = 5f;
@@ -31,8 +30,6 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
     private void Awake()
     {
         anim = GetComponent<EnemyAnim>();
-        render = GetComponent<SpriteRenderer>();
-        mat = render.material;
 
         attack = GetComponent<EnemyAttackBase>();
         movement = GetComponent<EnemyMovementBase>();
@@ -48,6 +45,7 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
         hitEffect = GameManager.instance.CombatManager.HitEffect;
         hitLevelResolver = new HitLevelResolver();
         hitEffectTable = GameManager.instance.CombatManager.HitEffectTable;
+        hitVisual = GetComponent<HitVisual>();
     }
 
     private void FixedUpdate()
@@ -127,6 +125,7 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
 
                 trsCtx.attacker = _attacker;
                 trsCtx.target = transform;
+                trsCtx.hitVisual = hitVisual;
 
                 hitEffect.ApplyHitEffect(data, trsCtx);
             }

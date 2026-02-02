@@ -47,6 +47,7 @@ public class HitTransformContext
 {
     public Transform attacker;
     public Transform target;
+    public HitVisual hitVisual;
 }
 
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class HitEffect : MonoBehaviour
@@ -55,13 +56,7 @@ public class HitEffect : MonoBehaviour
         if(_data.useCameraShake)
         cameraShake.ShakeCamera();
 
-        SpriteRenderer render = _ctx.target.GetComponent<SpriteRenderer>();
-        if (render != null)
-        {
-            Material originMat = render.material;
-
-            StartCoroutine(StartChangeColor(render, originMat));
-        }
+        _ctx.hitVisual.ChangeColor(whiteMat);
     }
 
     IEnumerator StartKnockBack(Rigidbody2D _rigid, Transform _attacker, Transform _target, float _knockBackPower)
@@ -82,15 +77,6 @@ public class HitEffect : MonoBehaviour
         yield return new WaitForSeconds(hitStopDelay);
 
         hitStop.ApplyHitStop(_hitStopSec);
-    }
-
-    IEnumerator StartChangeColor(SpriteRenderer _render, Material _originMat)
-    {
-        _render.material = whiteMat;
-
-        yield return new WaitForSeconds(0.25f);
-
-        _render.material = _originMat;
     }
 
     IEnumerator StartInvincible(float _time)

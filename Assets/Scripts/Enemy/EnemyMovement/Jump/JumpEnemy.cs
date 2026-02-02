@@ -2,17 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JumpEnemy : MonoBehaviour
+public class JumpEnemy : EnemyMovementBase
 {
-    // Start is called before the first frame update
-    void Start()
+    bool isJumping;
+
+    [SerializeField] float jumpPowerX;
+    [SerializeField] float jumpPowerY;
+
+    [SerializeField] float jumpTimer;
+
+    protected override void OnMove(Vector2 _dir)
     {
-        
+        if (!isGround || isJumping) return;
+
+        StartCoroutine(StartJump(_dir));
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Stop()
     {
-        
+        if(isJumping) return;
+        base.Stop();
+    }
+
+    IEnumerator StartJump(Vector2 _dir)
+    {
+        isJumping = true;
+
+        yield return new WaitForSeconds(jumpTimer);
+
+        Vector2 jumpVel;
+        jumpVel.x = _dir.x * jumpPowerX;
+        jumpVel.y = jumpPowerY;
+
+        rigid.velocity = jumpVel;
+
+        while (!isGround) yield return null;
+
+        isJumping = false;
     }
 }
