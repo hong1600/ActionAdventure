@@ -53,8 +53,12 @@ public class EnemyMoveState : EnemyAIState
         if (enemy.IsCanAttack())
         {
             enemy.StopMove();
-            machine.SetState(new EnemyAttackState(machine));
-            return;
+
+            if (enemy.HasAttackState())
+            {
+                machine.SetState(new EnemyAttackState(machine));
+                return;
+            }
         }
 
         enemy.MoveToTarget();

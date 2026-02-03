@@ -130,7 +130,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 92cdb2a5fa50424418daa4542012c514, type: 2}
+  - {fileID: 2100000, guid: c4efc125bc813bf429ad5fb564118e97, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -152,7 +152,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 13
   m_Sprite: {fileID: 21300000, guid: 96be36fcbc69e8944b5d9f089bc07112, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.81451416, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -259,6 +259,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   renders:
   - {fileID: 212971026275759962}
+  flashTime: 0.25
 --- !u!1 &2274794489114654244
 GameObject:
   m_ObjectHideFlags: 0
@@ -364,7 +365,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7253208585573954211}
   - component: {fileID: 6379153271227610293}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}

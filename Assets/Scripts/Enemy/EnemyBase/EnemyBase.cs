@@ -14,7 +14,7 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
     HitEffect hitEffect;
     HitLevelResolver hitLevelResolver;
     HitEffectTable hitEffectTable;
-    HitVisual hitVisual;
+    HitFlash hitFlash;
 
     [SerializeField] LayerMask targetLayer;
     [SerializeField] float searchRadius = 5f;
@@ -45,7 +45,7 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
         hitEffect = GameManager.instance.CombatManager.HitEffect;
         hitLevelResolver = new HitLevelResolver();
         hitEffectTable = GameManager.instance.CombatManager.HitEffectTable;
-        hitVisual = GetComponent<HitVisual>();
+        hitFlash = GetComponent<HitFlash>();
     }
 
     private void FixedUpdate()
@@ -90,6 +90,11 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
         return attack.isAttacking;
     }
 
+    public virtual bool HasAttackState()
+    {
+        return true;
+    }
+
     public bool IsSearchTarget()
     {
         RaycastHit2D hit = Physics2D.CircleCast(transform.position, searchRadius, Vector2.zero, 0f, targetLayer);
@@ -125,7 +130,7 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
 
                 trsCtx.attacker = _attacker;
                 trsCtx.target = transform;
-                trsCtx.hitVisual = hitVisual;
+                trsCtx.hitFlash = hitFlash;
 
                 hitEffect.ApplyHitEffect(data, trsCtx);
             }

@@ -18,6 +18,7 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
     public HitEffect HitEffect { get { return hitEffect; } }
     HitLevelResolver hitLevelResolver;
     HitEffectTable hitEffectTable;
+    HitFlash hitFlash;
 
     GameObject playerObj;
 
@@ -38,6 +39,7 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         render = GetComponent<SpriteRenderer>();
+        hitFlash = GetComponent<HitFlash>();
     }
 
     private void Start()
@@ -78,6 +80,7 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
 
                 trsCtx.attacker = _attacker;
                 trsCtx.target = transform;
+                trsCtx.hitFlash = hitFlash;
 
                 hitEffect.ApplyHitEffect(data, trsCtx);
             }

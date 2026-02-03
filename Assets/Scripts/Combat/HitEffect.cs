@@ -56,7 +56,7 @@ public class HitEffect : MonoBehaviour
         if(_data.useCameraShake)
         cameraShake.ShakeCamera();
 
-        _ctx.hitVisual.ChangeColor(whiteMat);
+        _ctx.hitFlash.Flash(whiteMat);
     }
 
     IEnumerator StartKnockBack(Rigidbody2D _rigid, Transform _attacker, Transform _target, float _knockBackPower)
