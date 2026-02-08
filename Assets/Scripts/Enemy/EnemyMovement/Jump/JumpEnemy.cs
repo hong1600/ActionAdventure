@@ -15,7 +15,7 @@ public class JumpEnemy : EnemyMovementBase
     {
         if (!isGround || isJumping) return;
 
-        StartCoroutine(StartJump(_dir));
+        StartCoroutine(StartJump());
     }
 
     public override void Stop()
@@ -24,14 +24,22 @@ public class JumpEnemy : EnemyMovementBase
         base.Stop();
     }
 
-    IEnumerator StartJump(Vector2 _dir)
+    IEnumerator StartJump()
     {
         isJumping = true;
 
         yield return new WaitForSeconds(jumpTimer);
 
+        if (enemyBase.target == null)
+        {
+            isJumping = false;
+            yield break;
+        }
+
+        Vector2 dir = (enemyBase.target.position - transform.position).normalized;
+
         Vector2 jumpVel;
-        jumpVel.x = _dir.x * jumpPowerX;
+        jumpVel.x = dir.x * jumpPowerX;
         jumpVel.y = jumpPowerY;
 
         rigid.velocity = jumpVel;

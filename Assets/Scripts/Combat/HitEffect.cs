@@ -13,14 +13,11 @@ public class HitEffect : MonoBehaviour
     [SerializeField] float hitStopDelay = 0.1f;
     [SerializeField] float knockBackDelay = 0.15f;
 
-    [SerializeField] float invincibleTime = 0.3f;
+    [SerializeField] float invincibleTime = 0.5f;
 
     public bool IsKnockBack { get; private set; }
     public bool isInvincible { get; private set; }
 
-    [SerializeField] Material whiteMat;
-
-    Coroutine colorRoutine;
 
     private void Start()
     {
@@ -33,8 +30,6 @@ public class HitEffect : MonoBehaviour
     public void ApplyHitEffect(HitEffectData _data, HitTransformContext _ctx)
     {
         if (_data.isParry) return;
-
-        StartInvincible(invincibleTime);
 
         if(_data.hitStopTime > 0)
         StartCoroutine(StartHitStopDelay(_data.hitStopTime));
@@ -56,7 +51,7 @@ public class HitEffect : MonoBehaviour
         if(_data.useCameraShake)
         cameraShake.ShakeCamera();
 
-        _ctx.hitFlash.Flash(whiteMat);
+        _ctx.hitFlash.Flash();
     }
 
     IEnumerator StartKnockBack(Rigidbody2D _rigid, Transform _attacker, Transform _target, float _knockBackPower)
@@ -77,6 +72,11 @@ public class HitEffect : MonoBehaviour
         yield return new WaitForSeconds(hitStopDelay);
 
         hitStop.ApplyHitStop(_hitStopSec);
+    }
+
+    public void Invincible()
+    {
+        StartCoroutine(StartInvincible(invincibleTime));
     }
 
     IEnumerator StartInvincible(float _time)

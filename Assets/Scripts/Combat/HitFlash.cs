@@ -9,14 +9,14 @@ public class HitFlash : MonoBehaviour
     MaterialPropertyBlock mpb;
     Coroutine routine;
 
-    [SerializeField] float flashTime = 0.07f;
+    [SerializeField] float flashTime = 0.15f;
 
     private void Awake()
     {
         mpb = new MaterialPropertyBlock();
     }
 
-    public void Flash(Material _whiteMat)
+    public void Flash()
     {
         if(routine != null)
         {

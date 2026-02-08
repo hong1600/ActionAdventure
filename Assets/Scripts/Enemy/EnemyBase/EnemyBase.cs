@@ -111,6 +111,10 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
 
     public void TakeDmg(int _dmg, Transform _attacker)
     {
+        if (hitEffect.isInvincible) return;
+
+        hitEffect.Invincible();
+
         if (curHp > 0)
         {
             curHp -= _dmg;

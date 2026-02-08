@@ -30,7 +30,6 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
     [SerializeField] int curMp = 0;
     int maxMp = 10;
 
-
     bool isDie = false;
     public bool IsDie { get {  return isDie; } }
 
@@ -60,6 +59,8 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
     public void TakeDmg(int _dmg, Transform _attacker)
     {
         if (hitEffect.isInvincible) return;
+
+        hitEffect.Invincible();
 
         if (curHp > 0)
         {

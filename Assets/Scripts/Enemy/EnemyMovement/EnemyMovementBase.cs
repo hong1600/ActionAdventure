@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class EnemyMovementBase : MonoBehaviour
 {
+    protected EnemyBase enemyBase;
+
     protected Rigidbody2D rigid;
     [SerializeField] Collider2D coll;
     EnemyAnim anim;
@@ -16,6 +18,8 @@ public abstract class EnemyMovementBase : MonoBehaviour
 
     private void Awake()
     {
+        enemyBase = GetComponent<EnemyBase>();
+
         anim = GetComponent<EnemyAnim>();
         rigid = GetComponent<Rigidbody2D>();
     }

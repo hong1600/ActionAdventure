@@ -13,11 +13,11 @@ GameObject:
   - component: {fileID: 8153265812172851188}
   - component: {fileID: 1489069125868753648}
   - component: {fileID: 9021869132876160004}
+  - component: {fileID: 2282489670074347400}
   - component: {fileID: 212832719579855464}
   - component: {fileID: 70012100074183034}
   - component: {fileID: 50760522753152062}
   - component: {fileID: 95874158880099268}
-  - component: {fileID: 2282489670074347400}
   m_Layer: 7
   m_Name: Boss
   m_TagString: Untagged
@@ -101,6 +101,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfb9a14ec03ca224d9758ddae414ac6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2282489670074347400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1516778740484128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb0adcedd189b7a468cb82218d92cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renders: []
+  flashTime: 0.15
 --- !u!212 &212832719579855464
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -236,19 +250,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &2282489670074347400
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1516778740484128}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb0adcedd189b7a468cb82218d92cc18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  renders: []
 --- !u!1 &5947704837241780950
 GameObject:
   m_ObjectHideFlags: 0
