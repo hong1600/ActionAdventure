@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SkillAcquireUI : MonoBehaviour
+public class ItemAcquireUI : MonoBehaviour
 {
     [SerializeField] Image skillImg;
     [SerializeField] TextMeshProUGUI skillNameText;

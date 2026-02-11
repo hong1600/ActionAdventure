@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class LobbyUI : MonoBehaviour
 {
-    [SerializeField] Image fadeImg;
-
     private void Start()
     {
         AudioManager.instance.PlayBgm(EBgm.LOBBY);
@@ -20,7 +18,7 @@ public class LobbyUI : MonoBehaviour
 
     IEnumerator StartClickStartBtn()
     {
-        yield return StartCoroutine(UIManager.instance.StartFadeIn(fadeImg, 3));
+        yield return StartCoroutine(UIManager.instance.StartFadeIn(UIManager.instance.FadeImg, 3));
 
         MSceneManager.Instance.ChangeScene(EScene.INTRO, true);
     }

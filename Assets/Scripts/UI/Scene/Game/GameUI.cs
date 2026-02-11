@@ -1,16 +1,15 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameUI : Singleton<GameUI>
 {
-    [SerializeField] Image fadeImg;
-
     private void Start()
     {
-        //StartCoroutine(UIManager.instance.StartFadeOut(fadeImg, 4f));
+        //StartCoroutine(UIManager.instance.StartFadeOut(UIManager.instance.FadeImg, 4f));
     }
 
     public void DieFade()
@@ -20,8 +19,8 @@ public class GameUI : Singleton<GameUI>
 
     IEnumerator StartDieFade()
     {
-        yield return StartCoroutine(UIManager.instance.StartFadeIn(fadeImg, 2f));
+        yield return StartCoroutine(UIManager.instance.StartFadeIn(UIManager.instance.FadeImg, 2));
 
-        yield return StartCoroutine(UIManager.instance.StartFadeOut(fadeImg, 2f));
+        yield return StartCoroutine(UIManager.instance.StartFadeOut(UIManager.instance.FadeImg, 2));
     }
 }

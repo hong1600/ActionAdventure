@@ -6,15 +6,15 @@ using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
-    //public void FadeIn(Graphic _ui, float _duration)
-    //{
-    //    _ui.DOFade(1f, _duration).SetEase(Ease.Linear);
-    //}
+    [SerializeField] Image fadeImg;
+    public Image FadeImg { get; private set; }
 
-    //public void FadeOut(Graphic _ui, float _duration)
-    //{
-    //    _ui.DOFade(0f, _duration).SetEase(Ease.InQuad);
-    //}
+    protected override void Awake()
+    {
+        base.Awake();
+
+        FadeImg = fadeImg;
+    }
 
     public IEnumerator StartFadeOut(Graphic _ui, float _duration)
     {
