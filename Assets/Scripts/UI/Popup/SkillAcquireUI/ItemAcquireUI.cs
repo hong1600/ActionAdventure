@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -11,10 +12,22 @@ public class ItemAcquireUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI skillDescText;
     [SerializeField] TextMeshProUGUI skillPushText;
 
+    private void OnEnable()
+    {
+        Item.OnItemAcquired += SetSkillUI;
+    }
+
+    private void OnDisable()
+    {
+        Item.OnItemAcquired -= SetSkillUI;
+    }
+
     public void SetSkillUI(TableSkill.Info _skill)
     {
         //skillImg.sprite = _skill.Img;
-        skillNameText.text = $"{skillNameText}";
-        skillDescText.text = $"{skillDescText}";
+        skillNameText.text = $"{_skill.Name}";
+        skillDescText.text = $"{_skill.Desc}";
+
+        gameObject.SetActive(true);
     }
 }

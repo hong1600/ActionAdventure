@@ -7,8 +7,6 @@ public class PlayerCombat : MonoBehaviour
 {
     Animator anim;
 
-    PlayerManager playerManager;
-
     [SerializeField] float attackDuration = 0.3f;
 
     public bool isAttack { get; private set; } = false;
@@ -18,13 +16,11 @@ public class PlayerCombat : MonoBehaviour
     private void Awake()
     {
         anim = GetComponent<Animator>();
-
-        playerManager = GetComponent<PlayerManager>();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A) && !playerManager.PlayerCombat.isAttack)
+        if (Input.GetKeyDown(KeyCode.A) && !isAttack)
         {
             StartCoroutine(StartAttack());
         }

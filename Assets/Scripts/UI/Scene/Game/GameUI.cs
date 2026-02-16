@@ -7,6 +7,11 @@ using UnityEngine.UI;
 
 public class GameUI : Singleton<GameUI>
 {
+    [SerializeField] InteractionUI interactionUI;
+    public InteractionUI InteractionUI { get { return interactionUI; } }
+    [SerializeField] ItemAcquireUI itemAcquireUI;
+    public ItemAcquireUI ItemAcquireUI { get { return itemAcquireUI; } }
+
     private void Start()
     {
         //StartCoroutine(UIManager.instance.StartFadeOut(UIManager.instance.FadeImg, 4f));
@@ -23,4 +28,5 @@ public class GameUI : Singleton<GameUI>
 
         yield return StartCoroutine(UIManager.instance.StartFadeOut(UIManager.instance.FadeImg, 2));
     }
+
 }

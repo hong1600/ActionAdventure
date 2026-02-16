@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     Animator anim;
     CapsuleCollider2D cap;
 
-    PlayerManager playerManager;
+    PlayerStatus playerStatus;
 
     float inputX;
     float curSpeed = 1;
@@ -45,12 +45,12 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         cap = GetComponent<CapsuleCollider2D>();
 
-        playerManager = GetComponent<PlayerManager>();
+        playerStatus = GetComponent<PlayerStatus>();
     }
 
     private void Update()
     {
-        if (playerManager.PlayerStatus.IsDie) return;
+        if (playerStatus.IsDie) return;
 
         InputX();
         Jump();
@@ -64,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (playerManager.PlayerStatus.HitEffect.IsKnockBack || playerManager.PlayerStatus.IsDie) return;
+        if (playerStatus.HitEffect.IsKnockBack || playerStatus.IsDie) return;
 
         if (isDash)
         {

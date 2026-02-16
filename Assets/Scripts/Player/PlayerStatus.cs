@@ -38,6 +38,7 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         render = GetComponent<SpriteRenderer>();
+
         hitFlash = GetComponent<HitFlash>();
     }
 
