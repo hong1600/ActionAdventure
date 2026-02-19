@@ -10,6 +10,7 @@ public class TableManager
 {
     public TableItem item = new TableItem();
     public TableSkill skill = new TableSkill();
+    public TableLocalization localization = new TableLocalization(); 
 
     public void Init(ETable _name)
     {
@@ -29,6 +30,13 @@ public class TableManager
         unit.Init_Binary($"{_name}");
 #endif
                 break;
+            case ETable.LOCALIZATIONDATA:
+#if UNITY_EDITOR
+                localization.Init_Csv(ETable.LOCALIZATIONDATA, 1, 0);
+#else
+        unit.Init_Binary($"{_name}");
+#endif
+                break;
         }
     }
 
@@ -41,6 +49,9 @@ public class TableManager
                 break;
             case ETable.SKILLDATA:
                 skill.Save_Binary("SkillData");
+                break;
+            case ETable.LOCALIZATIONDATA:
+                skill.Save_Binary("LocalizationData");
                 break;
         }
 

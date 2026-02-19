@@ -57,6 +57,9 @@ public class TableBase
             case ETable.SKILLDATA:
                 path = GetTablePath() + "/Resources/Data/Document/Skill/";
                 break;
+            case ETable.LOCALIZATIONDATA:
+                path = GetTablePath() + "/Resources/Data/Document/Localization/";
+                break;
         }
 
         FileStream file = new FileStream(path + _eTable + ext, FileMode.Open,

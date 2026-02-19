@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class ItemAcquireUI : MonoBehaviour
 {
+    [SerializeField] GameObject panel;
     [SerializeField] Image skillImg;
     [SerializeField] TextMeshProUGUI skillNameText;
     [SerializeField] TextMeshProUGUI skillDescText;
@@ -24,10 +25,10 @@ public class ItemAcquireUI : MonoBehaviour
 
     public void SetSkillUI(TableSkill.Info _skill)
     {
-        //skillImg.sprite = _skill.Img;
-        skillNameText.text = $"{_skill.Name}";
-        skillDescText.text = $"{_skill.Desc}";
+        skillImg.sprite = Resources.Load<Sprite>(_skill.ImgPath);
+        skillNameText.text = $"{_skill.NameKey}";
+        skillDescText.text = $"{_skill.DescKey}";
 
-        gameObject.SetActive(true);
+        panel.SetActive(true);
     }
 }

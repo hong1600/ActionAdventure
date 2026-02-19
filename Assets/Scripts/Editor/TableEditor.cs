@@ -23,8 +23,8 @@ public class TableEditor : MonoBehaviour
         tableManager.Save(_tableName);
     }
 
-    [MenuItem("CSV_Util/Table/SkillData/Parse Unit Skill CSV &F3", false, 1)]
-    static public void ParserUnitSkillCsv()
+    [MenuItem("CSV_Util/Table/SkillData/Parse Skill CSV &F3", false, 1)]
+    static public void ParserSkillCsv()
     {
         ParseTableCsv(ETable.SKILLDATA);
     }
@@ -33,5 +33,11 @@ public class TableEditor : MonoBehaviour
     static public void ParserItemCsv()
     {
         ParseTableCsv(ETable.ITEMDATA);
+    }
+
+    [MenuItem("CSV_Util/Table/LocalizationData/Parse Localization CSV &F4", false, 1)]
+    static public void ParserLocalizationCsv()
+    {
+        ParseTableCsv(ETable.LOCALIZATIONDATA);
     }
 }

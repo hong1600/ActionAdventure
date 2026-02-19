@@ -9,9 +9,9 @@ public class TableSkill : TableBase
     public class Info
     {
         public int ID;
-        public string Name;
-        public string Img;
-        public string Desc;
+        public string NameKey;
+        public string ImgPath;
+        public string DescKey;
     }
 
     public Dictionary<int, Info> Dictionary = new Dictionary<int, Info>();
@@ -58,9 +58,9 @@ public class TableSkill : TableBase
             return false;
 
         _Reader.getInt(_Row, ref _Info.ID);
-        _Reader.getString(_Row, ref _Info.Name);
-        _Reader.getString(_Row, ref _Info.Img);
-        _Reader.getString(_Row, ref _Info.Desc);
+        _Reader.getString(_Row, ref _Info.NameKey);
+        _Reader.getString(_Row, ref _Info.ImgPath);
+        _Reader.getString(_Row, ref _Info.DescKey);
 
         return true;
     }

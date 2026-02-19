@@ -5,5 +5,6 @@ using UnityEngine;
 public enum ETable
 {
     ITEMDATA,
-    SKILLDATA
+    SKILLDATA,
+    LOCALIZATIONDATA,
 }

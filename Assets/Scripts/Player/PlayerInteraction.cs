@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IInteractable
 {
-    void Interact(PlayerInteraction _player);
+    void Interact();
 }
 
 public class PlayerInteraction : MonoBehaviour
@@ -24,7 +24,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             if (curTarget != null)
             {
-                curTarget.Interact(this);
+                curTarget.Interact();
             }
         }
     }
@@ -36,7 +36,7 @@ public class PlayerInteraction : MonoBehaviour
         if (interactable != null)
         {
             curTarget = interactable;
-            interactionUI.Show(EInteractionText.INVESTIGATE);
+            interactionUI.Show(EInteractionText.INVESTIGATE, coll.transform);
         }
     }
 

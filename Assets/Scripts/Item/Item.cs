@@ -9,7 +9,14 @@ public class Item : MonoBehaviour, IInteractable
 
     public static  event Action<TableSkill.Info> OnItemAcquired;
 
-    public void Interact(PlayerInteraction _player)
+    [SerializeField] int skillID;
+
+    private void Start()
+    {
+        skillData = DataManager.instance.TableSkill.Get(skillID);
+    }
+
+    public void Interact()
     {
         OnItemAcquired?.Invoke(skillData);
 
