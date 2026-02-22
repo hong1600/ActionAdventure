@@ -3,6 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ELangauge
+{
+    KR,
+    EN
+}
+
 public class TableLocalization : TableBase
 {
     [Serializable]
@@ -13,16 +19,18 @@ public class TableLocalization : TableBase
         public string EN;
     }
 
+    public ELangauge curLanguage;
+
     public Dictionary<string, Info> Dictionary = new Dictionary<string, Info>();
 
-    public Info Get(string _id)
+    public string Get(string _id)
     {
-        if (Dictionary.ContainsKey(_id))
-        {
-            return Dictionary[_id];
-        }
+        if (Dictionary.ContainsKey(_id) == false) return _id;
 
-        return null;
+        Info info = Dictionary[_id];
+
+        if(curLanguage == ELangauge.KR) return info.KR;
+        else return info.EN;
     }
 
     public void Init_Binary(string _Name)

@@ -51,7 +51,7 @@ public class TableManager
                 skill.Save_Binary("SkillData");
                 break;
             case ETable.LOCALIZATIONDATA:
-                skill.Save_Binary("LocalizationData");
+                localization.Save_Binary("LocalizationData");
                 break;
         }
 

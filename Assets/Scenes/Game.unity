@@ -10104,7 +10104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c92e50e20d877de4582dcb0f2658add1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panel: {fileID: 0}
+  panel: {fileID: 757990417}
   skillImg: {fileID: 1734076731}
   skillNameText: {fileID: 1254057129}
   skillDescText: {fileID: 787727853}

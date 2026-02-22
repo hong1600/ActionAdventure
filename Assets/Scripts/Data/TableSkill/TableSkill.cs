@@ -10,8 +10,8 @@ public class TableSkill : TableBase
     {
         public int ID;
         public string NameKey;
-        public string ImgPath;
         public string DescKey;
+        public string ImgPath;
     }
 
     public Dictionary<int, Info> Dictionary = new Dictionary<int, Info>();
@@ -59,8 +59,8 @@ public class TableSkill : TableBase
 
         _Reader.getInt(_Row, ref _Info.ID);
         _Reader.getString(_Row, ref _Info.NameKey);
-        _Reader.getString(_Row, ref _Info.ImgPath);
         _Reader.getString(_Row, ref _Info.DescKey);
+        _Reader.getString(_Row, ref _Info.ImgPath);
 
         return true;
     }

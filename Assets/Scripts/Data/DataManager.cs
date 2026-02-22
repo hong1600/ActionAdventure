@@ -8,6 +8,7 @@ public class DataManager : Singleton<DataManager>
 {
     TableItem tableItem;
     TableSkill tableSkill;
+    TableLocalization tableLocalization;
 
     protected override void Awake()
     {
@@ -20,9 +21,14 @@ public class DataManager : Singleton<DataManager>
         tableSkill = new TableSkill();
         tableSkill.Init_Binary("SkillData");
         TableSkill = tableSkill;
+
+        tableLocalization = new TableLocalization();
+        tableLocalization.Init_Binary("LocalizationData");
+        TableLocalization = tableLocalization;
     }
 
     public TableItem TableItem { get; private set; }
     public TableSkill TableSkill { get; private set; }
+    public TableLocalization TableLocalization { get; private set; }
 }
 

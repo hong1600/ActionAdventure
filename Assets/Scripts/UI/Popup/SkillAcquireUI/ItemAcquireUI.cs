@@ -7,11 +7,18 @@ using UnityEngine.UI;
 
 public class ItemAcquireUI : MonoBehaviour
 {
+    TableLocalization localization;
+
     [SerializeField] GameObject panel;
     [SerializeField] Image skillImg;
     [SerializeField] TextMeshProUGUI skillNameText;
     [SerializeField] TextMeshProUGUI skillDescText;
     [SerializeField] TextMeshProUGUI skillPushText;
+
+    private void Start()
+    {
+        localization = DataManager.instance.TableLocalization;
+    }
 
     private void OnEnable()
     {
@@ -25,9 +32,10 @@ public class ItemAcquireUI : MonoBehaviour
 
     public void SetSkillUI(TableSkill.Info _skill)
     {
+        skillNameText.text = localization.Get(_skill.NameKey);
+        skillDescText.text = localization.Get(_skill.DescKey);
+
         skillImg.sprite = Resources.Load<Sprite>(_skill.ImgPath);
-        skillNameText.text = $"{_skill.NameKey}";
-        skillDescText.text = $"{_skill.DescKey}";
 
         panel.SetActive(true);
     }
