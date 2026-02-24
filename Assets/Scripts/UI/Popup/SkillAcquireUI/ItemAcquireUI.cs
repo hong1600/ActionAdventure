@@ -35,7 +35,7 @@ public class ItemAcquireUI : MonoBehaviour
         skillNameText.text = localization.Get(_skill.NameKey);
         skillDescText.text = localization.Get(_skill.DescKey);
 
-        skillImg.sprite = Resources.Load<Sprite>(_skill.ImgPath);
+        skillImg.sprite = SpriteManager.instance.GetSprite(_skill.SpriteName);
 
         panel.SetActive(true);
     }
