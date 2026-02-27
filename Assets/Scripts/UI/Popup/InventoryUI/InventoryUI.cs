@@ -8,7 +8,7 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] GameObject inventoryPanel;
 
     [SerializeField] Transform itemPanel;
-    [SerializeField] GameObject itemImgPrefab;
+    [SerializeField] GameObject itemSlotPrefab;
 
     private void OnEnable()
     {
@@ -30,7 +30,7 @@ public class InventoryUI : MonoBehaviour
 
     public void AddItem(TableSkill.Info _skill)
     {
-        GameObject itemImg = Instantiate(itemImgPrefab, itemPanel);
+        GameObject itemImg = Instantiate(itemSlotPrefab, itemPanel);
 
         itemImg.GetComponent<ItemSlot>().Init(_skill);
     }

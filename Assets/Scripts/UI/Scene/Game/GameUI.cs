@@ -14,7 +14,7 @@ public class GameUI : Singleton<GameUI>
 
     private void Start()
     {
-        //StartCoroutine(UIManager.instance.StartFadeOut(UIManager.instance.FadeImg, 4f));
+        StartCoroutine(UIManager.instance.StartFadeOut(UIManager.instance.FadeImg, 4f));
     }
 
     public void DieFade()

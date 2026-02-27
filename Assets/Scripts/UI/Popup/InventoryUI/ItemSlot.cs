@@ -5,14 +5,9 @@ using UnityEngine.UI;
 
 public class ItemSlot : MonoBehaviour
 {
-    Image img;
+    [SerializeField] Image img;
 
     TableSkill.Info tableSkill;
-
-    private void Awake()
-    {
-        img = GetComponent<Image>();
-    }
 
     public void Init(TableSkill.Info _skill)
     {

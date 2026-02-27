@@ -35,7 +35,7 @@ public class UIManager : Singleton<UIManager>
         _ui.color = _color;
     }
 
-    public IEnumerator StartFadeIn(Graphic _ui, float _duration)
+    public IEnumerator StartFadeIn(Graphic _ui, float _duration, float _alpha = 1f)
     {
         Color _color = _ui.color;
         float startAlpha = _color.a;
@@ -44,13 +44,13 @@ public class UIManager : Singleton<UIManager>
         while (time < _duration)
         {
             time += Time.deltaTime;
-            _color.a = Mathf.Lerp(startAlpha, 1, time / _duration);
+            _color.a = Mathf.Lerp(startAlpha, _alpha, time / _duration);
             _ui.color = _color;
 
             yield return null;
         }
 
-        _color.a = 1;
+        _color.a = _alpha;
         _ui.color = _color;
     }
 
