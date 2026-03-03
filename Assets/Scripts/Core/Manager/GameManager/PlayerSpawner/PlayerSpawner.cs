@@ -8,21 +8,16 @@ public class PlayerSpawner : MonoBehaviour
 {
     public event Action onSpawnEvent;
 
-    [SerializeField] Transform playerSpawnPos;
+    [SerializeField] List<Transform> checkPointList;
     [SerializeField] GameObject playerPrefab;
 
     [SerializeField] CinemachineVirtualCamera virtualCam;
 
     public GameObject playerObj { get; private set; }
 
-    private void Start()
+    public void Spawn(int _checkPoint)
     {
-        Invoke(nameof(Spawn), 1);
-    }
-
-    private void Spawn()
-    {
-        SpawnPlayer(playerSpawnPos.position);
+        SpawnPlayer(checkPointList[_checkPoint].position);
     }
 
     private void SpawnPlayer(Vector3 _spawnPos)

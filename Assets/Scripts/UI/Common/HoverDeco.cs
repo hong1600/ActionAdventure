@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class HoverDeco : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -12,17 +13,25 @@ public class HoverDeco : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     [SerializeField] float spacing = 20f;
 
+    private void Update()
+    {
+        if (!hoverDeco.gameObject.activeSelf) return;
+
+        if(Input.GetMouseButtonDown(0)) 
+        {
+            hoverDeco.gameObject.SetActive(false);
+        }
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         Transform target = eventData.pointerEnter.transform;
 
-        TextMeshProUGUI text = target.GetComponentInChildren<TextMeshProUGUI>();
-
-        RectTransform textRect = text.rectTransform;
+        RectTransform btnRect = target.GetComponent<RectTransform>();
 
         hoverDeco.position = target.position;
 
-        float halfWidth = textRect.rect.width * 0.5f;
+        float halfWidth = btnRect.rect.width * 0.5f;
 
         leftHoverDeco.anchoredPosition = new Vector2(-halfWidth - spacing, 0f);
 
@@ -32,6 +41,11 @@ public class HoverDeco : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     }
 
     public void OnPointerExit(PointerEventData eventData)
+    {
+        hoverDeco.gameObject.SetActive(false);
+    }
+
+    public void HideHover()
     {
         hoverDeco.gameObject.SetActive(false);
     }

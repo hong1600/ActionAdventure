@@ -10,14 +10,9 @@ public class LobbyUI : MonoBehaviour
     [SerializeField] CanvasGroup mainCanvasGroup;
     [SerializeField] CanvasGroup selectCanvasGroup;
 
-    private void Start()
-    {
-        AudioManager.instance.PlayBgm(EBgm.LOBBY);
-    }
-
     public void ClickStartBtn()
     {
-        StartCoroutine(StartClickStartBtn());
+        StartCoroutine(StartShowSelect());
     }
 
     public void ClickBackBtn()
@@ -30,13 +25,15 @@ public class LobbyUI : MonoBehaviour
         mainCanvasGroup.alpha = 1f;
         selectCanvasGroup.alpha = 0f;
 
-        mainCanvasGroup.DOFade(0f, 2f);
+        mainCanvasGroup.DOFade(0f, 0.5f);
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.5f);
 
         mainCanvasGroup.gameObject.SetActive(false);
 
-        selectCanvasGroup.DOFade(1f, 2f);
+        selectCanvasGroup.gameObject.SetActive(true);
+
+        selectCanvasGroup.DOFade(1f, 0.5f);
     }
 
     IEnumerator StartShowMain()
@@ -44,32 +41,14 @@ public class LobbyUI : MonoBehaviour
         mainCanvasGroup.alpha = 0f;
         selectCanvasGroup.alpha = 1f;
 
-        selectCanvasGroup.DOFade(0f, 2f);
+        selectCanvasGroup.DOFade(0f, 0.5f);
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.5f);
 
-        mainCanvasGroup.DOFade(1f, 2f);
-    }
+        selectCanvasGroup.gameObject.SetActive(false);
 
-    IEnumerator StartClickStartBtn()
-    {
-        yield return StartCoroutine(UIManager.instance.StartFadeIn(UIManager.instance.FadeImg, 3));
+        mainCanvasGroup.gameObject.SetActive(true);
 
-        MSceneManager.Instance.ChangeScene(EScene.INTRO, true);
-    }
-
-    public void ClickOptionBtn()
-    {
-
-    }
-
-    public void ClickExitBtn()
-    {
-
-#if UNITY_EDITOR
-        EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
+        mainCanvasGroup.DOFade(1f, 0.5f);
     }
 }

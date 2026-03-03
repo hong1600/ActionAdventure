@@ -64,6 +64,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (playerStatus.HitEffect == null) return;
+
         if (playerStatus.HitEffect.IsKnockBack || playerStatus.IsDie) return;
 
         if (isDash)
