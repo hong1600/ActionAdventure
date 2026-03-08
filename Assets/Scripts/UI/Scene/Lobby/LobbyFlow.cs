@@ -5,10 +5,14 @@ using UnityEngine;
 
 public class LobbyFlow : MonoBehaviour
 {
+    FadeUI fade;
+
     UserDataLoader userDataLoader;
 
     private void Start()
     {
+        fade = UIManager.instance.Fade;
+
         userDataLoader = DataManager.instance.UserData;
 
         AudioManager.instance.PlayBgm(EBgm.LOBBY);
@@ -16,7 +20,7 @@ public class LobbyFlow : MonoBehaviour
 
     public void ClickProfile(int _num)
     {
-        UserData userData = userDataLoader.LoadOrCreateUserData(_num);
+        UserData userData = userDataLoader.LoadPreviewData(_num);
 
         if(userData == null) 
         {
@@ -30,7 +34,7 @@ public class LobbyFlow : MonoBehaviour
 
     IEnumerator StartClickStartBtn(EScene _eScene)
     {
-        yield return StartCoroutine(UIManager.instance.StartFadeIn(UIManager.instance.FadeImg, 3));
+        yield return StartCoroutine(fade.StartFadeIn(fade.FadeImg, 3));
 
         MSceneManager.Instance.ChangeScene(_eScene, true);
     }

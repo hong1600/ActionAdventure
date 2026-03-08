@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class ItemAcquireUI : MonoBehaviour
 {
     TableLocalization localization;
+    FadeUI fade;
 
     [SerializeField] GameObject acquirePanel;
     Image acquireImg;
@@ -31,6 +32,7 @@ public class ItemAcquireUI : MonoBehaviour
     private void Start()
     {
         localization = DataManager.instance.TableLocalization;
+        fade = UIManager.instance.Fade;
     }
 
     private void OnEnable()
@@ -59,16 +61,16 @@ public class ItemAcquireUI : MonoBehaviour
 
         acquirePanel.SetActive(true);
 
-        StartCoroutine(UIManager.instance.StartFadeIn(acquireImg, 2f, 0.8f));
-        StartCoroutine(UIManager.instance.StartFadeIn(skillImg, 3f));
-        yield return StartCoroutine(UIManager.instance.StartFadeIn(skillNameText, 3f));
+        StartCoroutine(fade.StartFadeIn(acquireImg, 2f, 0.8f));
+        StartCoroutine(fade.StartFadeIn(skillImg, 3f));
+        yield return StartCoroutine(fade.StartFadeIn(skillNameText, 3f));
 
         underLineImg.rectTransform.DOScaleX(1f, 1f).SetEase(Ease.OutQuad);
 
         yield return new WaitForSeconds(1f);
 
-        StartCoroutine(UIManager.instance.StartFadeIn(skillPushText, 3f));
-        yield return StartCoroutine(UIManager.instance.StartFadeIn(skillDescText, 3f));
+        StartCoroutine(fade.StartFadeIn(skillPushText, 3f));
+        yield return StartCoroutine(fade.StartFadeIn(skillDescText, 3f));
 
         yield return new WaitForSeconds(3f);
 

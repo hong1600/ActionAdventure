@@ -7,48 +7,29 @@ using UnityEngine.UI;
 
 public class LobbyUI : MonoBehaviour
 {
-    [SerializeField] CanvasGroup mainCanvasGroup;
-    [SerializeField] CanvasGroup selectCanvasGroup;
+    PanelUI panel;
+
+    [SerializeField] CanvasGroup mainPanel;
+    [SerializeField] CanvasGroup selectPanel;
+
+    private void Start()
+    {
+        panel = UIManager.instance.Panel;
+        panel.Init(mainPanel);
+    }
 
     public void ClickStartBtn()
     {
-        StartCoroutine(StartShowSelect());
+        panel.OpenPanel(selectPanel);
     }
 
     public void ClickBackBtn()
     {
-        StartCoroutine(StartShowMain());
+        panel.ClosePanel();
     }
 
-    IEnumerator StartShowSelect()
+    public void ClickOptionBtn()
     {
-        mainCanvasGroup.alpha = 1f;
-        selectCanvasGroup.alpha = 0f;
-
-        mainCanvasGroup.DOFade(0f, 0.5f);
-
-        yield return new WaitForSeconds(0.5f);
-
-        mainCanvasGroup.gameObject.SetActive(false);
-
-        selectCanvasGroup.gameObject.SetActive(true);
-
-        selectCanvasGroup.DOFade(1f, 0.5f);
-    }
-
-    IEnumerator StartShowMain()
-    {
-        mainCanvasGroup.alpha = 0f;
-        selectCanvasGroup.alpha = 1f;
-
-        selectCanvasGroup.DOFade(0f, 0.5f);
-
-        yield return new WaitForSeconds(0.5f);
-
-        selectCanvasGroup.gameObject.SetActive(false);
-
-        mainCanvasGroup.gameObject.SetActive(true);
-
-        mainCanvasGroup.DOFade(1f, 0.5f);
+        SettingManager.instance.ClickOption();
     }
 }

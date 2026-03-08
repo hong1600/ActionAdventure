@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class GameUI : Singleton<GameUI>
 {
+    FadeUI fade;
+
     [SerializeField] InteractionUI interactionUI;
     public InteractionUI InteractionUI { get { return interactionUI; } }
     [SerializeField] ItemAcquireUI itemAcquireUI;
@@ -14,7 +16,9 @@ public class GameUI : Singleton<GameUI>
 
     private void Start()
     {
-        StartCoroutine(UIManager.instance.StartFadeOut(UIManager.instance.FadeImg, 4f));
+        fade = UIManager.instance.Fade;
+
+        StartCoroutine(fade.StartFadeOut(fade.FadeImg, 4f));
     }
 
     public void DieFade()
@@ -24,9 +28,9 @@ public class GameUI : Singleton<GameUI>
 
     IEnumerator StartDieFade()
     {
-        yield return StartCoroutine(UIManager.instance.StartFadeIn(UIManager.instance.FadeImg, 2));
+        yield return StartCoroutine(fade.StartFadeIn(fade.FadeImg, 2f));
 
-        yield return StartCoroutine(UIManager.instance.StartFadeOut(UIManager.instance.FadeImg, 2));
+        yield return StartCoroutine(fade.StartFadeOut(fade.FadeImg, 2f));
     }
 
 }
