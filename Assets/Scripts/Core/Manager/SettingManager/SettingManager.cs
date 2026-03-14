@@ -9,6 +9,9 @@ public class SettingManager : Singleton<SettingManager>
     [SerializeField] CanvasGroup settingPanel;
     public CanvasGroup SettingPanel { get; private set; }
 
+    [SerializeField] CanvasGroup audioPanel;
+    [SerializeField] CanvasGroup videoPanel;
+
     protected override void Awake()
     {
         base.Awake();
@@ -27,5 +30,20 @@ public class SettingManager : Singleton<SettingManager>
     public void ClickBack()
     {
         panel.ClosePanel();
+    }
+
+    public void ClickAudio()
+    {
+        panel.OpenPanel(audioPanel);
+    }
+
+    public void ClickVideo()
+    {
+        panel.OpenPanel(videoPanel);
+    }
+
+    public void ClickLanguage()
+    {
+
     }
 }
