@@ -26,3 +26,19 @@ public class InventoryData
 {
     public List<int> equipItem = new List<int>();
 }
+
+public class OptionData
+{
+    public float masterVol = 1f;
+    public float bgmVol = 1f;
+    public float sfxVol = 1f;
+
+    public int resWidth = 1920;
+    public int resHeight = 1080;
+
+    public EScreenMode screenMode = EScreenMode.FULLSCREEN;
+
+    public int qualityLevel = 2;
+
+    public ELangauge langauge = ELangauge.KR;
+}

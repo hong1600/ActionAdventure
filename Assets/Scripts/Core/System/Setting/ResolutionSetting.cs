@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ResolutionSetting : MonoBehaviour
 {
-    //[SerializeField] CustomDropdown dropdown;
-
-    [SerializeField] TextMeshProUGUI labelText;
+    [SerializeField] TextMeshProUGUI resolutionText;
 
     Resolution[] allRes;
     List<Resolution> filterResList = new List<Resolution>();
@@ -19,15 +18,10 @@ public class ResolutionSetting : MonoBehaviour
         new Vector2Int(1920, 1080) // FHD
     };
 
-    int curIndex = 0;
-
+    int curIndex = 1;
     private void Start()
     {
         allRes = Screen.resolutions;
-
-        labelText.text = Screen.currentResolution.width + " X " + Screen.currentResolution.height;
-
-        //dropdown.onOptionSelectedEvent.AddListener(SetResolution);
 
         List<Vector2Int> uniqueResList = new List<Vector2Int>();
 
@@ -42,28 +36,34 @@ public class ResolutionSetting : MonoBehaviour
                 filterResList.Add(allRes[i]);
             }
         }
-
-
-        for (int i = 0; i < filterResList.Count; i++)
-        {
-            Debug.Log(filterResList[i]);
-        }
     }
 
-    public void SetResolution(int _index)
+    public void Init(int _width, int _height)
     {
-        curIndex = _index;
-        Resolution res = filterResList[_index];
+        Screen.SetResolution
+            (_width, _height, Screen.fullScreen);
+
+        resolutionText.text = _width + " X " + _height;
+    }
+
+    public void SetResolution()
+    {
+        curIndex++;
+
+        if (curIndex >= filterResList.Count)
+        {
+            curIndex = 0;
+        }
+
+        Resolution res = filterResList[curIndex];
         Screen.SetResolution(res.width, res.height, Screen.fullScreen);
 
-        Debug.Log($"[SetResolution] index: {_index}, size: {res.width}x{res.height}, fullscreen: {Screen.fullScreen}");
+        resolutionText.text = res.width + " X " + res.height;
     }
 
     public void ReapplyCurrentResolution()
     {
         if (filterResList.Count == 0) return;
-
-        Resolution curRes = Screen.currentResolution;
 
         Resolution res = filterResList[curIndex];
         Screen.SetResolution(res.width, res.height, Screen.fullScreen);

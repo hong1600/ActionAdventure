@@ -8,14 +8,23 @@ using UnityEngine.UI;
 public class LobbyUI : MonoBehaviour
 {
     PanelUI panel;
+    FadeUI fade;
 
     [SerializeField] CanvasGroup mainPanel;
     [SerializeField] CanvasGroup selectPanel;
 
     private void Start()
     {
+        fade = UIManager.instance.Fade;
+
+        fade.FadeImg.color = new Color(0, 0, 0, 1);
+
+        StartCoroutine(fade.StartFadeOut(fade.FadeImg, 3f));
+
         panel = UIManager.instance.Panel;
         panel.Init(mainPanel);
+
+        AudioManager.instance.PlayBgm(EBgm.LOBBY);
     }
 
     public void ClickStartBtn()
@@ -30,6 +39,6 @@ public class LobbyUI : MonoBehaviour
 
     public void ClickOptionBtn()
     {
-        SettingManager.instance.ClickOption();
+        OptionManager.instance.ClickOption();
     }
 }

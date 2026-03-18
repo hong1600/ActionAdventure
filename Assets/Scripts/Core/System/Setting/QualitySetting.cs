@@ -5,38 +5,33 @@ using UnityEngine;
 
 public class QualitySetting : MonoBehaviour
 {
-    //[SerializeField] CustomDropdown dropdown;
-
-    [SerializeField] TextMeshProUGUI labelText;
+    [SerializeField] TextMeshProUGUI QualityText;
 
     List<string> qualOptionList = new List<string>()
     {
         "낮음", "중간", "높음", "매우높음"
     };
 
-    private void Start()
-    {
-        labelText.text = qualOptionList[2];
+    int curIndex;
 
-        //dropdown.onOptionSelectedEvent.AddListener(SetQuality);
+    public void Init(int _index)
+    {
+        QualitySettings.SetQualityLevel(_index);
+
+        QualityText.text = qualOptionList[_index];
     }
 
-    public void SetQuality(int _index)
+    public void SetQuality()
     {
-        switch (_index) 
+        curIndex++;
+
+        if(curIndex >= qualOptionList.Count) 
         {
-            case 0:
-                QualitySettings.SetQualityLevel(1);
-                break;
-            case 1:
-                QualitySettings.SetQualityLevel(2);
-                break;
-            case 2:
-                QualitySettings.SetQualityLevel(3);
-                break;
-            case 3:
-                QualitySettings.SetQualityLevel(4);
-                break;
+            curIndex = 0;
         }
+
+        QualitySettings.SetQualityLevel(curIndex);
+
+        QualityText.text = qualOptionList[curIndex];
     }
 }

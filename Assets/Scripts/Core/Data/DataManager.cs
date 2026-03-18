@@ -7,6 +7,7 @@ using UnityEngine;
 public class DataManager : Singleton<DataManager>
 {
     UserDataLoader userData;
+    OptionDataLoader optionDataLoader;
     TableItem tableItem;
     TableSkill tableSkill;
     TableLocalization tableLocalization;
@@ -16,6 +17,9 @@ public class DataManager : Singleton<DataManager>
         base.Awake();
 
         userData = new UserDataLoader();
+
+        optionDataLoader = new OptionDataLoader();
+        optionDataLoader.Init();
 
         tableItem = new TableItem();
         tableItem.Init_Binary("ItemData");
@@ -31,6 +35,7 @@ public class DataManager : Singleton<DataManager>
     }
 
     public UserDataLoader UserData { get { return userData; } }
+    public OptionDataLoader OptionDataLoader { get { return optionDataLoader; } }
     public TableItem TableItem { get; private set; }
     public TableSkill TableSkill { get; private set; }
     public TableLocalization TableLocalization { get; private set; }

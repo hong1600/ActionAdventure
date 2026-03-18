@@ -4,31 +4,55 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum EScreenMode
+{
+    FULLSCREEN,
+    WINDOW
+}
+
 public class ScreenModeSetting : MonoBehaviour
 {
-    //[SerializeField] CustomDropdown dropdown;
     [SerializeField] ResolutionSetting resolutionSetting;
+    [SerializeField] TextMeshProUGUI resolutionText;
 
-    [SerializeField] TextMeshProUGUI labelText;
+    int curIndex = 0;
 
-    private void Start()
+    public void Init(EScreenMode _eScreenMode)
     {
-        labelText.text = "ÀüÃ¼È­¸é";
-
-        //dropdown.onOptionSelectedEvent.AddListener(SetFullScreen);
-    }
-
-    public void SetFullScreen(int _index)
-    {
-        Debug.Log(_index);
-
-        if (_index == 0)
-        {
-            Screen.fullScreen = false;
-        }
-        else if (_index == 1)
+        if (_eScreenMode == EScreenMode.FULLSCREEN)
         {
             Screen.fullScreen = true;
+
+            resolutionText.text = "ÄÑÁü";
+        }
+        else
+        {
+            Screen.fullScreen = false;
+
+            resolutionText.text = "²¨Áü";
+        }
+    }
+
+    public void SetScreenMode()
+    {
+        curIndex++;
+
+        if (curIndex > 1)
+        {
+            curIndex = 0;
+        }
+
+        if (curIndex == 0)
+        {
+            Screen.fullScreen = true;
+
+            resolutionText.text = "ÄÑÁü";
+        }
+        else if (curIndex == 1)
+        {
+            Screen.fullScreen = false;
+
+            resolutionText.text = "²¨Áü";
         }
 
         StartCoroutine(ApplyResolutionAfterFullscreenChange());
