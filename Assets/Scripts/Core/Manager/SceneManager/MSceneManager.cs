@@ -8,7 +8,7 @@ public class MSceneManager : MonoBehaviour
 {
     public static MSceneManager Instance;
 
-    EScene scene = EScene.LOBBY;
+    EScene scene;
 
     private void Awake()
     {

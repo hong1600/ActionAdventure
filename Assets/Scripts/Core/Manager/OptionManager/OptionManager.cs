@@ -8,8 +8,8 @@ public class OptionManager : Singleton<OptionManager>
     OptionData optionData;
     PanelUI panel;
 
-    [SerializeField] CanvasGroup settingPanel;
-    public CanvasGroup SettingPanel { get; private set; }
+    [SerializeField] CanvasGroup optionPanel;
+    public CanvasGroup OptionPanel { get; private set; }
     [SerializeField] CanvasGroup audioPanel;
     [SerializeField] CanvasGroup videoPanel;
 
@@ -39,7 +39,7 @@ public class OptionManager : Singleton<OptionManager>
 
     public void ClickOption()
     {
-        panel.OpenPanel(settingPanel);
+        panel.OpenPanel(optionPanel);
     }
 
     public void ClickBack()

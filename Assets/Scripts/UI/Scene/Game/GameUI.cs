@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class GameUI : Singleton<GameUI>
 {
     FadeUI fade;
+    PanelUI panel;
 
     [SerializeField] InteractionUI interactionUI;
     public InteractionUI InteractionUI { get { return interactionUI; } }
@@ -16,6 +17,9 @@ public class GameUI : Singleton<GameUI>
 
     private void Start()
     {
+        panel = UIManager.instance.Panel;
+        panel.Init();
+
         fade = UIManager.instance.Fade;
 
         StartCoroutine(fade.StartFadeOut(fade.FadeImg, 4f));

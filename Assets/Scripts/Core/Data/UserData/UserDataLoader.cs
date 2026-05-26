@@ -28,7 +28,7 @@ public class UserDataLoader
         File.WriteAllText(path, jsonData);
     }
 
-    public UserData LoadOrCreateUserData(int _index)
+    public UserData LoadUserData(int _index)
     {
         curSlot = _index;
 
@@ -39,24 +39,23 @@ public class UserDataLoader
             string jsonData = File.ReadAllText(path);
 
             curUserData = JsonUtility.FromJson<UserData>(jsonData);
-        }
-        else
-        {
-            curUserData = CreateNewUserData();
-            SaveUserData();
+
+            return curUserData;
         }
 
-        return curUserData;
+        return null;
     }
 
-    private UserData CreateNewUserData()
+    public UserData CreateUserData()
     {
-        UserData data = new UserData();
+        curUserData = new UserData();
 
-        data.playerData.curHp = 5;
-        data.playerData.curMp = 5;
+        curUserData.playerData.curHp = 5;
+        curUserData.playerData.curMp = 5;
 
-        return data;
+        SaveUserData();
+
+        return curUserData;
     }
 
     public UserData LoadPreviewData(int _index) 

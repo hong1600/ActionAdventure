@@ -1,15 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class UserData
 {
-    public UserProgresssData playerData = new UserProgresssData();
+    public UserProgressData playerData = new UserProgressData();
     public WorldProgressData worldData = new WorldProgressData();
     public InventoryData inventoryData = new InventoryData();
 }
 
-public class UserProgresssData
+[Serializable]
+public class UserProgressData
 {
     public int curHp;
     public int curMp;
@@ -17,16 +20,19 @@ public class UserProgresssData
     public int Gold;
 }
 
+[Serializable]
 public class WorldProgressData
 {
-    public int lastCheckPointID = 0;
+    public EMap eLastMap = EMap.MAP1;
 }
 
+[Serializable]
 public class InventoryData
 {
     public List<int> equipItem = new List<int>();
 }
 
+[Serializable]
 public class OptionData
 {
     public float masterVol = 1f;

@@ -4,37 +4,38 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    Rigidbody2D rigid;
-    Animator anim;
+    public Rigidbody2D rigid { get; private set; }
     CapsuleCollider2D cap;
 
-    PlayerStatus playerStatus;
+    PlayerManager playerManager;
+    PlayerMovementState moveState;
 
-    float inputX;
+    public float inputX { get; private set; }
     float curSpeed = 1;
     [SerializeField] float walkSpeed = 1;
 
     int lastDir = 1;
 
-    [SerializeField] bool isGround;
+    public bool isGround { get; private set; }
     bool wasGround;
 
-    [SerializeField] float jumpSpeed = 5f; 
+    [SerializeField] float jumpPower = 10f; 
     [SerializeField] int jumpCount = 0;
 
-    [SerializeField] bool isDash = false;
+    public bool isDash { get; private set; }
     [SerializeField] float dashSpeed = 10;
     [SerializeField] float dashTime = 0.2f;
-    float dashTimer;
+    public float DashTime { get { return dashTime; } }
+    int dashCount = 0;
 
     [SerializeField] int wallDir;
-    [SerializeField] bool isWall;
-    [SerializeField] bool isWallJump;
+    public bool isWall { get; private set; }
     [SerializeField] float wallfallSpeed = -2f;
+
     [SerializeField] float wallJumpX = 7f;
     [SerializeField] float wallJumpY = 6f;
-    [SerializeField] float wallJumpLockTime = 0.15f;
     float wallJumpTimer;
+    bool isWallJump;
 
     [SerializeField] float gravity = -9.81f;
     [SerializeField] float maxFallSpeed = -10f;
@@ -42,56 +43,49 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
         cap = GetComponent<CapsuleCollider2D>();
 
-        playerStatus = GetComponent<PlayerStatus>();
+        moveState = new PlayerMovementState();
+
+        playerManager = GetComponent<PlayerManager>();
+    }
+
+    private void Start()
+    {
+        moveState.Init(this, playerManager);
     }
 
     private void Update()
     {
-        if (playerStatus.IsDie) return;
+        if (playerManager.PlayerStatus.IsDie) return;
 
         InputX();
-        Jump();
-        Dash();
         CheckWall();
-        Gravity();
         CheckGround();
-        ChangeAnim();
         CheckLand();
+        CheckWallJumpTimer();
+
+        moveState.Update();
     }
 
     private void FixedUpdate()
     {
-        if (playerStatus.HitEffect == null) return;
+        if (playerManager.PlayerStatus.HitEffect == null) return;
 
-        if (playerStatus.HitEffect.IsKnockBack || playerStatus.IsDie) return;
+        if (playerManager.PlayerStatus.HitEffect.IsKnockBack || playerManager.PlayerStatus.IsDie) return;
 
-        if (isDash)
-        {
-            DoDash();
-        }
-        else if (isWall)
-        {
-            WallClimb();
-        }
-        else if(!isWallJump)
-        {
-            Move();
-        }
-        WallClimbJump();
+        moveState.FixedUpdate();
     }
 
-    private void Move()
+    public void Move()
     {
+        if (isWallJump) return;
+
         rigid.velocity = new Vector2(curSpeed, rigid.velocity.y);
     }
 
-    private void InputX()
+    public void InputX()
     {
-        if (isDash) return;
-
         inputX = Input.GetAxisRaw("Horizontal");
         curSpeed = inputX * walkSpeed;
 
@@ -105,68 +99,63 @@ public class PlayerMovement : MonoBehaviour
     {
         if (inputX < 0 && lastDir != -1)
         {
-            transform.localScale = new Vector3(-0.5f, 0.45f, 0.5f);
+            transform.localScale = new Vector3(-3f, 3f, 1f);
 
             lastDir = -1;
         }
         else if (inputX > 0 && lastDir != 1)
         {
-            transform.localScale = new Vector3(0.5f, 0.45f, 0.5f);
+            transform.localScale = new Vector3(3f, 3f, 1f);
 
             lastDir = 1;
         }
     }
 
-    private void Jump()
+    public bool CanJump()
     {
-        if(Input.GetKeyDown(KeyCode.Space)) 
-        {
-            if (jumpCount < 2)
-            {
-                DoJump();
-            }
-        }
+        return jumpCount < 2;
     }
 
-    private void DoJump()
+    public void DoJump()
     {
         jumpCount++;
 
-        rigid.velocity = new Vector2(rigid.velocity.x, jumpSpeed);
+        rigid.velocity = new Vector2(rigid.velocity.x, jumpPower);
 
-        anim.SetTrigger("IsJump");
         AudioManager.instance.PlaySfx(ESfx.JUMPUP, transform.position, transform);
     }
 
-    private void Dash()
+    public void StopJump()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if(rigid.velocity.y > 0f) 
         {
-            if(!isDash) 
-            {
-                StartDash();
-            }
+            rigid.velocity = new Vector2(rigid.velocity.x, rigid.velocity.y * 0.5f);
         }
     }
 
-    private void StartDash()
+    public bool CanDash()
     {
-        isDash = true;
-        dashTimer = dashTime;
+        if (!isGround && dashCount > 0)
+        {
+            return false;
+        }
 
+        return true;
+    }
+
+    public void SetDash(bool _value)
+    {
+        isDash = _value;
+    }
+
+    public void DoDash()
+    {
         rigid.velocity = new Vector2(lastDir * dashSpeed, 0);
     }
 
-    private void DoDash()
+    public void AddDashCount()
     {
-        dashTimer -= Time.fixedDeltaTime;
-
-        rigid.velocity = new Vector2(lastDir * dashSpeed, 0);
-
-        if (dashTimer <= 0)
-        {
-            isDash = false; 
-        }
+        dashCount++;
     }
 
     private void CheckWall()
@@ -176,7 +165,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (isGround) return;
 
-        Vector2 origin = cap.bounds.center;
+        Vector2 origin = new Vector2(cap.bounds.center.x, cap.bounds.center.y - 0.2f);
         float dist = cap.bounds.extents.x + 0.05f;
         int wallMask = LayerMask.GetMask("Wall");
 
@@ -185,41 +174,58 @@ public class PlayerMovement : MonoBehaviour
 
         if (leftHit.collider != null)
         {
-            isWall = true;
-            wallDir = -1;
+            if (inputX <= 0)
+            {
+                isWall = true;
+                wallDir = -1;
+            }
         }
         else if (rightHit.collider != null) 
         {
-            isWall = true;
-            wallDir = 1;
+            if(inputX >= 0)
+            {
+                isWall = true;
+                wallDir = 1;
+            }
         }
     }
 
-    private void WallClimb()
+    public bool CanWallSlide()
+    {
+        if (isGround) return false;
+
+        if (!isWall) return false;
+
+        if (rigid.velocity.y >= 0) return false;
+
+        return true;
+    }
+
+    public void FallWall()
     {
         rigid.velocity = new Vector2(0, wallfallSpeed);
     }
 
-    private void WallClimbJump()
+    public void DoWallJump()
     {
-        if(isWall && Input.GetKeyDown(KeyCode.Space)) 
+        jumpCount = 1;
+
+        isWallJump = true;
+        wallJumpTimer = 0.15f;
+
+        float jumpX = -wallDir * wallJumpX;
+        float jumpY = wallJumpY;
+
+        rigid.velocity = new Vector2(jumpX, jumpY);
+    }
+
+    private void CheckWallJumpTimer()
+    {
+        if(isWallJump) 
         {
-            jumpCount = 2;
+            wallJumpTimer -= Time.deltaTime;
 
-            float jumpX = -wallDir * wallJumpX;
-            float jumpY = wallJumpY;
-
-            rigid.velocity = new Vector2(jumpX, jumpY);
-
-            isWall = false;
-            isWallJump = true;
-            wallJumpTimer = wallJumpLockTime;
-        }
-        if (isWallJump)
-        {
-            wallJumpTimer -= Time.fixedDeltaTime;
-
-            if(wallJumpTimer < 0) 
+            if (wallJumpTimer <= 0)
             {
                 isWallJump = false;
             }
@@ -236,10 +242,8 @@ public class PlayerMovement : MonoBehaviour
         wasGround = isGround;
     }
 
-    private void Gravity()
+    public void Gravity()
     {
-        if (isDash || isWall) return;
-
         if (!isGround)
         {
             float newY = rigid.velocity.y + gravity * Time.deltaTime;
@@ -260,22 +264,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckGround()
     {
-        RaycastHit2D hit = Physics2D.Raycast(cap.bounds.center, Vector2.down, cap.bounds.extents.y + 0.1f, LayerMask.GetMask("Ground"));
+        RaycastHit2D hit = Physics2D.Raycast(cap.bounds.center, Vector2.down, cap.bounds.extents.y + 0.1f, LayerMask.GetMask("Ground", "Wall"));
 
         bool nowGround = hit.collider != null;
 
         if (!isGround && nowGround)
         {
             jumpCount = 0;
+            dashCount = 0;
         }
 
         isGround = nowGround;
-    }
-
-    private void ChangeAnim()
-    {
-        anim.SetFloat("Horizontal", Mathf.Abs(inputX));
-        anim.SetBool("IsGround", isGround);
-        anim.SetBool("IsFalling", !isGround && rigid.velocity.y < 0);
     }
 }

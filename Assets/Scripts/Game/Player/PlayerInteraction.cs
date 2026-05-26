@@ -31,11 +31,14 @@ public class PlayerInteraction : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D coll)
     {
+        if (interactionUI == null) return;
+
         IInteractable interactable = coll.GetComponent<IInteractable>();
 
         if (interactable != null)
         {
             curTarget = interactable;
+
             interactionUI.Show(EInteractionText.INVESTIGATE, coll.transform);
         }
     }

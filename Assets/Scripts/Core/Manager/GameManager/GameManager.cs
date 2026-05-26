@@ -8,6 +8,7 @@ public class GameManager : Singleton<GameManager>
 
     [SerializeField] CombatManager combatManager;
     [SerializeField] PlayerSpawner playerSpawner;
+    [SerializeField] MapLoader mapLoader;
 
     protected override void Awake()
     {
@@ -20,11 +21,11 @@ public class GameManager : Singleton<GameManager>
 
         if (curUserData != null)
         {
-            playerSpawner.Spawn(curUserData.worldData.lastCheckPointID);
+            mapLoader.LoadMap(curUserData.worldData.eLastMap);
         }
         else
         {
-            playerSpawner.Spawn(0);
+            mapLoader.LoadMap(EMap.MAP1);
         }
     }
 

@@ -13,6 +13,7 @@ public abstract class AIState
 
     public virtual void Enter() { }
     public virtual void Execute() { }
+    public virtual void FixedExecute() { }
     public virtual void Exit() { }
 }
 
@@ -40,6 +41,14 @@ public abstract class StateMachine
         if(curState != null) 
         {
             curState.Execute();
+        }
+    }
+
+    public virtual void FixedUpdate()
+    {
+        if (curState != null)
+        {
+            curState.FixedExecute();
         }
     }
 }

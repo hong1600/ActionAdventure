@@ -22,7 +22,7 @@ public class LobbyUI : MonoBehaviour
         StartCoroutine(fade.StartFadeOut(fade.FadeImg, 3f));
 
         panel = UIManager.instance.Panel;
-        panel.Init(mainPanel);
+        panel.Init();
 
         AudioManager.instance.PlayBgm(EBgm.LOBBY);
     }

@@ -20,10 +20,11 @@ public class LobbyFlow : MonoBehaviour
 
     public void ClickProfile(int _num)
     {
-        UserData userData = userDataLoader.LoadPreviewData(_num);
+        UserData userData = userDataLoader.LoadUserData(_num);
 
         if(userData == null) 
         {
+            userDataLoader.CreateUserData();
             StartCoroutine(StartClickStartBtn(EScene.INTRO));
         }
         else

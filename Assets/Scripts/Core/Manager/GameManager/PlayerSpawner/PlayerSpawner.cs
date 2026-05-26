@@ -15,9 +15,9 @@ public class PlayerSpawner : MonoBehaviour
 
     public GameObject playerObj { get; private set; }
 
-    public void Spawn(int _checkPoint)
+    public void Spawn(Vector3 _pos)
     {
-        SpawnPlayer(checkPointList[_checkPoint].position);
+        SpawnPlayer(_pos);
     }
 
     private void SpawnPlayer(Vector3 _spawnPos)

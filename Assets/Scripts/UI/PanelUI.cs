@@ -7,14 +7,17 @@ public class PanelUI : MonoBehaviour
 {
     Stack<CanvasGroup> panelStack = new Stack<CanvasGroup>();
 
-    public void Init(CanvasGroup _startPanel)
+    bool isAnim = false;
+
+    public void Init()
     {
         panelStack.Clear();
-        OpenPanel(_startPanel);
     }
 
     public void OpenPanel(CanvasGroup _panel)
     {
+        if (isAnim) return;
+
         StartCoroutine(StartOpenPanel(_panel));
     }
 
@@ -32,37 +35,62 @@ public class PanelUI : MonoBehaviour
 
     public void ClosePanel()
     {
+        if (isAnim) return;
+
         StartCoroutine(StartClosePanel());
     }
 
     IEnumerator StartClosePanel()
     {
-        if (panelStack.Count <= 1) yield break;
+        if (panelStack.Count == 0) yield break;
 
         CanvasGroup curPanel = panelStack.Pop();
-        CanvasGroup prevPanel = panelStack.Peek();
 
         yield return StartCoroutine(StartHidePanel(curPanel, 0.5f));
-        yield return StartCoroutine(StartShowPanel(prevPanel, 0.5f));
+
+        if (panelStack.Count > 0)
+        {
+            CanvasGroup prevPanel = panelStack.Peek();
+            yield return StartCoroutine(StartShowPanel(prevPanel, 0.5f));
+        }
     }
 
-    IEnumerator StartShowPanel(CanvasGroup _panel, float _duration)
+    public IEnumerator StartShowPanel(CanvasGroup _panel, float _duration)
     {
         _panel.alpha = 0f;
         _panel.gameObject.SetActive(true);
 
-        _panel.DOFade(1f, _duration);
+        Tween tween = _panel.DOFade(1f, _duration).SetUpdate(true).OnComplete(OnOpenComplete);
 
-        yield return new WaitForSeconds(_duration);
+        yield return tween.WaitForCompletion();
+
+        OnOpenComplete();
     }
 
-    IEnumerator StartHidePanel(CanvasGroup _panel, float _duration)
+    public IEnumerator StartHidePanel(CanvasGroup _panel, float _duration)
     {
-        _panel.DOFade(0f, _duration);
+        Tween tween = _panel.DOFade(0f, _duration).SetUpdate(true);
 
-        yield return new WaitForSeconds(_duration);
+        yield return tween.WaitForCompletion();
 
-        _panel.gameObject.SetActive(false);
+        OnCloseComplete(_panel);
+
         _panel.alpha = 0f;
+    }
+
+    private void OnOpenComplete()
+    {
+        isAnim = false;
+    }
+
+    private void OnCloseComplete(CanvasGroup _panel)
+    {
+        _panel.gameObject.SetActive(false);
+        isAnim = false;
+    }
+
+    public bool HasPanel()
+    {
+        return panelStack.Count > 0;
     }
 }

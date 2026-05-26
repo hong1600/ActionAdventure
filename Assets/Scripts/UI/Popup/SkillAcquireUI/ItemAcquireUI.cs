@@ -62,21 +62,21 @@ public class ItemAcquireUI : MonoBehaviour
         acquirePanel.SetActive(true);
 
         StartCoroutine(fade.StartFadeIn(acquireImg, 2f, 0.8f));
-        StartCoroutine(fade.StartFadeIn(skillImg, 3f));
-        yield return StartCoroutine(fade.StartFadeIn(skillNameText, 3f));
+        StartCoroutine(fade.StartFadeIn(skillImg, 2f));
+        yield return StartCoroutine(fade.StartFadeIn(skillNameText, 2f));
 
         underLineImg.rectTransform.DOScaleX(1f, 1f).SetEase(Ease.OutQuad);
 
         yield return new WaitForSeconds(1f);
 
-        StartCoroutine(fade.StartFadeIn(skillPushText, 3f));
-        yield return StartCoroutine(fade.StartFadeIn(skillDescText, 3f));
-
-        yield return new WaitForSeconds(3f);
-
-        canvasGroup.DOFade(0, 2f);
+        StartCoroutine(fade.StartFadeIn(skillPushText, 2f));
+        yield return StartCoroutine(fade.StartFadeIn(skillDescText, 2f));
 
         yield return new WaitForSeconds(2f);
+
+        canvasGroup.DOFade(0, 1f);
+
+        yield return new WaitForSeconds(1f);
 
         acquirePanel.SetActive(false);
     }

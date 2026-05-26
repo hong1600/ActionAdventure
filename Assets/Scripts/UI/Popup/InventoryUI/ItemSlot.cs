@@ -5,9 +5,14 @@ using UnityEngine.UI;
 
 public class ItemSlot : MonoBehaviour
 {
+    TableSkill.Info tableSkill;
+
     [SerializeField] Image img;
 
-    TableSkill.Info tableSkill;
+    [SerializeField] ItemSlot up;
+    [SerializeField] ItemSlot down;
+    [SerializeField] ItemSlot left;
+    [SerializeField] ItemSlot right;
 
     public void Init(TableSkill.Info _skill)
     {
