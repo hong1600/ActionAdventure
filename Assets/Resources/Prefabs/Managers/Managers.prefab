@@ -720,6 +720,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6b4318e8c46fddf44b9ea7261b120b50, type: 3}
   - {fileID: 8300000, guid: 9e4d23e42db1814438fbf7bf1c3a5f75, type: 3}
   - {fileID: 8300000, guid: 937a72d9e5783ba4f9bd1d9560cb461a, type: 3}
+  - {fileID: 8300000, guid: a62a64f01daa02c4a987cb5a7f4eb054, type: 3}
+  - {fileID: 8300000, guid: 490562705aa6ccb48a7ed6bcbe82749a, type: 3}
+  - {fileID: 8300000, guid: e3ff8b7cd3d5a4643ae2dc3a1caab62e, type: 3}
   masterVolume: 1
   bgmVolume: 1
   sfxVolume: 1

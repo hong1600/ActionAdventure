@@ -257,9 +257,14 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void PlayFootStep()
+    public void PlayFootStepSfx()
     {
-        AudioManager.instance.PlaySfx(ESfx.RUN, transform.position, transform);
+        AudioManager.instance.PlaySfx(ESfx.FOOTSTEP, transform.position, transform);
+    }
+
+    public void PlayDashSfx()
+    {
+        AudioManager.instance.PlaySfx(ESfx.DASH, transform.position, transform);
     }
 
     private void CheckGround()

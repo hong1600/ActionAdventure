@@ -26,8 +26,10 @@ public enum ESfx
     HIT,
     JUMPLAND,
     JUMPUP,
-    RUN,
-    UICLICK
+    FOOTSTEP,
+    UICLICK,
+    DEATH,
+    ACQUIRE
 }
 
 public enum EBgm

@@ -7890,6 +7890,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3242509335449646935, guid: 57a2f849c4b5dab43a3c06b4f900c902, type: 3}
+      propertyPath: sfxClips.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3242509335449646935, guid: 57a2f849c4b5dab43a3c06b4f900c902, type: 3}
+      propertyPath: sfxClips.Array.data[5]
+      value: 
+      objectReference: {fileID: 8300000, guid: 490562705aa6ccb48a7ed6bcbe82749a, type: 3}
+    - target: {fileID: 3242509335449646935, guid: 57a2f849c4b5dab43a3c06b4f900c902, type: 3}
+      propertyPath: sfxClips.Array.data[6]
+      value: 
+      objectReference: {fileID: 8300000, guid: 937a72d9e5783ba4f9bd1d9560cb461a, type: 3}
+    - target: {fileID: 3242509335449646935, guid: 57a2f849c4b5dab43a3c06b4f900c902, type: 3}
+      propertyPath: sfxClips.Array.data[7]
+      value: 
+      objectReference: {fileID: 8300000, guid: a62a64f01daa02c4a987cb5a7f4eb054, type: 3}
+    - target: {fileID: 3242509335449646935, guid: 57a2f849c4b5dab43a3c06b4f900c902, type: 3}
+      propertyPath: sfxClips.Array.data[8]
+      value: 
+      objectReference: {fileID: 8300000, guid: e3ff8b7cd3d5a4643ae2dc3a1caab62e, type: 3}
+    - target: {fileID: 3242509335449646935, guid: 57a2f849c4b5dab43a3c06b4f900c902, type: 3}
+      propertyPath: sfxClips.Array.data[9]
+      value: 
+      objectReference: {fileID: 8300000, guid: 9e4d23e42db1814438fbf7bf1c3a5f75, type: 3}
     - target: {fileID: 8107512433309906545, guid: 57a2f849c4b5dab43a3c06b4f900c902, type: 3}
       propertyPath: m_Name
       value: Managers

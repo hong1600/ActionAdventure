@@ -12,6 +12,8 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
     Rigidbody2D rigid;
     Animator anim;
     SpriteRenderer render;
+    CapsuleCollider2D cap;
+    BoxCollider2D deadCol;
 
     PlayerSpawner playerSpawner;
     HitEffect hitEffect;
@@ -38,6 +40,8 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         render = GetComponent<SpriteRenderer>();
+        cap = GetComponent<CapsuleCollider2D>();
+        deadCol = GetComponent<BoxCollider2D>();
 
         hitFlash = GetComponent<HitFlash>();
     }
@@ -50,6 +54,14 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
         hitEffect = GameManager.instance.CombatManager.HitEffect;
         hitLevelResolver = new HitLevelResolver();
         hitEffectTable = GameManager.instance.CombatManager.HitEffectTable;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            TakeDmg(1, transform);
+        }
     }
 
     private void Init()
@@ -128,6 +140,8 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
     {
         isDie = true;
         rigid.velocity = Vector3.zero;
+        cap.enabled = false;
+        deadCol.enabled = true;
 
         anim.SetTrigger("IsDie");
         curState = EPlayerState.DIE;
@@ -136,6 +150,11 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
 
         GameUI.instance.DieFade();
         gameObject.SetActive(false);
+    }
+
+    public void PlayDieSfx()
+    {
+        AudioManager.instance.PlaySfx(ESfx.DEATH, transform.position, transform);
     }
 }
 
