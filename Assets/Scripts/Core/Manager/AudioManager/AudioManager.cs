@@ -3,6 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class SfxData
+{
+    public ESfx type;
+    public AudioClip clip;
+
+    [Range(0f, 1f)]
+    public float volume = 1f;
+}
+
 public class AudioManager : Singleton<AudioManager>
 {
     AudioSource[] sfxSources;
@@ -11,7 +21,7 @@ public class AudioManager : Singleton<AudioManager>
 
     [Header("Clip")]
     [SerializeField] AudioClip[] bgmClips;
-    [SerializeField] AudioClip[] sfxClips;
+    [SerializeField] SfxData[] sfxDatas;
 
     [Header("Volume")]
     [Range(0f, 1f)] public float masterVolume = 1.0f;
@@ -88,20 +98,29 @@ public class AudioManager : Singleton<AudioManager>
             sfxIndex = (sfxIndex + 1) % sfxSources.Length;
         }
 
+        int indexSfx = (int)_eSfx;
+
+        if (indexSfx < 0 || indexSfx >= sfxDatas.Length) return;
+
+        SfxData data = sfxDatas[indexSfx];
+
         source.transform.parent = _parent;
         source.transform.position = _pos;
         source.minDistance = _minDist;
         source.maxDistance = _maxDist;
-        source.PlayOneShot(sfxClips[(int)_eSfx], sfxVolume * masterVolume);
+
+        source.PlayOneShot(data.clip,data.volume * sfxVolume * masterVolume);
     }
 
     public void PlaySfxUI(ESfx _eSfx)
     {
         int sfxIndex = (int)_eSfx;
-        if (sfxIndex >= 0 && sfxIndex < sfxClips.Length)
-        {
-            sfx2DSource.PlayOneShot(sfxClips[sfxIndex], sfxVolume * masterVolume);
-        }
+
+        if (sfxIndex < 0 || sfxIndex >= sfxDatas.Length) return;
+
+        SfxData data = sfxDatas[sfxIndex];
+
+        sfx2DSource.PlayOneShot(data.clip, data.volume * sfxVolume * masterVolume);
     }
 
     public void SetMasterVolume(float _volume)

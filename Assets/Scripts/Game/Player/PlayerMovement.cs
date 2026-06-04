@@ -7,8 +7,10 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody2D rigid { get; private set; }
     CapsuleCollider2D cap;
 
-    PlayerManager playerManager;
     PlayerMovementState moveState;
+
+    PlayerManager playerManager;
+    GameState gameState;
 
     public float inputX { get; private set; }
     float curSpeed = 1;
@@ -19,8 +21,12 @@ public class PlayerMovement : MonoBehaviour
     public bool isGround { get; private set; }
     bool wasGround;
 
-    [SerializeField] float jumpPower = 10f; 
+    [SerializeField] float jumpPower = 5f; 
     [SerializeField] int jumpCount = 0;
+    [SerializeField] float jumpHoldTime = 0.2f;
+    [SerializeField] float jumpHoldForce = 10f;
+    float jumpTimer;
+    bool isJumpHolding;
 
     public bool isDash { get; private set; }
     [SerializeField] float dashSpeed = 10;
@@ -48,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
         moveState = new PlayerMovementState();
 
         playerManager = GetComponent<PlayerManager>();
+        gameState = GameManager.instance.GameState;
     }
 
     private void Start()
@@ -58,6 +65,8 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         if (playerManager.PlayerStatus.IsDie) return;
+
+        if (!gameState.CanPlayerControl()) return;
 
         InputX();
         CheckWall();
@@ -122,11 +131,34 @@ public class PlayerMovement : MonoBehaviour
 
         rigid.velocity = new Vector2(rigid.velocity.x, jumpPower);
 
+        jumpTimer = jumpHoldTime;
+        isJumpHolding = true;
+
         AudioManager.instance.PlaySfx(ESfx.JUMPUP, transform.position, transform);
+    }
+
+    public void JumpHold()
+    {
+        if (!isJumpHolding) return;
+
+        jumpTimer -= Time.fixedDeltaTime;
+
+        if (jumpTimer <= 0)
+        {
+            isJumpHolding = false;
+            return;
+        }
+
+        if(Input.GetKey(KeyCode.Space))
+        {
+            rigid.velocity += Vector2.up * jumpHoldForce * Time.fixedDeltaTime;
+        }
     }
 
     public void StopJump()
     {
+        isJumpHolding = false;
+
         if(rigid.velocity.y > 0f) 
         {
             rigid.velocity = new Vector2(rigid.velocity.x, rigid.velocity.y * 0.5f);
@@ -217,6 +249,8 @@ public class PlayerMovement : MonoBehaviour
         float jumpY = wallJumpY;
 
         rigid.velocity = new Vector2(jumpX, jumpY);
+
+        AudioManager.instance.PlaySfx(ESfx.JUMPUP, transform.position, transform);
     }
 
     private void CheckWallJumpTimer()

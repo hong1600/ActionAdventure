@@ -39,22 +39,22 @@ public class OptionManager : Singleton<OptionManager>
 
     public void ClickOption()
     {
-        panel.OpenPanel(optionPanel);
+        panel.OpenPanel(optionPanel, EPanelAnimType.FADE);
     }
 
     public void ClickBack()
     {
-        panel.ClosePanel();
+        panel.ClosePanel(EPanelAnimType.FADE);
     }
 
     public void ClickAudio()
     {
-        panel.OpenPanel(audioPanel);
+        panel.OpenPanel(audioPanel, EPanelAnimType.FADE);
     }
 
     public void ClickVideo()
     {
-        panel.OpenPanel(videoPanel);
+        panel.OpenPanel(videoPanel, EPanelAnimType.FADE);
     }
 
     public void ClickLanguage()

@@ -35,11 +35,11 @@ public class InventoryUI : MonoBehaviour
         {
             if (!inventoryPanel.gameObject.activeSelf)
             {
-                panel.OpenPanel(inventoryPanel);
+                panel.OpenPanel(inventoryPanel, EPanelAnimType.FADE);
             }
             else
             {
-                panel.ClosePanel();
+                panel.ClosePanel(EPanelAnimType.FADE);
             }
         }
 

@@ -30,7 +30,7 @@ public class LobbySlotUI : MonoBehaviour
 
         SetProfileUI();
 
-        fade = UIManager.instance.Fade;
+        fade = UIManager.instance.Panel.Fade;
     }
 
     private void SetProfileUI()

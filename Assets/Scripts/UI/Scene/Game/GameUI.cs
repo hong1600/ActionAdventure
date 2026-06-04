@@ -11,16 +11,16 @@ public class GameUI : Singleton<GameUI>
     PanelUI panel;
 
     [SerializeField] InteractionUI interactionUI;
-    public InteractionUI InteractionUI { get { return interactionUI; } }
     [SerializeField] ItemAcquireUI itemAcquireUI;
-    public ItemAcquireUI ItemAcquireUI { get { return itemAcquireUI; } }
+    [SerializeField] DialogueUI dialogueUI;
+    [SerializeField] PlayerStatUI playerStatUI;
 
     private void Start()
     {
         panel = UIManager.instance.Panel;
         panel.Init();
 
-        fade = UIManager.instance.Fade;
+        fade = UIManager.instance.Panel.Fade;
 
         StartCoroutine(fade.StartFadeOut(fade.FadeImg, 4f));
     }
@@ -37,4 +37,8 @@ public class GameUI : Singleton<GameUI>
         yield return StartCoroutine(fade.StartFadeOut(fade.FadeImg, 2f));
     }
 
+    public InteractionUI InteractionUI { get { return interactionUI; } }
+    public ItemAcquireUI ItemAcquireUI { get { return itemAcquireUI; } }
+    public DialogueUI DialogueUI { get { return dialogueUI; } }
+    public PlayerStatUI PlayerStatUI { get { return playerStatUI;} }
 }

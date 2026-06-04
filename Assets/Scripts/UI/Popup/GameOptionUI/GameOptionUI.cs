@@ -21,18 +21,18 @@ public class GameOptionUI : MonoBehaviour
         {
             if (panel.HasPanel())
             {
-                panel.ClosePanel();
+                panel.ClosePanel(EPanelAnimType.FADE);
             }
             else
             {
-                panel.OpenPanel(gameOptionPanel);
+                panel.OpenPanel(gameOptionPanel, EPanelAnimType.FADE);
             }
         }
     }
 
     public void ClickContinue()
     {
-        panel.ClosePanel();
+        panel.ClosePanel(EPanelAnimType.FADE);
     }
 
     public void ClickOption() 
@@ -42,7 +42,7 @@ public class GameOptionUI : MonoBehaviour
 
     public void ClickExit()
     {
-        panel.OpenPanel(ExitPanel);
+        panel.OpenPanel(ExitPanel, EPanelAnimType.FADE);
     }
 
     public void ClickAgree()
@@ -54,6 +54,6 @@ public class GameOptionUI : MonoBehaviour
 
     public void ClickCancle()
     {
-        panel.ClosePanel();
+        panel.ClosePanel(EPanelAnimType.FADE);
     }
 }

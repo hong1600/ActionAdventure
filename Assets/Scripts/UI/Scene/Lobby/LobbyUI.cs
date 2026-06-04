@@ -15,7 +15,7 @@ public class LobbyUI : MonoBehaviour
 
     private void Start()
     {
-        fade = UIManager.instance.Fade;
+        fade = UIManager.instance.Panel.Fade;
 
         fade.FadeImg.color = new Color(0, 0, 0, 1);
 
@@ -29,12 +29,12 @@ public class LobbyUI : MonoBehaviour
 
     public void ClickStartBtn()
     {
-        panel.OpenPanel(selectPanel);
+        panel.OpenPanel(selectPanel, EPanelAnimType.FADE);
     }
 
     public void ClickBackBtn()
     {
-        panel.ClosePanel();
+        panel.ClosePanel(EPanelAnimType.FADE);
     }
 
     public void ClickOptionBtn()

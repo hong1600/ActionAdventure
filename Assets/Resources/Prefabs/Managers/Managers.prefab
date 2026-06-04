@@ -51,6 +51,51 @@ MonoBehaviour:
   resSet: {fileID: 501966266349479026}
   screenSet: {fileID: 8010529128647107922}
   qualitySet: {fileID: 4294314255656637925}
+--- !u!1 &562048638784833217
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5017853003491171772}
+  - component: {fileID: 5589316371532845094}
+  m_Layer: 0
+  m_Name: Fade
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5017853003491171772
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 562048638784833217}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7886929485379269402}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5589316371532845094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 562048638784833217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da373dc8bcfcef843b6c46246cb76812, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeImg: {fileID: 2787423780693905397}
 --- !u!1 &759544433140338698
 GameObject:
   m_ObjectHideFlags: 0
@@ -186,8 +231,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9177135435063833691}
   - component: {fileID: 3808512800566559486}
-  - component: {fileID: 8873271327721874280}
-  - component: {fileID: 4197318374882119795}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -209,6 +252,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8780496518119054285}
+  - {fileID: 7886929485379269402}
   m_Father: {fileID: 1517363522584378253}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3808512800566559486
@@ -223,31 +267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34e59b92934889a4cb1e714b72b119dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8873271327721874280
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1824631254765455491}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e26d390d872d18f489c8308f41ce2d72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4197318374882119795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1824631254765455491}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da373dc8bcfcef843b6c46246cb76812, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fadeImg: {fileID: 2787423780693905397}
+  panel: {fileID: 5119110731163406617}
 --- !u!1 &2269486558144386112
 GameObject:
   m_ObjectHideFlags: 0
@@ -543,6 +563,53 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -40}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &4992468230321647087
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7886929485379269402}
+  - component: {fileID: 5119110731163406617}
+  m_Layer: 0
+  m_Name: PanelUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7886929485379269402
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4992468230321647087}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5017853003491171772}
+  m_Father: {fileID: 9177135435063833691}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5119110731163406617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4992468230321647087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e26d390d872d18f489c8308f41ce2d72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fade: {fileID: 5589316371532845094}
+  scale: {fileID: 0}
 --- !u!1 &5659511224872486579
 GameObject:
   m_ObjectHideFlags: 0
@@ -712,17 +779,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgmClips:
   - {fileID: 8300000, guid: 0cffa37f4bc010b4c885509247449dc6, type: 3}
-  sfxClips:
-  - {fileID: 8300000, guid: bd2c80b023c76e04c8aa9a1e6b3151f0, type: 3}
-  - {fileID: 8300000, guid: aa5afae48f35c5f4183d4837e5be751f, type: 3}
-  - {fileID: 8300000, guid: 60cf4d2e3c8635c4e861cdef5357c32f, type: 3}
-  - {fileID: 8300000, guid: 5325a422cba6d1847970f9a58eae4cb7, type: 3}
-  - {fileID: 8300000, guid: 6b4318e8c46fddf44b9ea7261b120b50, type: 3}
-  - {fileID: 8300000, guid: 9e4d23e42db1814438fbf7bf1c3a5f75, type: 3}
-  - {fileID: 8300000, guid: 937a72d9e5783ba4f9bd1d9560cb461a, type: 3}
-  - {fileID: 8300000, guid: a62a64f01daa02c4a987cb5a7f4eb054, type: 3}
-  - {fileID: 8300000, guid: 490562705aa6ccb48a7ed6bcbe82749a, type: 3}
-  - {fileID: 8300000, guid: e3ff8b7cd3d5a4643ae2dc3a1caab62e, type: 3}
+  sfxDatas:
+  - type: 0
+    clip: {fileID: 8300000, guid: bd2c80b023c76e04c8aa9a1e6b3151f0, type: 3}
+    volume: 0.8
+  - type: 1
+    clip: {fileID: 8300000, guid: aa5afae48f35c5f4183d4837e5be751f, type: 3}
+    volume: 0.6
+  - type: 2
+    clip: {fileID: 8300000, guid: 60cf4d2e3c8635c4e861cdef5357c32f, type: 3}
+    volume: 1
+  - type: 3
+    clip: {fileID: 8300000, guid: 5325a422cba6d1847970f9a58eae4cb7, type: 3}
+    volume: 0.6
+  - type: 4
+    clip: {fileID: 8300000, guid: 6b4318e8c46fddf44b9ea7261b120b50, type: 3}
+    volume: 0.5
+  - type: 5
+    clip: {fileID: 8300000, guid: 490562705aa6ccb48a7ed6bcbe82749a, type: 3}
+    volume: 0.25
+  - type: 6
+    clip: {fileID: 8300000, guid: 937a72d9e5783ba4f9bd1d9560cb461a, type: 3}
+    volume: 0.3
+  - type: 7
+    clip: {fileID: 8300000, guid: a62a64f01daa02c4a987cb5a7f4eb054, type: 3}
+    volume: 0.9
+  - type: 8
+    clip: {fileID: 8300000, guid: e3ff8b7cd3d5a4643ae2dc3a1caab62e, type: 3}
+    volume: 0.5
   masterVolume: 1
   bgmVolume: 1
   sfxVolume: 1

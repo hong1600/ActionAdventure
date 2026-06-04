@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,7 @@ public class PlayerStatUI : MonoBehaviour
 {
     PlayerStatus playerStatus;
 
+    [SerializeField] GameObject statPanel;
     [SerializeField] List<Image> hpImg = new List<Image>();
 
     [SerializeField] Image mpImg;
@@ -44,5 +46,15 @@ public class PlayerStatUI : MonoBehaviour
         float ratio = (float)_curMp / _maxMp;
 
         mpMat.SetFloat("_Fill", ratio);
+    }
+
+    public void ShowStatUI()
+    {
+        statPanel.transform.DOScale(Vector3.one, 0.3f).SetUpdate(true);
+    }
+
+    public void HideStatUI()
+    {
+        statPanel.transform.DOScale(Vector3.zero, 0.3f).SetUpdate(true);
     }
 }

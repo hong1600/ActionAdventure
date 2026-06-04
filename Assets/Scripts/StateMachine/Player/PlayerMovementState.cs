@@ -154,6 +154,7 @@ public class PlayerAirState : PlayerMovementBaseState
     {
         player.Move();
         player.Gravity();
+        player.JumpHold();
     }
 }
 

@@ -20,8 +20,6 @@ public class InteractionUI : MonoBehaviour
 
     [SerializeField] float effectDuration = 0.25f;
 
-    [SerializeField] Vector3 offset = new Vector3 (0, 1.5f, 0);
-
     Dictionary<EInteractionText, string> textDic = new Dictionary<EInteractionText, string>();
 
     Tween curTween;
@@ -32,11 +30,11 @@ public class InteractionUI : MonoBehaviour
         textDic.Add(EInteractionText.ACQUIRE, "È¹µæ");
     }
 
-    public void Show(EInteractionText _type, Transform _target)
+    public void Show(EInteractionText _type, Transform _target, Vector3 _offset)
     {
         if (curTween != null) curTween.Kill(true);
 
-        interactionText.transform.position = _target.position + offset;
+        interactionText.transform.position = _target.position + _offset;
 
         string text;
         if (textDic.TryGetValue(_type, out text)) interactionText.text = text;

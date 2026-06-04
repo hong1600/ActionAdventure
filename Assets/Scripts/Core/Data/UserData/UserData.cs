@@ -35,7 +35,7 @@ public class InventoryData
 [Serializable]
 public class OptionData
 {
-    public float masterVol = 1f;
+    public float masterVol = 0.7f;
     public float bgmVol = 1f;
     public float sfxVol = 1f;
 

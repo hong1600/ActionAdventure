@@ -11,6 +11,9 @@ public class Item : MonoBehaviour, IInteractable
 
     [SerializeField] int skillID;
 
+    [SerializeField] Vector3 offset;
+    public Vector3 interactionOffset { get { return offset; } }
+
     private void Start()
     {
         skillData = DataManager.instance.TableSkill.Get(skillID);

@@ -9,6 +9,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] CombatManager combatManager;
     [SerializeField] PlayerSpawner playerSpawner;
     [SerializeField] MapLoader mapLoader;
+    [SerializeField] GameState gameState;
 
     protected override void Awake()
     {
@@ -25,7 +26,7 @@ public class GameManager : Singleton<GameManager>
         }
         else
         {
-            mapLoader.LoadMap(EMap.MAP1);
+            mapLoader.LoadMap(EMap.MAP2);
         }
     }
 
@@ -39,4 +40,6 @@ public class GameManager : Singleton<GameManager>
 
     public CombatManager CombatManager { get { return combatManager; } }
     public PlayerSpawner PlayerSpawner { get { return playerSpawner; } }
+    public MapLoader MapLoader { get {  return mapLoader; } }
+    public GameState GameState { get {  return gameState; } }
 }

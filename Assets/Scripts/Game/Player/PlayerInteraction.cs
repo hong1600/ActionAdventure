@@ -4,6 +4,8 @@ using UnityEngine;
 
 public interface IInteractable
 {
+    Vector3 interactionOffset { get; }
+
     void Interact();
 }
 
@@ -12,10 +14,14 @@ public class PlayerInteraction : MonoBehaviour
     IInteractable curTarget;
 
     InteractionUI interactionUI;
+    GameState gameState;
+    DialogueUI dialogueUI;
 
     private void Start()
     {
         interactionUI = GameUI.instance.InteractionUI;
+        gameState = GameManager.instance.GameState;
+        dialogueUI = GameUI.instance.DialogueUI;
     }
 
     private void Update()
@@ -24,7 +30,22 @@ public class PlayerInteraction : MonoBehaviour
         {
             if (curTarget != null)
             {
+                if (gameState.curState == EGameState.DIALOAGUE)
+                {
+                    if(GameUI.instance.DialogueUI.isTyping) 
+                    {
+                        dialogueUI.SkipTyping();
+                    }
+                    else
+                    {
+                        DialogueManager.instance.NextLine();
+                    }
+
+                    return;
+                }
+
                 curTarget.Interact();
+                interactionUI.Hide();
             }
         }
     }
@@ -39,7 +60,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             curTarget = interactable;
 
-            interactionUI.Show(EInteractionText.INVESTIGATE, coll.transform);
+            interactionUI.Show(EInteractionText.INVESTIGATE, coll.transform, interactable.interactionOffset);
         }
     }
 

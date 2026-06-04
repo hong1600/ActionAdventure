@@ -216,8 +216,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 5
-  jumpPower: 10
+  jumpPower: 5
   jumpCount: 0
+  jumpHoldTime: 0.15
+  jumpHoldForce: 50
   dashSpeed: 10
   dashTime: 0.2
   wallDir: 0
