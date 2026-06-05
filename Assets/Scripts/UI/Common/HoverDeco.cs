@@ -11,7 +11,7 @@ public class HoverDeco : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     [SerializeField] RectTransform leftHoverDeco;
     [SerializeField] RectTransform rightHoverDeco;
 
-    [SerializeField] float spacing = 20f;
+    [SerializeField] float spacing = 70f;
 
     private void Update()
     {

@@ -10,11 +10,19 @@ public enum EDialogueType
     QUESTPROGRESS,
 }
 
+public enum EInteractionResult
+{
+    NONE,
+    OPENSHOP,
+}
+
 [System.Serializable]
 public class DialogueData
 {
-    public string npcName;
     [TextArea]
     public string[] lines;
+
     public EDialogueType dialogueType;
+
+    public EInteractionResult resultType;
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour, IInteractable
 {
+    [SerializeField] string npcName;
+
     [SerializeField] DialogueData[] normalDatas;
     [SerializeField] DialogueData[] questStartDatas;
     [SerializeField] DialogueData[] questProgressDatas;
@@ -20,16 +22,16 @@ public class NPC : MonoBehaviour, IInteractable
         switch (type) 
         {
             case EDialogueType.NORMAL:
-                DialogueManager.instance.StartDialogue(normalDatas);
+                DialogueManager.instance.StartDialogue(normalDatas, npcName);
                 break;
             case EDialogueType.QUESTSTART:
-                DialogueManager.instance.StartDialogue(questStartDatas);
+                DialogueManager.instance.StartDialogue(questStartDatas, npcName);
                 break;
             case EDialogueType.QUESTPROGRESS:
-                DialogueManager.instance.StartDialogue(questProgressDatas);
+                DialogueManager.instance.StartDialogue(questProgressDatas, npcName);
                 break;
             case EDialogueType.QUESTCOMPLETE:
-                DialogueManager.instance.StartDialogue(questCompleteDatas);
+                DialogueManager.instance.StartDialogue(questCompleteDatas, npcName);
                 break;
         }
     }

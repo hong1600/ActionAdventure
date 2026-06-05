@@ -14,14 +14,14 @@ public class DialogueManager : Singleton<DialogueManager>
         base.Awake();
     }
 
-    public void StartDialogue(DialogueData[] _data)
+    public void StartDialogue(DialogueData[] _data, string _name)
     {
         curData = _data;
 
         curDataIndex = 0;
         curLineIndex = 0;
 
-        GameUI.instance.DialogueUI.OpenDialogue();
+        GameUI.instance.DialogueUI.OpenDialogue(_name);
 
         ShowCurLine();
     }

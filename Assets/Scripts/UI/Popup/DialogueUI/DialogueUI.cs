@@ -12,6 +12,7 @@ public class DialogueUI : MonoBehaviour
 
     [SerializeField] CanvasGroup dialoguePanel;
     [SerializeField] TextMeshProUGUI dialogueText;
+    [SerializeField] TextMeshProUGUI npcName;
 
     Coroutine typingRoutine;
     public bool isTyping { get; private set; }
@@ -23,11 +24,13 @@ public class DialogueUI : MonoBehaviour
         gameState = GameManager.instance.GameState;
     }
 
-    public void OpenDialogue()
+    public void OpenDialogue(string _name)
     {
         gameState.SetState(EGameState.DIALOAGUE);
 
         playerStatUI.HideStatUI();
+
+        npcName.text = _name;
 
         panelUI.OpenPanel(dialoguePanel, EPanelAnimType.SCALE);
     }
