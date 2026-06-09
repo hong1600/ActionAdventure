@@ -267,7 +267,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34e59b92934889a4cb1e714b72b119dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panel: {fileID: 5119110731163406617}
+  systemPanel: {fileID: 5119110731163406617}
+  gamePanel: {fileID: 5119110731163406617}
 --- !u!1 &2269486558144386112
 GameObject:
   m_ObjectHideFlags: 0
@@ -609,7 +610,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fade: {fileID: 5589316371532845094}
-  scale: {fileID: 0}
 --- !u!1 &5659511224872486579
 GameObject:
   m_ObjectHideFlags: 0

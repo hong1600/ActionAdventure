@@ -11,7 +11,7 @@ public class LobbyFlow : MonoBehaviour
 
     private void Start()
     {
-        fade = UIManager.instance.Panel.Fade;
+        fade = UIManager.instance.SystemPanel.Fade;
 
         userDataLoader = DataManager.instance.UserData;
 

@@ -26,7 +26,7 @@ public class InventoryUI : MonoBehaviour
 
     private void Start()
     {
-        panel = UIManager.instance.Panel;
+        panel = UIManager.instance.GamePanel;
     }
 
     private void Update()

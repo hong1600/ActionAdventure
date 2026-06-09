@@ -32,7 +32,7 @@ public class ItemAcquireUI : MonoBehaviour
     private void Start()
     {
         localization = DataManager.instance.TableLocalization;
-        fade = UIManager.instance.Panel.Fade;
+        fade = UIManager.instance.GamePanel.Fade;
     }
 
     private void OnEnable()

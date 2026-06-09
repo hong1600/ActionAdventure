@@ -19,14 +19,14 @@ public class DialogueUI : MonoBehaviour
 
     private void Start()
     {
-        panelUI = UIManager.instance.Panel;
+        panelUI = UIManager.instance.GamePanel;
         playerStatUI = GameUI.instance.PlayerStatUI;
         gameState = GameManager.instance.GameState;
     }
 
     public void OpenDialogue(string _name)
     {
-        gameState.SetState(EGameState.DIALOAGUE);
+        gameState.SetState(EGameState.DIALOGUE);
 
         playerStatUI.HideStatUI();
 

@@ -26,7 +26,7 @@ public class OptionManager : Singleton<OptionManager>
     {
         loader = DataManager.instance.OptionDataLoader;
         optionData = DataManager.instance.OptionDataLoader.OptionData;
-        panel = UIManager.instance.Panel;
+        panel = UIManager.instance.SystemPanel;
 
         resSet.Init(optionData.resWidth, optionData.resHeight);
         screenSet.Init(optionData.screenMode);

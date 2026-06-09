@@ -26,11 +26,11 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.UpArrow))
         {
             if (curTarget != null)
             {
-                if (gameState.curState == EGameState.DIALOAGUE)
+                if (gameState.curState == EGameState.DIALOGUE)
                 {
                     if(GameUI.instance.DialogueUI.isTyping) 
                     {
@@ -43,6 +43,8 @@ public class PlayerInteraction : MonoBehaviour
 
                     return;
                 }
+
+                if (gameState.curState != EGameState.PLAY) return;
 
                 curTarget.Interact();
                 interactionUI.Hide();

@@ -12,7 +12,7 @@ public class GameOptionUI : MonoBehaviour
 
     private void Start()
     {
-        panel = UIManager.instance.Panel;
+        panel = UIManager.instance.SystemPanel;
     }
 
     private void Update()

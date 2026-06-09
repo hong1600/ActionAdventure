@@ -8,6 +8,7 @@ public class PlayerCombat : MonoBehaviour
     Animator anim;
 
     PlayerManager playerManager;
+    GameState gameState;
 
     public bool isAttack { get; private set; } = false;
 
@@ -16,14 +17,19 @@ public class PlayerCombat : MonoBehaviour
     private void Awake()
     {
         anim = GetComponent<Animator>();
+
         playerManager = GetComponent<PlayerManager>();
+        gameState = GameManager.instance.GameState;
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A) && CanAttack())
+        if (gameState.curState == EGameState.PLAY)
         {
-            DoAttack();
+            if (Input.GetKeyDown(KeyCode.A) && CanAttack())
+            {
+                DoAttack();
+            }
         }
     }
 

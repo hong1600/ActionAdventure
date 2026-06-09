@@ -6,7 +6,8 @@ public enum EGameState
 {
     PLAY,
     STOP,
-    DIALOAGUE,
+    DONTMOVE,
+    DIALOGUE,
 }
 
 public class GameState : MonoBehaviour

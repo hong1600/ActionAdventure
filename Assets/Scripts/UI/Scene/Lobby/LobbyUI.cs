@@ -15,13 +15,13 @@ public class LobbyUI : MonoBehaviour
 
     private void Start()
     {
-        fade = UIManager.instance.Panel.Fade;
+        fade = UIManager.instance.SystemPanel.Fade;
 
         fade.FadeImg.color = new Color(0, 0, 0, 1);
 
         StartCoroutine(fade.StartFadeOut(fade.FadeImg, 3f));
 
-        panel = UIManager.instance.Panel;
+        panel = UIManager.instance.SystemPanel;
         panel.Init();
 
         AudioManager.instance.PlayBgm(EBgm.LOBBY);

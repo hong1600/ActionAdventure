@@ -12,7 +12,7 @@ public class IntroUI : MonoBehaviour
 
     private void Start()
     {
-        fade = UIManager.instance.Panel.Fade;
+        fade = UIManager.instance.SystemPanel.Fade;
 
         StartCoroutine(StartTextFadeInOut());
     }

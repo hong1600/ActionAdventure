@@ -3857,7 +3857,7 @@ PrefabInstance:
       addedObject: {fileID: 3889692391024757801}
     - targetCorrespondingSourceObject: {fileID: 8865749864346044615, guid: 6ecf5bcec20adfa429a788f660f29ff5, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7665297432112328590}
+      addedObject: {fileID: 6829451863150373416}
   m_SourcePrefab: {fileID: 100100000, guid: 6ecf5bcec20adfa429a788f660f29ff5, type: 3}
 --- !u!1 &6317916016366444810 stripped
 GameObject:
@@ -3909,7 +3909,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.125, y: 1.90625}
   m_EdgeRadius: 0
---- !u!114 &7665297432112328590
+--- !u!114 &6829451863150373416
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3918,16 +3918,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6317916016366444810}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6194f3c37adf5874080547865db7bbce, type: 3}
+  m_Script: {fileID: 11500000, guid: 621c2eca4af499940bf33e78de88d3af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcName: "\uAC8C\uC2DC\uD310"
-  normalDatas: []
-  questStartDatas: []
-  questProgressDatas: []
-  questCompleteDatas: []
+  questList:
+  - {fileID: 11400000, guid: c30d62f4295878d43ac898480dd8fa56, type: 2}
+  - {fileID: 11400000, guid: fa868ada2852f7748b1b084457c974a2, type: 2}
   offset: {x: 0, y: 2.5, z: 0}
-  type: 0
 --- !u!4 &7259494579888818782 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5195500821582717843, guid: 6ecf5bcec20adfa429a788f660f29ff5, type: 3}
