@@ -5,27 +5,24 @@ using UnityEngine;
 public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
     private static T _instance;
+
     public static T instance
     {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = FindObjectOfType<T>();
-            }
-            return _instance;
-        }
+        get { return  _instance; }
     }
 
     protected virtual void Awake()
     {
+        T current = this as T;
+
         if (_instance == null)
         {
-            _instance = this as T;
+            _instance = current;
+            return;
         }
-        else
-        {
-            Destroy(this.gameObject);
-        }
+
+        if (_instance == current) return;
+
+        Destroy(this.gameObject);
     }
 }

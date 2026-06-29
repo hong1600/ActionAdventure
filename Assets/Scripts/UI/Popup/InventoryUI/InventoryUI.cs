@@ -14,39 +14,28 @@ public class InventoryUI : MonoBehaviour
 
     List<ItemSlot> slotList = new List<ItemSlot>();
 
-    private void OnEnable()
-    {
-        Item.OnItemAcquired += SetItem;
-    }
-
-    private void OnDisable()
-    {
-        Item.OnItemAcquired -= SetItem;
-    }
-
     private void Start()
     {
         panel = UIManager.instance.GamePanel;
+
+        SkillItem.OnSkillItemAcquired += SetSkillItem;
+        InputManager.instance.OnInputI += OpenInventoryPanel;
     }
 
-    private void Update()
+    private void OnDestroy()
     {
-        if(Input.GetKeyDown(KeyCode.I)) 
-        {
-            if (!inventoryPanel.gameObject.activeSelf)
-            {
-                panel.OpenPanel(inventoryPanel, EPanelAnimType.FADE);
-            }
-            else
-            {
-                panel.ClosePanel(EPanelAnimType.FADE);
-            }
-        }
-
-        if (!inventoryPanel.gameObject.activeSelf) return;
+        SkillItem.OnSkillItemAcquired -= SetSkillItem;
+        InputManager.instance.OnInputI -= OpenInventoryPanel;
     }
 
-    public void SetItem(TableSkill.Info _skill)
+    private void OpenInventoryPanel()
+    {
+        if (inventoryPanel.gameObject.activeSelf) return;
+
+        panel.OpenPanel(inventoryPanel, EPanelAnimType.FADE);
+    }
+
+    public void SetSkillItem(ItemData _data)
     {
     }
 }

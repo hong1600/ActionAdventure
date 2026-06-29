@@ -10,16 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6d7646c209a791048877280b772b3ce2, type: 3}
-  m_Name: StartQuest_1
+  m_Name: HuntBoss
   m_EditorClassIdentifier: 
   questID: 0
   questName: "\uB054\uCC0D\uD55C \uD3ED\uAD70"
   questImg: {fileID: 21300000, guid: e6269c5efa3fc294e8807a202aa14dde, type: 3}
+  questState: 0
+  questType: 0
+  questCondition:
+    enemyType: 5
+    itemID: 0
+    needCount: 1
+    curCount: 0
+  rewardAmount: 100
+  rewardImg: {fileID: 21300000, guid: a252142e5af0102419be52276f92f90c, type: 3}
   questDesc: "\uACE8\uC218\uC5D0\uC11C \uAC00\uC7A5 \uAC70\uB300\uD558\uACE0 \uB054\uCC0D\uD55C
     \uBF08\uC758 \uD3EC\uC2DD\uC790, \uD574\uACE8 \uD3ED\uAD70\uC774 \uC704\uB300\uD55C
     \uAE38 \uC704\uC5D0 \uC788\uB294 \uB3D9\uAD74\uC744 \uB3CC\uC544\uB2E4\uB2C8\uACE0
     \uC788\uC5B4\uC694. \uC774 \uC57C\uC218\uB97C \uC5C6\uC560\uC11C \uC6B0\uB9AC\uC758
     \uC548\uC804\uC744 \uC9C0\uCF1C\uC8FC\uC138\uC694!"
-  rewardAmount: 100
-  rewardImg: {fileID: 21300000, guid: a252142e5af0102419be52276f92f90c, type: 3}
-  questState: 1

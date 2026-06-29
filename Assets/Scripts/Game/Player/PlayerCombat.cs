@@ -28,21 +28,25 @@ public class PlayerCombat : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.A) && CanAttack())
             {
-                DoAttack();
+                playerManager.PlayerAnimation.PlayAttack();
             }
         }
-    }
-
-    private void DoAttack()
-    {
-        playerManager.PlayerAnimation.PlayAttack();
     }
 
     public void AttackStart()
     {
         isAttack = true;
-        attackBox.SetActive(true);
         AudioManager.instance.PlaySfx(ESfx.ATTACK, transform.position, transform);
+    }
+
+    public void DoAttack()
+    {
+        attackBox.SetActive(true);
+    }
+    public void AttackEnd()
+    {
+        attackBox.SetActive(false);
+        isAttack = false;
     }
 
     private bool CanAttack()
@@ -52,12 +56,6 @@ public class PlayerCombat : MonoBehaviour
         if (playerManager.PlayerMovement.isWall) return false;
 
         return true;
-    }
-
-    public void AttackEnd()
-    {
-        attackBox.SetActive(false);
-        isAttack = false;
     }
 
     public void DoDashDamage() { }

@@ -352,6 +352,7 @@ GameObject:
   - component: {fileID: 3638134348643056220}
   - component: {fileID: 3982493519778132655}
   - component: {fileID: 2094160650506448300}
+  - component: {fileID: 2414632994979583275}
   - component: {fileID: 1116185186464139599}
   - component: {fileID: 4725441939726676958}
   - component: {fileID: 5447488497218821677}
@@ -361,7 +362,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4777254194347893088
 Transform:
   m_ObjectHideFlags: 0
@@ -397,6 +398,7 @@ MonoBehaviour:
   searchRadius: 5
   curHp: 0
   maxHp: 5
+  enemyType: 0
 --- !u!114 &3638134348643056220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -423,6 +425,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coll: {fileID: 5447488497218821677}
   moveSpeed: 5
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  dirDistance: 1
+  turnSpeed: 6
 --- !u!114 &2094160650506448300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -440,6 +447,23 @@ MonoBehaviour:
   - {fileID: 4777254192485836642}
   - {fileID: 4777254193388359192}
   - {fileID: 4777254192540089483}
+  flashTime: 0.15
+--- !u!114 &2414632994979583275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4777254194347893091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 829649f80b12e9548a1affe7dba64f02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questData: {fileID: 0}
+  itemData: {fileID: 0}
+  dropPrefab: {fileID: 0}
+  amount: 0
 --- !u!95 &1116185186464139599
 Animator:
   serializedVersion: 5

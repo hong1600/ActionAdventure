@@ -10787,7 +10787,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4291875251515850699, guid: cdd27949b2594f84d9bf766998b7ca4b, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 150
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 4291875251515850699, guid: cdd27949b2594f84d9bf766998b7ca4b, type: 3}
       propertyPath: m_LocalScale.x
@@ -10803,7 +10803,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7085904485402551319, guid: cdd27949b2594f84d9bf766998b7ca4b, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 150
+      value: 90
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

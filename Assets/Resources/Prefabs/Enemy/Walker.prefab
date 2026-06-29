@@ -186,13 +186,14 @@ GameObject:
   - component: {fileID: 6878290378526362710}
   - component: {fileID: 3600532631769829778}
   - component: {fileID: 667333889926692381}
+  - component: {fileID: -6778579292973684782}
   m_Layer: 7
-  m_Name: Normal
+  m_Name: Walker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8375028066944256371
 Transform:
   m_ObjectHideFlags: 0
@@ -240,6 +241,7 @@ MonoBehaviour:
   searchRadius: 5
   curHp: 0
   maxHp: 5
+  enemyType: 2
 --- !u!114 &2904100281949127765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,7 +270,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackRange: 1.5
   attackCoolTime: 1.2
-  attackBox: {fileID: 0}
+  attackBox: {fileID: 5363378906040382732}
 --- !u!114 &1856054428368884937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,6 +286,7 @@ MonoBehaviour:
   renders:
   - {fileID: 8375028065914672564}
   - {fileID: 8375028065265380698}
+  flashTime: 0.15
 --- !u!95 &6878290378526362710
 Animator:
   serializedVersion: 5
@@ -377,6 +380,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.35, y: 1.5}
   m_EdgeRadius: 0
+--- !u!114 &-6778579292973684782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8375028066944256370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 829649f80b12e9548a1affe7dba64f02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questData: {fileID: 11400000, guid: fa868ada2852f7748b1b084457c974a2, type: 2}
+  itemData: {fileID: 11400000, guid: e9e04c779f9c0064fa7bdfe39520a862, type: 2}
+  dropPrefab: {fileID: 1357398833807169029, guid: 648fa4f027f3e1d49907247bd9208c6f, type: 3}
+  amount: 1
 --- !u!1001 &305832619154074594
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -438,6 +457,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22e2a4fe67b7fdf4abb7a2d423ec0395, type: 3}
+--- !u!1 &5363378906040382732 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5643016480455646958, guid: 22e2a4fe67b7fdf4abb7a2d423ec0395, type: 3}
+  m_PrefabInstance: {fileID: 305832619154074594}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8791629085989907116 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9096335800358682958, guid: 22e2a4fe67b7fdf4abb7a2d423ec0395, type: 3}

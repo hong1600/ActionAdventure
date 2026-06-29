@@ -6,10 +6,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemAcquireUI : MonoBehaviour
+public class SkillAcquireUI : MonoBehaviour
 {
     TableLocalization localization;
     FadeUI fade;
+    GameState gameState;
 
     [SerializeField] GameObject acquirePanel;
     Image acquireImg;
@@ -33,24 +34,25 @@ public class ItemAcquireUI : MonoBehaviour
     {
         localization = DataManager.instance.TableLocalization;
         fade = UIManager.instance.GamePanel.Fade;
+
+        SkillManager.instance.onSkillItemAcquired += SetSkillUI;
+
+        gameState = GameManager.instance.GameState;
     }
 
-    private void OnEnable()
+    private void OnDestroy()
     {
-        Item.OnItemAcquired += SetSkillUI;
+        SkillManager.instance.onSkillItemAcquired -= SetSkillUI;
     }
 
-    private void OnDisable()
+    public void SetSkillUI(ItemData _data)
     {
-        Item.OnItemAcquired -= SetSkillUI;
-    }
+        skillNameText.text = localization.Get(_data.itemName);
+        skillDescText.text = localization.Get(_data.itemDesc);
 
-    public void SetSkillUI(TableSkill.Info _skill)
-    {
-        skillNameText.text = localization.Get(_skill.NameKey);
-        skillDescText.text = localization.Get(_skill.DescKey);
+        skillImg.sprite = _data.itemImg;
 
-        skillImg.sprite = SpriteManager.instance.GetSprite(_skill.SpriteName);
+        gameState.SetState(EGameState.DONTMOVE);
 
         StartCoroutine(StartFade());
     }
@@ -61,7 +63,7 @@ public class ItemAcquireUI : MonoBehaviour
 
         acquirePanel.SetActive(true);
 
-        StartCoroutine(fade.StartFadeIn(acquireImg, 2f, 0.8f));
+        StartCoroutine(fade.StartFadeIn(acquireImg, 2f, 0.99f));
         StartCoroutine(fade.StartFadeIn(skillImg, 2f));
         yield return StartCoroutine(fade.StartFadeIn(skillNameText, 2f));
 
@@ -79,6 +81,8 @@ public class ItemAcquireUI : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         acquirePanel.SetActive(false);
+
+        gameState.SetState(EGameState.PLAY);
     }
 
     private void SetFade()

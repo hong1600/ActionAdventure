@@ -6,8 +6,6 @@ public class Board : MonoBehaviour, IInteractable
 {
     BoardUI boardUI;
 
-    [SerializeField] List<QuestData> questList;
-
     [SerializeField] Vector3 offset;
 
     public Vector3 interactionOffset { get { return offset; } }
@@ -15,12 +13,14 @@ public class Board : MonoBehaviour, IInteractable
     private void Start()
     {
         boardUI = GameUI.instance.BoardUI;
-
-        boardUI.InitBoard(questList);
     }
 
     public void Interact()
     {
+        List<QuestData> questList = QuestManager.instance.GetCanStartQuestList();
+
+        boardUI.InitBoard(questList);
+
         boardUI.OpenPanel();
     }
 
@@ -28,4 +28,6 @@ public class Board : MonoBehaviour, IInteractable
     {
         Destroy(_questPrefab);
     }
+
+
 }

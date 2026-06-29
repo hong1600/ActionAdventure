@@ -11,17 +11,19 @@ public class GameUI : Singleton<GameUI>
     PanelUI panel;
 
     [SerializeField] InteractionUI interactionUI;
-    [SerializeField] ItemAcquireUI itemAcquireUI;
+    [SerializeField] SkillAcquireUI skillAcquireUI;
     [SerializeField] DialogueUI dialogueUI;
     [SerializeField] PlayerStatUI playerStatUI;
     [SerializeField] BoardUI boardUI;
+    [SerializeField] QuestUI questUI;
+    [SerializeField] ToastUI toastUI;
 
     private void Start()
     {
-        panel = UIManager.instance.GamePanel;
+        panel = UIManager.instance.SystemPanel;
         panel.Init();
 
-        fade = UIManager.instance.GamePanel.Fade;
+        fade = UIManager.instance.SystemPanel.Fade;
 
         StartCoroutine(fade.StartFadeOut(fade.FadeImg, 4f));
     }
@@ -39,8 +41,10 @@ public class GameUI : Singleton<GameUI>
     }
 
     public InteractionUI InteractionUI { get { return interactionUI; } }
-    public ItemAcquireUI ItemAcquireUI { get { return itemAcquireUI; } }
+    public SkillAcquireUI SkillAcquireUI { get { return skillAcquireUI; } }
     public DialogueUI DialogueUI { get { return dialogueUI; } }
     public PlayerStatUI PlayerStatUI { get { return playerStatUI;} }
     public BoardUI BoardUI { get { return boardUI;} }
+    public QuestUI QuestUI { get { return questUI; } }
+    public ToastUI ToastUI { get { return toastUI;} }
 }

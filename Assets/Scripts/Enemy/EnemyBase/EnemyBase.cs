@@ -3,6 +3,16 @@ using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
+public enum EEnemyType
+{
+    NONE,
+    FLY,
+    JUMPER,
+    WALKER,
+    ELITE,
+    BOSS
+}
+
 public abstract class EnemyBase : MonoBehaviour, ITakeDmg
 {
     public EnemyAnim anim { get; private set; }
@@ -15,6 +25,7 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
     HitLevelResolver hitLevelResolver;
     HitEffectTable hitEffectTable;
     HitFlash hitFlash;
+    EnemyDrop enemyDrop;
 
     [SerializeField] LayerMask targetLayer;
     [SerializeField] float searchRadius = 5f;
@@ -27,12 +38,17 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
     public Transform target { get; private set; }
 
 
+    [SerializeField] EEnemyType enemyType;
+    public EEnemyType EnemyType { get { return enemyType; } }
+
+
     private void Awake()
     {
         anim = GetComponent<EnemyAnim>();
 
         attack = GetComponent<EnemyAttackBase>();
         movement = GetComponent<EnemyMovementBase>();
+        enemyDrop = GetComponent<EnemyDrop>();
     }
 
     private void Start()
@@ -150,6 +166,7 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
     {
         anim.Die();
         isDie = true;
+        enemyDrop.Drop(transform.position);
 
         yield return new WaitForSeconds(1f);
 

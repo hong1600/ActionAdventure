@@ -6,11 +6,16 @@ using UnityEngine.UI;
 public class FadeUI : MonoBehaviour
 {
     [SerializeField] Image fadeImg;
-    public Image FadeImg { get; private set; }
+    public Image FadeImg { get { return fadeImg; } }
 
-    private void Awake()
+    public Coroutine FadeIn(Graphic _ui, float _duration, float _alpha = 1)
     {
-        FadeImg = fadeImg;
+        return StartCoroutine(StartFadeIn(_ui, _duration, _alpha));
+    }
+
+    public Coroutine FadeOut(Graphic _ui, float _duration)
+    {
+        return StartCoroutine(StartFadeOut(_ui, _duration));
     }
 
     public IEnumerator StartFadeOut(Graphic _ui, float _duration)

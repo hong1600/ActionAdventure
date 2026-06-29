@@ -2,37 +2,50 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class GameOptionUI : MonoBehaviour
 {
     [SerializeField] CanvasGroup gameOptionPanel;
     [SerializeField] CanvasGroup ExitPanel;
 
-    PanelUI panel;
+    PanelUI systemPanel;
+    PanelUI gamePanel;
 
     private void Start()
     {
-        panel = UIManager.instance.SystemPanel;
+        systemPanel = UIManager.instance.SystemPanel;
+        gamePanel = UIManager.instance.GamePanel;
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (panel.HasPanel())
+            if (systemPanel.HasPanel())
             {
-                panel.ClosePanel(EPanelAnimType.FADE);
+                systemPanel.ClosePanel(EPanelAnimType.FADE);
+                return;
             }
-            else
+
+            if(gamePanel.HasPanel()) 
             {
-                panel.OpenPanel(gameOptionPanel, EPanelAnimType.FADE);
+                gamePanel.ClosePanel(EPanelAnimType.FADE, ReturnPlayState);
+                return;
             }
+
+            systemPanel.OpenPanel(gameOptionPanel, EPanelAnimType.FADE);
         }
+    }
+
+    private void ReturnPlayState()
+    {
+        GameManager.instance.GameState.SetState(EGameState.PLAY);
     }
 
     public void ClickContinue()
     {
-        panel.ClosePanel(EPanelAnimType.FADE);
+        systemPanel.ClosePanel(EPanelAnimType.FADE);
     }
 
     public void ClickOption() 
@@ -42,7 +55,7 @@ public class GameOptionUI : MonoBehaviour
 
     public void ClickExit()
     {
-        panel.OpenPanel(ExitPanel, EPanelAnimType.FADE);
+        systemPanel.OpenPanel(ExitPanel, EPanelAnimType.FADE);
     }
 
     public void ClickAgree()
@@ -54,6 +67,6 @@ public class GameOptionUI : MonoBehaviour
 
     public void ClickCancle()
     {
-        panel.ClosePanel(EPanelAnimType.FADE);
+        systemPanel.ClosePanel(EPanelAnimType.FADE);
     }
 }

@@ -60,6 +60,8 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         moveState.Init(this, playerManager);
+
+        GameManager.instance.GameState.OnStateChange += StopMove;
     }
 
     private void Update()
@@ -91,6 +93,15 @@ public class PlayerMovement : MonoBehaviour
         if (isWallJump) return;
 
         rigid.velocity = new Vector2(curSpeed, rigid.velocity.y);
+    }
+
+    private void StopMove(EGameState _state)
+    {
+        if (_state == EGameState.DONTMOVE)
+        {
+            curSpeed = 0;
+            playerManager.PlayerAnimation.ChangeAnim(EPlayerAnim.IDLE);
+        }
     }
 
     public void InputX()

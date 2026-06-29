@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,6 +27,7 @@ public class PanelUI : MonoBehaviour
     {
         if (isAnim) return;
 
+        isAnim = true;
         StartCoroutine(StartOpenPanel(_panel, _animType));
     }
 
@@ -59,14 +61,15 @@ public class PanelUI : MonoBehaviour
         }
     }
 
-    public void ClosePanel(EPanelAnimType _animType)
+    public void ClosePanel(EPanelAnimType _animType, Action _onClose = null)
     {
         if (isAnim) return;
 
-        StartCoroutine(StartClosePanel(_animType));
+        isAnim = true;
+        StartCoroutine(StartClosePanel(_animType, _onClose));
     }
 
-    IEnumerator StartClosePanel(EPanelAnimType _animType)
+    IEnumerator StartClosePanel(EPanelAnimType _animType, Action _onClose = null)
     {
         if (panelStack.Count == 0) yield break;
 
@@ -81,6 +84,8 @@ public class PanelUI : MonoBehaviour
                 yield return StartCoroutine(StartScaleClosePanel(curPanel, 0.3f));
                 break;
         }
+
+        _onClose?.Invoke();
 
         if (panelStack.Count > 0)
         {
