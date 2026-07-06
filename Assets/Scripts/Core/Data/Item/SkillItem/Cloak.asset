@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemType: 2
   ItemID: 4
-  QuestID: 0
+  skillID: 3
   itemName: "\uB9DD\uD1A0 "
   itemImg: {fileID: 21300000, guid: 1292d3388e3ef3b4992ee155fe07d21d, type: 3}
   itemDesc: "\uC55E\uC73C\uB85C \uB3CC\uC9C4\uD569\uB2C8\uB2E4."

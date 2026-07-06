@@ -32,6 +32,7 @@ public class ItemData : ScriptableObject
 {
     public EItemType ItemType;
     public EItemID ItemID;
+    public ESkillID skillID;
 
     public string itemName;
     public Sprite itemImg;

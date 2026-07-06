@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
 
     PlayerManager playerManager;
     GameState gameState;
+    SkillManager skillManager;
 
     public float inputX { get; private set; }
     float curSpeed = 1;
@@ -55,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
 
         playerManager = GetComponent<PlayerManager>();
         gameState = GameManager.instance.GameState;
+        skillManager = SkillManager.instance;
     }
 
     private void Start()
@@ -133,7 +135,14 @@ public class PlayerMovement : MonoBehaviour
 
     public bool CanJump()
     {
-        return jumpCount < 2;
+        if (jumpCount <= 0) return true;
+
+        if (skillManager.IsUnlocked(ESkillID.DOUBLEJUMP))
+        {
+            return jumpCount < 2;
+        }
+
+        return false;
     }
 
     public void DoJump()
@@ -178,7 +187,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool CanDash()
     {
-        if (!isGround && dashCount > 0)
+        if (!isGround && dashCount > 0 || !skillManager.IsUnlocked(ESkillID.DASH))
         {
             return false;
         }
@@ -206,7 +215,7 @@ public class PlayerMovement : MonoBehaviour
         isWall = false;
         wallDir = 0;
 
-        if (isGround) return;
+        if (isGround || !skillManager.IsUnlocked(ESkillID.CLIMB)) return;
 
         Vector2 origin = new Vector2(cap.bounds.center.x, cap.bounds.center.y - 0.2f);
         float dist = cap.bounds.extents.x + 0.05f;
