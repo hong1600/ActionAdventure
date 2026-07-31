@@ -14,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
     SkillManager skillManager;
 
     public float inputX { get; private set; }
+    public float inputY { get; private set; } 
+
     float curSpeed = 1;
     [SerializeField] float walkSpeed = 1;
 
@@ -44,8 +46,12 @@ public class PlayerMovement : MonoBehaviour
     float wallJumpTimer;
     bool isWallJump;
 
-    [SerializeField] float gravity = -9.81f;
+    [SerializeField] float gravityScale = -9.81f;
     [SerializeField] float maxFallSpeed = -10f;
+
+    public bool isNearLadder { get; private set; }
+    bool isClimbLadder;
+    [SerializeField] float climbSpeed = 3f;
 
     private void Awake()
     {
@@ -300,7 +306,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isGround)
         {
-            float newY = rigid.velocity.y + gravity * Time.deltaTime;
+            float newY = rigid.velocity.y + gravityScale * Time.deltaTime;
 
             if (newY < maxFallSpeed)
             {
@@ -334,5 +340,43 @@ public class PlayerMovement : MonoBehaviour
         }
 
         isGround = nowGround;
+    }
+
+    public void SetLadder(bool _isNear)
+    {
+        isNearLadder = _isNear;
+
+        if (_isNear == false)
+        {
+            isClimbLadder = false;
+        }
+    }
+
+    public bool CanClimbLadder()
+    {
+        InputY();
+
+        return isNearLadder && Mathf.Abs(inputY) > 0;
+    }
+
+    public void InputY()
+    {
+        inputY = Input.GetAxisRaw("Vertical");
+    }
+
+    public void StartClimbLadder()
+    {
+        rigid.gravityScale = 0f;
+        rigid.velocity = Vector3.zero;
+    }
+
+    public void ClimbLadder()
+    {
+        rigid.velocity = new Vector2(0f, inputY * climbSpeed);
+    }
+
+    public void EndClimbLadder()
+    {
+        rigid.gravityScale = 1;
     }
 }

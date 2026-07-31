@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public enum EEnemyType
@@ -16,7 +15,7 @@ public enum EEnemyType
 public abstract class EnemyBase : MonoBehaviour, ITakeDmg
 {
     public EnemyAnim anim { get; private set; }
-    EnemyState enemyState;
+    protected EnemyState enemyState;
 
     public EnemyAttackBase attack { get; private set; }
     public EnemyMovementBase movement { get; private set; }
@@ -53,8 +52,7 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
 
     private void Start()
     {
-        enemyState = new EnemyState();
-        enemyState.Init(this);
+        InitStateMachine();
 
         curHp = maxHp;
 
@@ -62,6 +60,12 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
         hitLevelResolver = new HitLevelResolver();
         hitEffectTable = GameManager.instance.CombatManager.HitEffectTable;
         hitFlash = GetComponent<HitFlash>();
+    }
+
+    protected virtual void InitStateMachine()
+    {
+        enemyState = new EnemyState();
+        enemyState.Init(this);
     }
 
     private void FixedUpdate()
@@ -135,7 +139,7 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
         {
             curHp -= _dmg;
 
-            anim.Hit();
+            anim.PlayAnim(EEnemyAnim.HIT);
 
             HitContext ctx = new HitContext();
             ctx.isCritical = true;
@@ -164,9 +168,13 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
 
     IEnumerator StartDie()
     {
-        anim.Die();
+        anim.PlayAnim(EEnemyAnim.DIE);
         isDie = true;
-        enemyDrop.Drop(transform.position);
+
+        if (enemyDrop != null)
+        {
+            enemyDrop.Drop(transform.position);
+        }
 
         yield return new WaitForSeconds(1f);
 

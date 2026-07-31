@@ -12,6 +12,8 @@ public class Chest : MonoBehaviour, IInteractable
     [SerializeField] ItemData itemData;
     [SerializeField] GameObject dropItemPrefab;
 
+    public bool isOpened { get; private set; } = false;
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -31,5 +33,7 @@ public class Chest : MonoBehaviour, IInteractable
         DropItem dropItem = obj.GetComponent<DropItem>();
 
         dropItem.SetItem(itemData);
+
+        isOpened = true;
     }
 }

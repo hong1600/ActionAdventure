@@ -15,6 +15,7 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
     CapsuleCollider2D cap;
     BoxCollider2D deadCol;
 
+
     PlayerSpawner playerSpawner;
     HitEffect hitEffect;
     public HitEffect HitEffect { get { return hitEffect; } }
@@ -22,12 +23,12 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
     HitEffectTable hitEffectTable;
     HitFlash hitFlash;
 
-    GameObject playerObj;
-
     public EPlayerState curState { get; private set; } = EPlayerState.PLAY;
 
     [SerializeField] int curHp = 5;
+    public int CurHp { get { return curHp; }}
     int maxHp = 5;
+    public int MaxHp { get { return maxHp; }}
 
     [SerializeField] int curMp = 0;
     int maxMp = 10;
@@ -49,7 +50,6 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
     private void Start()
     {
         playerSpawner = GameManager.instance.PlayerSpawner;
-        playerSpawner.onSpawnEvent += Init;
 
         hitEffect = GameManager.instance.CombatManager.HitEffect;
         hitLevelResolver = new HitLevelResolver();
@@ -62,11 +62,6 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
         {
             TakeDmg(1, transform);
         }
-    }
-
-    private void Init()
-    {
-        playerObj = playerSpawner.playerObj;
     }
 
     public void TakeDmg(int _dmg, Transform _attacker)

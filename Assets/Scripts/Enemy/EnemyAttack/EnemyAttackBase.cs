@@ -21,6 +21,7 @@ public abstract class EnemyAttackBase : MonoBehaviour
     public virtual bool CanAttack(Transform _target)
     {
         if (_target == null) return false;
+        if (isAttacking || isCooldown) return false;
 
         float distance = Vector2.Distance(transform.position, _target.position);
 
@@ -48,9 +49,9 @@ public abstract class EnemyAttackBase : MonoBehaviour
 
     protected virtual IEnumerator StartAttack(Transform _target)
     {
-        enemy.anim.Attack();
+        enemy.anim.PlayAnim(EEnemyAnim.ATTACK);
 
-        yield return null;
+        yield break;
     }
 
     protected IEnumerator StartCooldown(float _cooldown)

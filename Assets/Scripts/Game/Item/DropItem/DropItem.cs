@@ -34,13 +34,20 @@ public class DropItem : MonoBehaviour
 
     private void PopOut()
     {
-        float dirX = Random.Range(-1f, 1);
+        float dirX = Random.Range(-0.5f, 0.5f);
 
         rigid.velocity = Vector2.zero;
 
         rigid.AddForce(new Vector2(dirX * popPowerX, popPowerY), ForceMode2D.Impulse);
 
         StartCoroutine(StartAcquireDelay());
+
+        Invoke(nameof(Stop), 2f);
+    }
+
+    private void Stop()
+    {
+        rigid.velocity = Vector2.zero;
     }
 
     IEnumerator StartAcquireDelay()

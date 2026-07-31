@@ -37,5 +37,7 @@ public class InventoryUI : MonoBehaviour
 
     public void SetSkillItem(ItemData _data)
     {
+
+
     }
 }

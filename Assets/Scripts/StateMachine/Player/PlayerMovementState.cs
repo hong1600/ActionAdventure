@@ -81,6 +81,12 @@ public class PlayerGroundState : PlayerMovementBaseState
             machine.SetState(new PlayerAirState(machine));
             return;
         }
+
+        if (player.CanClimbLadder())
+        {
+            machine.SetState(new PlayerClimbLadderState(machine));
+            return;
+        }
     }
 
     public override void FixedExecute()
@@ -142,6 +148,11 @@ public class PlayerAirState : PlayerMovementBaseState
                 }
             }
 
+            if (player.CanClimbLadder())
+            {
+                machine.SetState(new PlayerClimbLadderState(machine));
+                return;
+            }
         }
 
         if (Input.GetKeyUp(KeyCode.Space))
@@ -238,5 +249,44 @@ public class PlayerWallSlideState : PlayerMovementBaseState
     public override void FixedExecute()
     {
         player.FallWall();
+    }
+}
+
+public class PlayerClimbLadderState : PlayerMovementBaseState
+{
+    public PlayerClimbLadderState(StateMachine _machine) : base(_machine) { }
+
+    public override void Enter()
+    {
+        player.StartClimbLadder();
+        playerManager.PlayerAnimation.ChangeAnim(EPlayerAnim.CLIMBLADDER);
+    }
+
+    public override void Execute()
+    {
+        player.InputY();
+
+        if (!player.isNearLadder)
+        {
+            machine.SetState(new PlayerAirState(machine));
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            player.DoJump();
+            machine.SetState(new PlayerAirState(machine));
+            return;
+        }
+    }
+
+    public override void FixedExecute()
+    {
+        player.ClimbLadder();
+    }
+
+    public override void Exit()
+    {
+        player.EndClimbLadder();
     }
 }

@@ -2,38 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EEnemyAnim
+{
+    IDLE,
+    MOVE,
+    ATTACK,
+    DASH,
+    DASH_READY,
+    HIT,
+    DIE
+}
+
 public class EnemyAnim : MonoBehaviour
 {
     Animator anim;
+
+    EEnemyAnim curAnim;
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
     }
 
-    public void StartMove()
+    public void PlayAnim(EEnemyAnim _animType)
     {
-        anim.SetBool("isMove", true);
-    }
+        if (curAnim == _animType) return;
 
-    public void StopMove()
-    {
-        anim.SetBool("isMove", false);
-    }
+        curAnim = _animType;
 
-    public void Attack()
-    {
-        anim.SetTrigger("Attack");
-    }
-
-    public void Hit()
-    {
-        anim.SetTrigger("Hit");
-    }
-
-    public void Die()
-    {
-        anim.SetTrigger("Die");
+        anim.Play(_animType.ToString());
     }
 
     public void DoDashDamage() 

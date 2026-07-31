@@ -52,23 +52,23 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D coll)
+    private void OnTriggerEnter2D(Collider2D _coll)
     {
         if (interactionUI == null) return;
 
-        IInteractable interactable = coll.GetComponent<IInteractable>();
+        IInteractable interactable = _coll.GetComponent<IInteractable>();
 
         if (interactable != null)
         {
             curTarget = interactable;
 
-            interactionUI.Show(EInteractionText.INVESTIGATE, coll.transform, interactable.interactionOffset);
+            interactionUI.Show(EInteractionText.INVESTIGATE, _coll.transform, interactable.interactionOffset);
         }
     }
 
-    private void OnTriggerExit2D(Collider2D coll)
+    private void OnTriggerExit2D(Collider2D _coll)
     {
-        IInteractable interactable = coll.GetComponent<IInteractable>();
+        IInteractable interactable = _coll.GetComponent<IInteractable>();
 
         if (interactable != null && interactable == curTarget)
         {

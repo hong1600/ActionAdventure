@@ -8,8 +8,11 @@ public class PlayerStatUI : MonoBehaviour
 {
     PlayerStatus playerStatus;
 
+    [SerializeField] Transform hpPrefabParent;
+    [SerializeField] GameObject hpPrefab;
+
     [SerializeField] GameObject statPanel;
-    [SerializeField] List<Image> hpImg = new List<Image>();
+    [SerializeField] List<GameObject> hpList = new List<GameObject>();
 
     [SerializeField] Image mpImg;
     Material mpMat;
@@ -29,13 +32,30 @@ public class PlayerStatUI : MonoBehaviour
 
         playerStatus.onHpEvent += UpdateHp;
         playerStatus.onMpEvent += UpdateMp;
+
+        CreateHp(playerStatus.CurHp, playerStatus.MaxHp);
+    }
+
+    private void CreateHp(int _curHp, int _maxHp)
+    {
+        hpList.Clear();
+
+        for(int i = 0; i < _maxHp; i++) 
+        {
+            GameObject go = Instantiate(hpPrefab, hpPrefabParent);
+            GameObject hp = go.transform.GetChild(0).gameObject;
+
+            hpList.Add(hp);
+        }
+
+        UpdateHp(_curHp, _maxHp);
     }
 
     private void UpdateHp(int _curHp, int _maxHp)
     {
-        for(int i = 0; i < hpImg.Count; i++) 
+        for(int i = 0; i < hpList.Count; i++) 
         {
-            hpImg[i].enabled = i < _curHp;
+            hpList[i].SetActive(i < _curHp);
         }
     }
 

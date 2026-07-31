@@ -10,7 +10,8 @@ public enum EPlayerAnim
     JUMP,
     FALL,
     WALLSLIDE,
-    DASH
+    DASH,
+    CLIMBLADDER
 }
 
 

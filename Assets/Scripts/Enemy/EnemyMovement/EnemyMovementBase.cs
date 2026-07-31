@@ -6,7 +6,7 @@ public abstract class EnemyMovementBase : MonoBehaviour
 {
     protected EnemyBase enemyBase;
 
-    protected Rigidbody2D rigid;
+    public Rigidbody2D rigid { get; private set; }
     [SerializeField] Collider2D coll;
     EnemyAnim anim;
 
@@ -34,7 +34,7 @@ public abstract class EnemyMovementBase : MonoBehaviour
         if (!isMoving) 
         {
             isMoving = true;
-            anim.StartMove();
+            anim.PlayAnim(EEnemyAnim.MOVE);
         }
 
         OnMove(_dir);
@@ -48,13 +48,13 @@ public abstract class EnemyMovementBase : MonoBehaviour
         if(isMoving) 
         {
             isMoving = false;
-            anim.StopMove();
+            anim.PlayAnim(EEnemyAnim.IDLE);
         }
 
         rigid.velocity = Vector2.zero;
     }
 
-    protected void Turn(Vector2 _dir)
+    public void Turn(Vector2 _dir)
     {
         if (_dir.x < 0)
         {
