@@ -14,6 +14,12 @@ public class BossEnemy : EnemyBase
 
     [Header("Boss Slam")]
     [SerializeField] private BossSlamData slamData;
+    [SerializeField] SpikeSpawner spikeSpawner;
+    [SerializeField] GameObject impactEffect;
+    [SerializeField] GameObject impactObj;
+
+    [Header("Boss Projectile")]
+    [SerializeField] BossProjectileShooter projectileShooter;
 
     public float IdleTime => idleTime;
 
@@ -42,5 +48,30 @@ public class BossEnemy : EnemyBase
     public void SetDashAttackBox(bool _active)
     {
         dashData.AttackBox.SetActive(_active);
+    }
+
+    public void SetSlamAttackBox(bool _active)
+    {
+        slamData.AttackBox.SetActive(_active);
+    }
+
+    public void SpawnSpike()
+    {
+        spikeSpawner.SpawnSpike();
+    }
+
+    public bool IsProjectileShooting()
+    {
+        return projectileShooter.IsShooting;
+    }
+
+    public void SweepProjectile()
+    {
+        if(target == null) return;
+
+        float dirX = target.position.x - transform.position.x;
+
+        movement.Turn(new Vector2(dirX, 0f));
+        projectileShooter.Sweep(dirX);
     }
 }

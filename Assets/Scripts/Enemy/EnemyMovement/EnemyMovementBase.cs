@@ -15,6 +15,7 @@ public abstract class EnemyMovementBase : MonoBehaviour
     bool isMoving;
 
     protected bool isGround;
+    public bool IsGround => isGround;
 
     private void Awake()
     {

@@ -95,7 +95,8 @@ public class BossPattenState : BossAIState
             return;
         }
 
-        int random = Random.Range(0, 2);
+        //int random = Random.Range(0, 2);
+        int random = 3;
 
         switch (random)
         {
@@ -104,6 +105,12 @@ public class BossPattenState : BossAIState
                 break;
             case 1:
                 machine.SetState(new BossDashState(machine));
+                break;
+            case 2:
+                machine.SetState(new BossSlamState(machine));
+                break;
+            case 3:
+                machine.SetState(new BossProjectileState(machine));
                 break;
         }
     }
@@ -255,16 +262,15 @@ public class BossSlamState : BossAIState
         READY,
         AIR_WAIT,
         SLAM,
-        IMPACT,
-        RECOVERY
+        SPIKE,
     }
 
     private ESlamState curState;
 
     private Rigidbody2D rigid;
     private float timer;
-    private float targetX;
-    private bool isGroundHit;
+    private Vector2 target;
+    private bool wasGround;
 
     public BossSlamState(StateMachine _machine) : base(_machine) { }
 
@@ -273,17 +279,121 @@ public class BossSlamState : BossAIState
         rigid = boss.movement.rigid;
 
         boss.StopMove();
+        rigid.gravityScale = 0f;
+        boss.SetSlamAttackBox(false);
+
+        target = boss.target.position;
 
         curState = ESlamState.READY;
-        //timer = boss
 
+        boss.anim.PlayAnim(EEnemyAnim.IDLE);
     }
 
     public override void Execute()
     {
+        timer -= Time.deltaTime;
+
+        switch (curState) 
+        {
+            case ESlamState.READY:
+                Ready(); 
+                break;
+            case ESlamState.AIR_WAIT:
+                AirWait(); 
+                break;
+            case ESlamState.SLAM:
+                Slam(); 
+                break;
+            case ESlamState.SPIKE:
+                Spike(); 
+                break;
+        }
     }
 
-    public override void Exit()
+    private void Ready()
     {
+        boss.movement.Stop();
+        timer = boss.Slam.ReadyTime;
+        curState = ESlamState.AIR_WAIT;
+    }
+
+    private void AirWait()
+    {
+        if (timer > 0f) return;
+
+        Vector2 airPos = new Vector2(target.x, target.y + boss.Slam.TeleportHeight);
+        CameraManager.instance.CameraShake.ShakeCamera(0.3f);
+
+        boss.transform.position = airPos;
+
+        wasGround = true;
+        timer = boss.Slam.AirWaitTime;
+        curState = ESlamState.SLAM;
+    }
+
+    private void Slam()
+    {
+        if (timer > 0f) return;
+
+        boss.SetSlamAttackBox(true);
+        rigid.velocity = Vector2.down * boss.Slam.Speed;
+
+        if (!boss.movement.IsGround)
+        {
+            wasGround = false;
+            return;
+        }
+
+        if (!wasGround && boss.movement.IsGround)
+        {
+            boss.StopMove();
+            boss.SetSlamAttackBox(false);
+
+            boss.SpawnSpike();
+
+            CameraManager.instance.CameraShake.ShakeCamera(1f);
+
+            timer = boss.Slam.SpikeWaitTime;
+            curState = ESlamState.SPIKE;
+        }
+    }
+
+    private void Spike()
+    {
+        if (timer > 0f) return;
+
+        rigid.gravityScale = 1f;
+
+        machine.SetState(new BossIdleState(machine));
+    }
+}
+
+public class BossProjectileState : BossAIState
+{
+    bool isStarted;
+
+    public BossProjectileState(StateMachine _machine) : base(_machine) { }
+
+    public override void Enter()
+    {
+        boss.StopMove();
+        isStarted = false;
+
+        if (boss.target == null)
+        {
+            machine.SetState(new BossIdleState(machine));
+            return;
+        }
+
+        boss.SweepProjectile();
+        isStarted = true;
+    }
+
+    public override void Execute()
+    {
+        if (!isStarted) return;
+        if (boss.IsProjectileShooting()) return;
+
+        machine.SetState(new BossIdleState(machine));
     }
 }

@@ -49,7 +49,7 @@ public class HitEffect : MonoBehaviour
         AudioManager.instance.PlaySfx(_data.sfx, _ctx.target.position, _ctx.target);
 
         if(_data.useCameraShake)
-        cameraShake.ShakeCamera();
+        cameraShake.ShakeCamera(0.3f);
 
         _ctx.hitFlash.Flash();
     }

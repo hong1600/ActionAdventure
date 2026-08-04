@@ -8,7 +8,6 @@ public class CameraShake : MonoBehaviour
     [SerializeField] CinemachineVirtualCamera virtualCam;
     CinemachineBasicMultiChannelPerlin perlin;
 
-    [SerializeField] float shakeDuration = 0.3f;
     [SerializeField] float amp = 0.3f;
     [SerializeField] float freq = 0.11f;
 
@@ -17,23 +16,23 @@ public class CameraShake : MonoBehaviour
         perlin = virtualCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
     }
 
-    public void ShakeCamera()
+    public void ShakeCamera(float _duration)
     {
-        StartCoroutine(StartShakeCamera(freq));
+        StartCoroutine(StartShakeCamera(freq, _duration));
     }
 
-    IEnumerator StartShakeCamera(float _freq)
+    IEnumerator StartShakeCamera(float _freq, float _duration)
     {
         float t = 0f;
 
         perlin.m_AmplitudeGain = amp;
         perlin.m_FrequencyGain = freq;
 
-        while (t < shakeDuration) 
+        while (t < _duration) 
         {
             t += Time.deltaTime;
 
-            float norm = t / shakeDuration;
+            float norm = t / _duration;
 
             perlin.m_AmplitudeGain = Mathf.Lerp(amp, 0, norm);
 

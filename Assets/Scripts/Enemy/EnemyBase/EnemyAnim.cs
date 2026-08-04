@@ -9,6 +9,7 @@ public enum EEnemyAnim
     ATTACK,
     DASH,
     DASH_READY,
+    SLAMIMPACT,
     HIT,
     DIE
 }

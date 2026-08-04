@@ -6,19 +6,19 @@ using UnityEngine;
 public class BossDashData
 {
     [Header("Visual")]
-    [SerializeField] private GameObject attackBox;
+    [SerializeField] GameObject attackBox;
 
     [Header("Condition")]
-    [SerializeField] private float minDistance = 3f;
-    [SerializeField] private float maxDistance = 7f;
+    [SerializeField] float minDistance = 3f;
+    [SerializeField] float maxDistance = 7f;
 
     [Header("Timing")]
-    [SerializeField] private float readyTime = 0.5f;
-    [SerializeField] private float dashTime = 0.5f;
-    [SerializeField] private float recoveryTime = 0.7f;
+    [SerializeField] float readyTime = 0.5f;
+    [SerializeField] float dashTime = 0.5f;
+    [SerializeField] float recoveryTime = 0.7f;
 
     [Header("Movement")]
-    [SerializeField] private float speed = 8f;
+    [SerializeField] float speed = 8f;
 
     public GameObject AttackBox => attackBox;
 
@@ -35,21 +35,26 @@ public class BossDashData
 [System.Serializable]
 public class BossSlamData
 {
+    [Header("Visual")]
+    [SerializeField] GameObject attackBox;
+
     [Header("Timing")]
-    [SerializeField] private float readyTime = 0.3f;
-    [SerializeField] private float airWaitTime = 0.45f;
-    [SerializeField] private float impactTime = 0.15f;
-    [SerializeField] private float recoveryTime = 0.5f;
+    [SerializeField] float readyTime = 0.3f;
+    [SerializeField] float airWaitTime = 0.45f;
+    [SerializeField] float spikeWaitTime = 2f;
+    [SerializeField] float recoveryTime = 1f;
 
     [Header("Movement")]
-    [SerializeField] private float teleportHeight = 4f;
-    [SerializeField] private float slamSpeed = 14f;
+    [SerializeField] float teleportHeight = 4f;
+    [SerializeField] float speed = 14f;
+
+    public GameObject AttackBox => attackBox;
 
     public float ReadyTime => readyTime;
     public float AirWaitTime => airWaitTime;
-    public float ImpactTime => impactTime;
+    public float SpikeWaitTime => spikeWaitTime;
     public float RecoveryTime => recoveryTime;
 
     public float TeleportHeight => teleportHeight;
-    public float SlamSpeed => slamSpeed;
+    public float Speed => speed;
 }

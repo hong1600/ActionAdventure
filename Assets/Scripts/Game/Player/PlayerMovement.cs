@@ -50,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float maxFallSpeed = -10f;
 
     public bool isNearLadder { get; private set; }
-    bool isClimbLadder;
+    //bool isClimbLadder;
     [SerializeField] float climbSpeed = 3f;
 
     private void Awake()
@@ -348,7 +348,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (_isNear == false)
         {
-            isClimbLadder = false;
+            //isClimbLadder = false;
         }
     }
 
