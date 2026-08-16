@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6076701252123642448}
   - component: {fileID: 428799120826221371}
   - component: {fileID: 4522420281154814474}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: AttackBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -226,8 +226,9 @@ MonoBehaviour:
   wallfallSpeed: -1
   wallJumpX: 5
   wallJumpY: 9
-  gravity: -20
+  gravityScale: -9.81
   maxFallSpeed: -25
+  climbSpeed: 3
 --- !u!114 &3675535137219140683
 MonoBehaviour:
   m_ObjectHideFlags: 0

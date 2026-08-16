@@ -43,6 +43,7 @@ Transform:
   - {fileID: 5638807933853310756}
   - {fileID: 399940349921788786}
   - {fileID: 1927904629847117316}
+  - {fileID: 4855017146123478285}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8016566555584966738
@@ -82,8 +83,7 @@ MonoBehaviour:
     teleportHeight: 4
     speed: 20
   spikeSpawner: {fileID: 2853274411139564937}
-  impactEffect: {fileID: 6349225774222857112, guid: 89fca7b1bc370f0419f6abecd0f9307b, type: 3}
-  impactObj: {fileID: 7343196625974076221, guid: fd16cffaac44e6945a0035cd5f5a7db4, type: 3}
+  projectileShooter: {fileID: 6367533316968200815}
 --- !u!114 &8153265812172851188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -622,7 +622,7 @@ MonoBehaviour:
   - {fileID: 3324338668598758531}
   - {fileID: 8251275080249413771}
   - {fileID: 5373140467161200038}
-  spikePrefab: {fileID: 7343196625974076221, guid: fd16cffaac44e6945a0035cd5f5a7db4, type: 3}
+  spikePrefab: {fileID: 3644910118223164193, guid: 1a4556a20fbf4a24c83e8d3932001bd3, type: 3}
   waitEffect: {fileID: 6349225774222857112, guid: 89fca7b1bc370f0419f6abecd0f9307b, type: 3}
 --- !u!1 &5280841460210376753
 GameObject:
@@ -873,6 +873,58 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1927904629847117316}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6557183998836900918
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4855017146123478285}
+  - component: {fileID: 6367533316968200815}
+  m_Layer: 7
+  m_Name: ProjectileShooter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4855017146123478285
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6557183998836900918}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4105275436270494857}
+  m_Father: {fileID: 4633865963506118}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6367533316968200815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6557183998836900918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 163a460c7e3512d4ea6083c09bd089fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 9052899534327435798, guid: 76570a2f52615a142b32682348fc1ad8, type: 3}
+  shotCount: 7
+  startAngle: -15
+  endAngle: 45
+  shotInterval: 0.08
+  projectileSpeed: 10
+  fireTrs: {fileID: 4105275436270494857}
 --- !u!1 &7245656337457564509
 GameObject:
   m_ObjectHideFlags: 0
@@ -955,6 +1007,37 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!1 &8023923589931313479
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4105275436270494857}
+  m_Layer: 7
+  m_Name: FireTrs
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4105275436270494857
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8023923589931313479}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.155, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4855017146123478285}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8248615224204248414
 GameObject:
   m_ObjectHideFlags: 0

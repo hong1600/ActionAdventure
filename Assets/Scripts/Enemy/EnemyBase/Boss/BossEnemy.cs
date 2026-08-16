@@ -15,8 +15,6 @@ public class BossEnemy : EnemyBase
     [Header("Boss Slam")]
     [SerializeField] private BossSlamData slamData;
     [SerializeField] SpikeSpawner spikeSpawner;
-    [SerializeField] GameObject impactEffect;
-    [SerializeField] GameObject impactObj;
 
     [Header("Boss Projectile")]
     [SerializeField] BossProjectileShooter projectileShooter;

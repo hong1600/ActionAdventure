@@ -95,7 +95,7 @@ public class BossPattenState : BossAIState
             return;
         }
 
-        //int random = Random.Range(0, 2);
+        //int random = Random.Range(0, 3);
         int random = 3;
 
         switch (random)
