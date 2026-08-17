@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 5600320377556985931}
   - component: {fileID: 482186762218826981}
   - component: {fileID: 6924633945970870623}
-  - component: {fileID: 2864196866592540003}
+  - component: {fileID: 140829553907357958}
   m_Layer: 0
-  m_Name: ElevatorSwitch
+  m_Name: Switch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3945144762333219761}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.677, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -115,7 +115,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -131,7 +131,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 7.5, y: 7}
   m_EdgeRadius: 0
---- !u!114 &2864196866592540003
+--- !u!114 &140829553907357958
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -140,6 +140,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 3945144762333219761}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c09733f10e17e5842a7c868bd2f51b73, type: 3}
+  m_Script: {fileID: 11500000, guid: e5679e1632ca4f9418ba5b1c336db21b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

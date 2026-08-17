@@ -2,24 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ElevatorSwitch : Switch
+public class TrapDoorSwitch : Switch
 {
-    Elevator elevator;
+    TrapDoor trapDoor;
 
     protected override void Awake()
     {
         base.Awake();
 
-        elevator = GetComponentInParent<Elevator>();
+        trapDoor = GetComponentInParent<TrapDoor>();
     }
-
 
     protected override bool Interaction()
     {
-        if (elevator.isMoving) return false;
-
-        elevator.MoveNext();
-
+        trapDoor.OpenDoor();
         return true;
     }
 }
