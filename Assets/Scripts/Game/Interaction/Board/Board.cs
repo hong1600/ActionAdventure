@@ -7,8 +7,9 @@ public class Board : MonoBehaviour, IInteractable
     BoardUI boardUI;
 
     [SerializeField] Vector3 offset;
-
     public Vector3 interactionOffset { get { return offset; } }
+
+    public EInteractionText interactionText => EInteractionText.INVESTIGATE;
 
     private void Start()
     {

@@ -35,6 +35,9 @@ public enum ESfx
 public enum EBgm
 {
     LOBBY,
+    BOSS,
+    MAP1,
+    MAP2,
 }
 
 public enum EPlayerState

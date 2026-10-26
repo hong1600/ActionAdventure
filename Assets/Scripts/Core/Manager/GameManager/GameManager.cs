@@ -10,6 +10,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] PlayerSpawner playerSpawner;
     [SerializeField] MapLoader mapLoader;
     [SerializeField] GameState gameState;
+    [SerializeField] CheckPointManager checkPointManager;
 
     protected override void Awake()
     {
@@ -38,8 +39,9 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    public CombatManager CombatManager { get { return combatManager; } }
-    public PlayerSpawner PlayerSpawner { get { return playerSpawner; } }
-    public MapLoader MapLoader { get {  return mapLoader; } }
-    public GameState GameState { get {  return gameState; } }
+    public CombatManager CombatManager => combatManager;
+    public PlayerSpawner PlayerSpawner => playerSpawner;
+    public MapLoader MapLoader => mapLoader;
+    public GameState GameState => gameState;
+    public CheckPointManager CheckPointManager => checkPointManager;
 }

@@ -6,6 +6,7 @@ public class DamageDealer : MonoBehaviour
 {
     [SerializeField] int dmg = 1;
     [SerializeField] LayerMask targetLayers;
+    [SerializeField] Transform attacker;
 
     private void OnTriggerEnter2D(Collider2D coll)
     {
@@ -15,7 +16,7 @@ public class DamageDealer : MonoBehaviour
 
             if (target != null)
             {
-                target.TakeDmg(dmg, transform);
+                target.TakeDmg(dmg, attacker);
             }
         }
     }

@@ -7,7 +7,7 @@ public class KnockBack
     public void Apply(Rigidbody2D _rigid, Transform _attacker, Transform _target, float _power)
     {
         Vector2 dir = (_target.transform.position - _attacker.transform.position).normalized;
-        dir.y = 0.3f;
+        dir.y = 0.5f;
 
         _rigid.velocity = Vector2.zero;
 

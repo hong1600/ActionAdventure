@@ -8,7 +8,9 @@ using UnityEngine.UI;
 public enum EInteractionText
 {
     INVESTIGATE,
-    ACQUIRE
+    ACQUIRE,
+    REST,
+    DIALOGUE
 }
 
 public class InteractionUI : MonoBehaviour
@@ -28,6 +30,8 @@ public class InteractionUI : MonoBehaviour
     {
         textDic.Add(EInteractionText.INVESTIGATE, "Á¶»ç");
         textDic.Add(EInteractionText.ACQUIRE, "È¹µæ");
+        textDic.Add(EInteractionText.REST, "ÈÞ½Ä");
+        textDic.Add(EInteractionText.DIALOGUE, "µè±â");
     }
 
     public void Show(EInteractionText _type, Transform _target, Vector3 _offset)

@@ -17,6 +17,7 @@ public class GameUI : Singleton<GameUI>
     [SerializeField] BoardUI boardUI;
     [SerializeField] QuestUI questUI;
     [SerializeField] ToastUI toastUI;
+    [SerializeField] BossUI bossUI;
 
     private void Start()
     {
@@ -37,6 +38,8 @@ public class GameUI : Singleton<GameUI>
     {
         yield return StartCoroutine(fade.StartFadeIn(fade.FadeImg, 2f));
 
+        yield return StartCoroutine(GameManager.instance.CheckPointManager.Respawn());
+
         yield return StartCoroutine(fade.StartFadeOut(fade.FadeImg, 2f));
     }
 
@@ -47,4 +50,5 @@ public class GameUI : Singleton<GameUI>
     public BoardUI BoardUI { get { return boardUI;} }
     public QuestUI QuestUI { get { return questUI; } }
     public ToastUI ToastUI { get { return toastUI;} }
+    public BossUI BossUI { get { return bossUI;} }
 }

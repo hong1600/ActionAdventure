@@ -11,6 +11,9 @@ public enum EEnemyAnim
     DASH_READY,
     SLAMIMPACT,
     HIT,
+    TELEPORT_READY,
+    AREABURST_READY,
+    INTRO,
     DIE
 }
 

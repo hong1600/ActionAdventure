@@ -128,8 +128,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2189b50ee4041649a3570c4ad7c53e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawner: {fileID: 0}
   visual: {fileID: 8083895462092148049}
   attackBox: {fileID: 8589488292920203601}
+  hiddenOffsetY: -2
   riseStep1OffsetY: -1
   riseStepTime: 0.04
   activeTime: 0.5
@@ -211,7 +213,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: f8d1e4b73fcbc9d439e03b7e59c64ddb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -231,6 +233,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8083895462092148049}
     m_Modifications:
+    - target: {fileID: 674678997446202289, guid: 22e2a4fe67b7fdf4abb7a2d423ec0395, type: 3}
+      propertyPath: attacker
+      value: 
+      objectReference: {fileID: 7565462965640625685}
     - target: {fileID: 5132466988386754536, guid: 22e2a4fe67b7fdf4abb7a2d423ec0395, type: 3}
       propertyPath: m_Size.x
       value: 0.5

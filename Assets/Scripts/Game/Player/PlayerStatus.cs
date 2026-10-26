@@ -144,7 +144,6 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
         yield return new WaitForSeconds(1.37f);
 
         GameUI.instance.DieFade();
-        gameObject.SetActive(false);
     }
 
     public void PlayDieSfx()

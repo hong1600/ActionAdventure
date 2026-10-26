@@ -8,6 +8,8 @@ public abstract class Item : MonoBehaviour, IInteractable
     [SerializeField] Vector3 offset;
     public Vector3 interactionOffset { get { return offset; } }
 
+    public EInteractionText interactionText => EInteractionText.ACQUIRE;
+
     public void Interact()
     {
         InteractItem();

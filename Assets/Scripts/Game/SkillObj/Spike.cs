@@ -5,11 +5,13 @@ using UnityEngine.Rendering.Universal;
 
 public class Spike : MonoBehaviour
 {
+    [SerializeField] BossSpikeSpawner spawner;
+
     [Header("Spike")]
     [SerializeField] Transform visual;
     [SerializeField] GameObject attackBox;
 
-    float hiddenOffsetY;
+    [SerializeField] float hiddenOffsetY = -2f;
     [SerializeField] float riseStep1OffsetY = -1f;
 
     [SerializeField] float riseStepTime = 0.03f;
@@ -26,10 +28,9 @@ public class Spike : MonoBehaviour
 
     float timer;
 
+
     private void OnEnable()
     {
-        hiddenOffsetY = transform.localScale.y;
-
         StopAllCoroutines();
         StartCoroutine(StartRise());
 
@@ -52,10 +53,13 @@ public class Spike : MonoBehaviour
         warningLight.pointLightOuterRadius = Mathf.Lerp(startRadius, endRadius, ratio);
     }
 
+    public void SetSpawner(BossSpikeSpawner _spanwer)
+    {
+        spawner = _spanwer;
+    }
+
     IEnumerator StartRise()
     {
-        yield return new WaitForSeconds(1f);
-
         attackBox.SetActive(false);
 
         visual.localPosition = new Vector3(0f, hiddenOffsetY, 0f);
@@ -78,6 +82,8 @@ public class Spike : MonoBehaviour
         yield return new WaitForSeconds(hideStepTime);
 
         visual.localPosition =  new Vector3(0f, hiddenOffsetY, 0f);
+
+        spawner.OnSpikeFinished();
 
         Destroy(this.gameObject);
     }

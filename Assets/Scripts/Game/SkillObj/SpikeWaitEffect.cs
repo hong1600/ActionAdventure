@@ -1,14 +1,19 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UI;
 
 public class SpikeWaitEffect : MonoBehaviour
 {
     [SerializeField] float destroyTime = 2f;
+    [SerializeField] SpriteRenderer img;
 
     private void OnEnable()
     {
+        img.DOFade(1f, 2f);
+
         Destroy(gameObject, destroyTime);
     }
 

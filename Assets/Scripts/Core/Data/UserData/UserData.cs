@@ -36,7 +36,7 @@ public class InventoryData
 public class OptionData
 {
     public float masterVol = 0.7f;
-    public float bgmVol = 1f;
+    public float bgmVol = 0.1f;
     public float sfxVol = 1f;
 
     public int resWidth = 1920;

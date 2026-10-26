@@ -5,6 +5,7 @@ using UnityEngine;
 public interface IInteractable
 {
     Vector3 interactionOffset { get; }
+    EInteractionText interactionText { get; }
 
     void Interact();
 }
@@ -62,7 +63,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             curTarget = interactable;
 
-            interactionUI.Show(EInteractionText.INVESTIGATE, _coll.transform, interactable.interactionOffset);
+            interactionUI.Show(interactable.interactionText, _coll.transform, interactable.interactionOffset);
         }
     }
 

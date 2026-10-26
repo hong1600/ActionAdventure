@@ -14,6 +14,8 @@ public class Chest : MonoBehaviour, IInteractable
 
     public bool isOpened { get; private set; } = false;
 
+    public EInteractionText interactionText => EInteractionText.INVESTIGATE;
+
     private void Awake()
     {
         anim = GetComponent<Animator>();

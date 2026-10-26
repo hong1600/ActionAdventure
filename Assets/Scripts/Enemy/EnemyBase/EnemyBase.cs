@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,8 @@ public enum EEnemyType
 
 public abstract class EnemyBase : MonoBehaviour, ITakeDmg
 {
+    public event Action onTakeDamage;
+
     public EnemyAnim anim { get; private set; }
     protected EnemyState enemyState;
 
@@ -31,6 +34,9 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
 
     [SerializeField] float curHp;
     [SerializeField] float maxHp;
+
+    public float CurHp => curHp;
+    public float MaxHp => maxHp;
 
     bool isDie = false;
 
@@ -71,6 +77,8 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
     private void FixedUpdate()
     {
         if (isDie || hitEffect.IsKnockBack) return;
+
+        if (!CanUpdateState()) return;
 
         if (enemyState != null)
         {
@@ -141,8 +149,10 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
 
             anim.PlayAnim(EEnemyAnim.HIT);
 
+            onTakeDamage?.Invoke();
+
             HitContext ctx = new HitContext();
-            ctx.isCritical = true;
+            ctx.isCritical = false;
             ctx.isFinish = curHp <= 0;
 
             EHitLevel level = hitLevelResolver.Resolve(ctx);
@@ -185,5 +195,10 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, searchRadius);
+    }
+
+    protected virtual bool CanUpdateState()
+    {
+        return true;
     }
 }

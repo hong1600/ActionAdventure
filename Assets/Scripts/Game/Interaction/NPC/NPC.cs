@@ -17,6 +17,8 @@ public class NPC : MonoBehaviour, IInteractable
 
     public Vector3 interactionOffset { get { return offset; } }
 
+    public EInteractionText interactionText => EInteractionText.DIALOGUE;
+
     public void Interact()
     {
         switch (type) 
