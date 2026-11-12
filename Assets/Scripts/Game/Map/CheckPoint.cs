@@ -15,7 +15,10 @@ public enum ECheckPointID
 public class CheckPoint : MonoBehaviour, IInteractable
 {
     [SerializeField] CheckPointData data;
-    [SerializeField] Transform spawnPoint;
+    [SerializeField] Vector3 offset;
+    [SerializeField] Transform sitPoint;
+    Transform spawnPoint;
+    bool isResting;
 
     public CheckPointData CheckPointData => data; 
     public Vector3 SpawnPos => spawnPoint.position;
@@ -23,11 +26,55 @@ public class CheckPoint : MonoBehaviour, IInteractable
     public Vector3 interactionOffset { get { return offset; } }
     public EInteractionText interactionText => EInteractionText.REST;
 
-    [SerializeField] Vector3 offset;
-
-    public void Interact()
+    private void Awake()
     {
+        spawnPoint = transform;
+    }
+
+    public void Interact() { }
+
+    public void Interact(PlayerManager _player)
+    {
+        if (isResting) return;
+
+        StartCoroutine(StartRest(_player));
+    }
+
+    IEnumerator StartRest(PlayerManager _player)
+    {
+        isResting = true;
+
+        GameManager.instance.GameState.SetState(EGameState.DONTMOVE);
+
+        Rigidbody2D rigid = _player.PlayerMovement.rigid;
+
+        rigid.velocity = Vector2.zero;
+        rigid.position = sitPoint.position;
+
+        _player.PlayerAnimation.ChangeAnim(EPlayerAnim.REST);
+
+        yield return new WaitForSeconds(0.5f);
+
+        _player.PlayerStatus.RestHp();
+
+        _player.GetComponent<HitFlash>().Flash(0.5f);
+
         GameManager.instance.CheckPointManager.Activate(this);
+
+        while (true)
+        {
+            float inputX = Input.GetAxisRaw("Horizontal");
+
+            if (inputX != 0) break;
+
+            yield return null;
+        }
+
+        _player.PlayerAnimation.ChangeAnim(EPlayerAnim.IDLE);
+
+        GameManager.instance.GameState.SetState(EGameState.PLAY);
+
+        isResting = false;
     }
 
     private void OnEnable()

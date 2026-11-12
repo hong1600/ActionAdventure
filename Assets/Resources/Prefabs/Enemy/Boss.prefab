@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 95874158880099268}
   - component: {fileID: 70012100074183034}
   - component: {fileID: 50760522753152062}
+  - component: {fileID: -6659766654872334920}
   m_Layer: 7
   m_Name: Boss
   m_TagString: Untagged
@@ -157,7 +158,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   renders: []
-  flashTime: 0.15
 --- !u!212 &212832719579855464
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -293,6 +293,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &-6659766654872334920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1516778740484128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d5fe7d5d51b1334bbc706b525019d47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  invincibleTime: 0.5
+  knockBackDelay: 0.15
 --- !u!1 &3817610454712612294
 GameObject:
   m_ObjectHideFlags: 0

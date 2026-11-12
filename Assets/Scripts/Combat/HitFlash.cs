@@ -9,28 +9,26 @@ public class HitFlash : MonoBehaviour
     MaterialPropertyBlock mpb;
     Coroutine routine;
 
-    [SerializeField] float flashTime = 0.15f;
-
     private void Awake()
     {
         mpb = new MaterialPropertyBlock();
     }
 
-    public void Flash()
+    public void Flash(float _flashTime)
     {
         if(routine != null)
         {
             StopCoroutine(routine);
         }
 
-        routine = StartCoroutine(StartFlash());
+        routine = StartCoroutine(StartFlash(_flashTime));
     }
 
-    IEnumerator StartFlash()
+    IEnumerator StartFlash(float _flashTime)
     {
         SetFlash(1f);
 
-        yield return new WaitForSeconds(flashTime);
+        yield return new WaitForSeconds(_flashTime);
 
         SetFlash(0f);
 

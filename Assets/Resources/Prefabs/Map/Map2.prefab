@@ -181587,7 +181587,7 @@ Transform:
   m_GameObject: {fileID: 7752414437235513153}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.594, y: -0.3, z: 0}
+  m_LocalPosition: {x: 18.03, y: -39.32, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -193510,6 +193510,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CheckPointBench5
       objectReference: {fileID: 0}
+    - target: {fileID: 6117450746949060226, guid: a2fcc2cad1694ac42949e8e2502be729, type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 11400000, guid: d1f338788cd7e444aa1ab81b3465bf60, type: 2}
     - target: {fileID: 6265670936862214329, guid: a2fcc2cad1694ac42949e8e2502be729, type: 3}
       propertyPath: m_LocalPosition.x
       value: 41.5
@@ -195951,6 +195955,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CheckPointBench4
       objectReference: {fileID: 0}
+    - target: {fileID: 6117450746949060226, guid: a2fcc2cad1694ac42949e8e2502be729, type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 11400000, guid: a9b4feb0f36988a47939b3a1bee2efd2, type: 2}
     - target: {fileID: 6265670936862214329, guid: a2fcc2cad1694ac42949e8e2502be729, type: 3}
       propertyPath: m_LocalPosition.x
       value: 63
@@ -210519,6 +210527,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CheckPointBench2
       objectReference: {fileID: 0}
+    - target: {fileID: 6117450746949060226, guid: a2fcc2cad1694ac42949e8e2502be729, type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 11400000, guid: f036bfa0ab2e19443b5708fa3057e67e, type: 2}
     - target: {fileID: 6265670936862214329, guid: a2fcc2cad1694ac42949e8e2502be729, type: 3}
       propertyPath: m_LocalPosition.x
       value: 33.7
@@ -230618,6 +230630,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CheckPointBench3
       objectReference: {fileID: 0}
+    - target: {fileID: 6117450746949060226, guid: a2fcc2cad1694ac42949e8e2502be729, type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 11400000, guid: ff25c58af81111a46b90ebfbbbc2d7fb, type: 2}
     - target: {fileID: 6265670936862214329, guid: a2fcc2cad1694ac42949e8e2502be729, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10.55
@@ -232708,6 +232724,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CheckPointBench1
       objectReference: {fileID: 0}
+    - target: {fileID: 6117450746949060226, guid: a2fcc2cad1694ac42949e8e2502be729, type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 11400000, guid: 7283b09aa9fc1c242806214d5f2699c2, type: 2}
     - target: {fileID: 6265670936862214329, guid: a2fcc2cad1694ac42949e8e2502be729, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.5

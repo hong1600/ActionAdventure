@@ -6,65 +6,41 @@ using UnityEngine;
 public class HitEffect : MonoBehaviour
 {
     [SerializeField] HitStop hitStop;
-    KnockBack knockBack;
+    [SerializeField] float hitStopDelay = 0.1f;
+
     EffectPool effectPool;
     CameraShake cameraShake;
 
-    [SerializeField] float hitStopDelay = 0.1f;
-    [SerializeField] float knockBackDelay = 0.15f;
-
-    [SerializeField] float invincibleTime = 0.5f;
-
-    public bool IsKnockBack { get; private set; }
-    public bool isInvincible { get; private set; }
-
-
     private void Start()
     {
-        knockBack = new KnockBack();
-
         effectPool = ObjectPoolManager.instance.EffectPool;
         cameraShake = CameraManager.instance.CameraShake;
     }
 
     public void ApplyHitEffect(HitEffectData _data, HitTransformContext _ctx)
     {
+        if(_data == null || _ctx == null) return;
+        if(_ctx.target == null) return;
         if (_data.isParry) return;
 
-        if(_data.hitStopTime > 0)
-        StartCoroutine(StartHitStopDelay(_data.hitStopTime));
-
-        if (_data.useKnockBack)
+        if (_data.hitStopTime > 0)
         {
-            Rigidbody2D rigid = _ctx.target.GetComponent<Rigidbody2D>();
-
-            if (rigid != null)
-            {
-                StartCoroutine(StartKnockBack(rigid, _ctx.attacker, _ctx.target, _data.knockBackPower));
-            }
+            StartCoroutine(StartHitStopDelay(_data.hitStopTime));
         }
 
         effectPool.FindEffect(_data.effect, _ctx.target.position, Quaternion.identity);
 
         AudioManager.instance.PlaySfx(_data.sfx, _ctx.target.position, _ctx.target);
 
-        if(_data.useCameraShake)
-        cameraShake.ShakeCamera(0.3f);
+        if (_data.useCameraShake)
+        {
+            cameraShake.ShakeCamera(0.3f);
+        }
 
-        _ctx.hitFlash.Flash();
-    }
-
-    IEnumerator StartKnockBack(Rigidbody2D _rigid, Transform _attacker, Transform _target, float _knockBackPower)
-    {
-        IsKnockBack = true;
-
-        knockBack.Apply(_rigid, _attacker, _target, _knockBackPower);
-
-        yield return new WaitForSeconds(knockBackDelay);
-
-        IsKnockBack = false;
-
-        _rigid.velocity = Vector3.zero;
+        if (_ctx.hitFlash != null)
+        {
+            _ctx.hitFlash.Flash(0.15f);
+        }
     }
 
     IEnumerator StartHitStopDelay(float _hitStopSec)
@@ -72,19 +48,5 @@ public class HitEffect : MonoBehaviour
         yield return new WaitForSeconds(hitStopDelay);
 
         hitStop.ApplyHitStop(_hitStopSec);
-    }
-
-    public void Invincible()
-    {
-        StartCoroutine(StartInvincible(invincibleTime));
-    }
-
-    IEnumerator StartInvincible(float _time)
-    {
-        isInvincible = true;
-
-        yield return new WaitForSeconds(_time);
-
-        isInvincible = false;
     }
 }

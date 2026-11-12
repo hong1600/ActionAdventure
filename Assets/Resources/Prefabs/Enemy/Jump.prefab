@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 3427708651255208554}
   - component: {fileID: 8845966337480793591}
   - component: {fileID: 1347252979569147392}
+  - component: {fileID: -5181643183633676678}
   m_Layer: 7
   m_Name: Jump
   m_TagString: Untagged
@@ -119,7 +120,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   renders:
   - {fileID: 3449157669964368573}
-  flashTime: 0.15
 --- !u!95 &2451176199020477679
 Animator:
   serializedVersion: 5
@@ -229,6 +229,21 @@ MonoBehaviour:
   targetLayers:
     serializedVersion: 2
     m_Bits: 8
+  attacker: {fileID: 0}
+--- !u!114 &-5181643183633676678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3449157669816223843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d5fe7d5d51b1334bbc706b525019d47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  invincibleTime: 0.5
+  knockBackDelay: 0.15
 --- !u!1 &3449157669964368575
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,6 +336,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3449157669816223840}
     m_Modifications:
+    - target: {fileID: 674678997446202289, guid: 22e2a4fe67b7fdf4abb7a2d423ec0395, type: 3}
+      propertyPath: attacker
+      value: 
+      objectReference: {fileID: 3449157669816223840}
     - target: {fileID: 5643016480455646958, guid: 22e2a4fe67b7fdf4abb7a2d423ec0395, type: 3}
       propertyPath: m_Name
       value: AttackBox

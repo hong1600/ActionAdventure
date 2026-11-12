@@ -75,7 +75,6 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         if (playerManager.PlayerStatus.IsDie) return;
-
         if (!gameState.CanPlayerControl()) return;
 
         InputX();
@@ -84,14 +83,16 @@ public class PlayerMovement : MonoBehaviour
         CheckLand();
         CheckWallJumpTimer();
 
+        if (playerManager.PlayerStatus.HitReaction.IsKnockBack) return;
+
         moveState.Update();
     }
 
     private void FixedUpdate()
     {
-        if (playerManager.PlayerStatus.HitEffect == null) return;
-
-        if (playerManager.PlayerStatus.HitEffect.IsKnockBack || playerManager.PlayerStatus.IsDie) return;
+        if(!gameState.CanPlayerControl()) return;
+        if (playerManager.PlayerStatus.IsDie) return;
+        if (playerManager.PlayerStatus.HitReaction.IsKnockBack) return;
 
         moveState.FixedUpdate();
     }

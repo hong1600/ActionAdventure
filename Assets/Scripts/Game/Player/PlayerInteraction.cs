@@ -12,11 +12,17 @@ public interface IInteractable
 
 public class PlayerInteraction : MonoBehaviour
 {
+    PlayerManager player;
     IInteractable curTarget;
 
     InteractionUI interactionUI;
     GameState gameState;
     DialogueUI dialogueUI;
+
+    private void Awake()
+    {
+        player = GetComponent<PlayerManager>();
+    }
 
     private void Start()
     {
@@ -47,7 +53,15 @@ public class PlayerInteraction : MonoBehaviour
 
                 if (gameState.curState != EGameState.PLAY) return;
 
-                curTarget.Interact();
+                if (curTarget is CheckPoint checkPoint)
+                {
+                    checkPoint.Interact(player);
+                }
+                else
+                {
+                    curTarget.Interact();
+                }
+
                 interactionUI.Hide();
             }
         }

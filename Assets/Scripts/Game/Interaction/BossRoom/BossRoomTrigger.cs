@@ -16,6 +16,9 @@ public class BossRoomTrigger : MonoBehaviour
         if (_coll.gameObject.layer != LayerMask.NameToLayer("Player"))
             return;
 
+
+        PlayerMovement movement = _coll.gameObject.GetComponent<PlayerMovement>();
+        movement.rigid.velocity = Vector3.zero;
         bossRoom.BossBattle();
     }
 }

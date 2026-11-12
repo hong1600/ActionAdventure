@@ -356,6 +356,7 @@ GameObject:
   - component: {fileID: 1116185186464139599}
   - component: {fileID: 4725441939726676958}
   - component: {fileID: 5447488497218821677}
+  - component: {fileID: 8560310695507730603}
   m_Layer: 7
   m_Name: Fly
   m_TagString: Untagged
@@ -447,7 +448,6 @@ MonoBehaviour:
   - {fileID: 4777254192485836642}
   - {fileID: 4777254193388359192}
   - {fileID: 4777254192540089483}
-  flashTime: 0.15
 --- !u!114 &2414632994979583275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -547,6 +547,20 @@ CapsuleCollider2D:
   m_Offset: {x: -0.15, y: 0}
   m_Size: {x: 1.35, y: 2}
   m_Direction: 0
+--- !u!114 &8560310695507730603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4777254194347893091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d5fe7d5d51b1334bbc706b525019d47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  invincibleTime: 0.5
+  knockBackDelay: 0.15
 --- !u!1001 &732320840406245334
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -555,6 +569,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4777254194347893088}
     m_Modifications:
+    - target: {fileID: 674678997446202289, guid: 22e2a4fe67b7fdf4abb7a2d423ec0395, type: 3}
+      propertyPath: attacker
+      value: 
+      objectReference: {fileID: 4777254194347893088}
     - target: {fileID: 5643016480455646958, guid: 22e2a4fe67b7fdf4abb7a2d423ec0395, type: 3}
       propertyPath: m_Name
       value: AttackBox

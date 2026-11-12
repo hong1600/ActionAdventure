@@ -15,10 +15,10 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
     CapsuleCollider2D cap;
     BoxCollider2D deadCol;
 
-
     PlayerSpawner playerSpawner;
     HitEffect hitEffect;
-    public HitEffect HitEffect { get { return hitEffect; } }
+    HitReaction hitReaction;
+    public HitReaction HitReaction { get { return hitReaction; } }
     HitLevelResolver hitLevelResolver;
     HitEffectTable hitEffectTable;
     HitFlash hitFlash;
@@ -45,6 +45,7 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
         deadCol = GetComponent<BoxCollider2D>();
 
         hitFlash = GetComponent<HitFlash>();
+        hitReaction = GetComponent<HitReaction>();
     }
 
     private void Start()
@@ -58,7 +59,7 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Y))
+        if(Input.GetKeyDown(KeyCode.T)) 
         {
             TakeDmg(1, transform);
         }
@@ -66,39 +67,50 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
 
     public void TakeDmg(int _dmg, Transform _attacker)
     {
-        if (hitEffect.isInvincible) return;
+        if (isDie || curHp <= 0) return;
+        if(_dmg <=  0) return;
+        if (!hitReaction.TryBeginHit()) return;
 
-        hitEffect.Invincible();
+        curHp -= _dmg;
 
-        if (curHp > 0)
+        onHpEvent?.Invoke(curHp, maxHp);
+
+        HitContext ctx = new HitContext();
+        ctx.isCritical = true;
+        ctx.isFinish = curHp <= 0;
+
+        EHitLevel level = hitLevelResolver.Resolve(ctx);
+        HitEffectData data = hitEffectTable.Get(level);
+
+        if (data != null)
         {
-            curHp -= _dmg;
+            HitTransformContext trsCtx = new HitTransformContext();
+            trsCtx.attacker = _attacker;
+            trsCtx.target = transform;
+            trsCtx.hitFlash = hitFlash;
 
-            onHpEvent?.Invoke(curHp, maxHp);
-
-            HitContext ctx = new HitContext();
-            ctx.isCritical = true;
-            ctx.isFinish = curHp <= 0;
-
-            EHitLevel level = hitLevelResolver.Resolve(ctx);
-
-            HitEffectData data = hitEffectTable.Get(level);
-            if (data != null)
-            {
-                HitTransformContext trsCtx = new HitTransformContext();
-
-                trsCtx.attacker = _attacker;
-                trsCtx.target = transform;
-                trsCtx.hitFlash = hitFlash;
-
-                hitEffect.ApplyHitEffect(data, trsCtx);
-            }
-
-            if (curHp <= 0)
-            {
-                StartCoroutine(StartDie());
-            }
+            hitReaction.ApplyKnockBack(_attacker, data);
+            hitEffect.ApplyHitEffect(data, trsCtx);
         }
+
+        if (curHp <= 0)
+        {
+            StartCoroutine(StartDie());
+        }
+    }
+
+    private void FillHp(int _amount)
+    {
+        if (CurHp >= maxHp) return;
+
+        curHp = Mathf.Min(curHp + _amount, maxHp);
+
+        onHpEvent?.Invoke(curHp, maxHp);
+    }
+
+    public void RestHp()
+    {
+        FillHp(maxHp - curHp);
     }
 
     private void FillMp(int _amount)
@@ -108,10 +120,6 @@ public class PlayerStatus : MonoBehaviour, ITakeDmg
             curMp += _amount;
 
             onMpEvent?.Invoke(curMp, maxMp);
-        }
-        else
-        {
-            return;
         }
     }
 

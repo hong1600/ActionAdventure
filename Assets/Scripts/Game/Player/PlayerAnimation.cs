@@ -11,7 +11,8 @@ public enum EPlayerAnim
     FALL,
     WALLSLIDE,
     DASH,
-    CLIMBLADDER
+    CLIMBLADDER,
+    REST
 }
 
 

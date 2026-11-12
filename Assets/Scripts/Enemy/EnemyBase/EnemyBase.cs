@@ -23,6 +23,7 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
     public EnemyAttackBase attack { get; private set; }
     public EnemyMovementBase movement { get; private set; }
 
+    HitReaction hitReaction;
     HitEffect hitEffect;
     HitLevelResolver hitLevelResolver;
     HitEffectTable hitEffectTable;
@@ -54,6 +55,7 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
         attack = GetComponent<EnemyAttackBase>();
         movement = GetComponent<EnemyMovementBase>();
         enemyDrop = GetComponent<EnemyDrop>();
+        hitReaction = GetComponent<HitReaction>();
     }
 
     private void Start()
@@ -76,8 +78,7 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
 
     private void FixedUpdate()
     {
-        if (isDie || hitEffect.IsKnockBack) return;
-
+        if (isDie || hitReaction.IsKnockBack) return;
         if (!CanUpdateState()) return;
 
         if (enemyState != null)
@@ -139,40 +140,37 @@ public abstract class EnemyBase : MonoBehaviour, ITakeDmg
 
     public void TakeDmg(int _dmg, Transform _attacker)
     {
-        if (hitEffect.isInvincible) return;
+        if (isDie || curHp <= 0f) return;
+        if (_dmg <= 0) return;
+        if (!hitReaction.TryBeginHit()) return;
 
-        hitEffect.Invincible();
+        curHp -= _dmg;
 
-        if (curHp > 0)
+        anim.PlayAnim(EEnemyAnim.HIT);
+
+        onTakeDamage?.Invoke();
+
+        HitContext ctx = new HitContext();
+        ctx.isCritical = false;
+        ctx.isFinish = curHp <= 0;
+
+        EHitLevel level = hitLevelResolver.Resolve(ctx);
+        HitEffectData data = hitEffectTable.Get(level);
+
+        if (data != null)
         {
-            curHp -= _dmg;
+            HitTransformContext trsCtx = new HitTransformContext();
+            trsCtx.attacker = _attacker;
+            trsCtx.target = transform;
+            trsCtx.hitFlash = hitFlash;
 
-            anim.PlayAnim(EEnemyAnim.HIT);
+            hitReaction.ApplyKnockBack(_attacker, data);
+            hitEffect.ApplyHitEffect(data, trsCtx);
+        }
 
-            onTakeDamage?.Invoke();
-
-            HitContext ctx = new HitContext();
-            ctx.isCritical = false;
-            ctx.isFinish = curHp <= 0;
-
-            EHitLevel level = hitLevelResolver.Resolve(ctx);
-
-            HitEffectData data = hitEffectTable.Get(level);
-            if (data != null)
-            {
-                HitTransformContext trsCtx = new HitTransformContext();
-
-                trsCtx.attacker = _attacker;
-                trsCtx.target = transform;
-                trsCtx.hitFlash = hitFlash;
-
-                hitEffect.ApplyHitEffect(data, trsCtx);
-            }
-
-            if (curHp <= 0)
-            {
-                StartCoroutine(StartDie());
-            }
+        if (curHp <= 0)
+        {
+            StartCoroutine(StartDie());
         }
     }
 
